@@ -1,70 +1,96 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie ie9" lang="en" class="no-js"> <![endif]-->
+<!--[if !(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
+<head>
+	<title>Glamore</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="description" content="QueenAdmin - Beautiful Bootstrap Admin Dashboard Theme">
+	<meta name="author" content="The Develovers">
+	<!-- CSS -->
+	<link href={{ asset('assets/css/bootstrap.css') }} rel="stylesheet" type="text/css">
+	<link href={{ asset('assets/css/ionicons.css') }} rel="stylesheet" type="text/css">
+	<link href={{ asset('assets/css/main.css') }} rel="stylesheet" type="text/css">
+	<!-- Google Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,700' rel='stylesheet' type='text/css'>
+	<!-- Fav and touch icons -->
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href={{ asset('assets/ico/queenadmin-favicon144x144.png') }}>
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href={{ asset('assets/ico/queenadmin-favicon114x114.png') }}>
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href={{ asset('assets/ico/queenadmin-favicon72x72.png') }}>
+	<link rel="apple-touch-icon-precomposed" sizes="57x57" href={{ asset('assets/ico/queenadmin-favicon57x57.png') }}>
+	<link rel="shortcut icon" href={{ asset('assets/ico/favicon.png') }}>
+</head>
 
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
-                        {!! csrf_field() !!}
+<body class="middle-content page-login-social">
+	<div class="container-fluid">
+		<div class="content-box-bordered login-box box-with-help">
+			<h1>Reset password</h1>
+			<form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
+			{!! csrf_field() !!}
 
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ $email or old('email') }}">
-
-                                @if ($errors->has('email'))
+			<input type="hidden" name="token" value="{{ $token }}">
+			
+				<div class="form-group">
+					<label for="inputEmail3b" class="control-label sr-only">Email</label>
+					<div class="col-sm-12">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="icon ion-email"></i></span>
+							<input type="email" class="form-control" name="email" value="{{ $email or old('email') }}" id="inputEmail3b" placeholder="Email">
+							
+						</div>
+						@if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
-                            </div>
-                        </div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="password" class="control-label sr-only">Password</label>
+					<div class="col-sm-12">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="icon ion-locked"></i></span>
+							<input type="password" class="form-control" id="password" placeholder="Password" name="password">
+						</div>
+						@if ($errors->has('password'))
+						    <span class="help-block">
+						        <strong>{{ $errors->first('password') }}</strong>
+						    </span>
+						@endif
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="password2" class="control-label sr-only">Repeat Password</label>
+					<div class="col-sm-12">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="icon ion-locked"></i></span>
+							<input type="password" class="form-control" id="password2" placeholder="Repeat Password" name="password_confirmation">
+						</div>
+						@if ($errors->has('password_confirmation'))
+						    <span class="help-block">
+						        <strong>{{ $errors->first('password_confirmation') }}</strong>
+						    </span>
+						@endif
+					</div>
+				</div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Password</label>
+				<div class="form-group">
+					<div class="col-sm-7">
+						<button type="submit" class="btn btn-success btn-block">Reset Password</button>
+					</div>
+				</div>
+			</form>
+			
+		</div>
+		
+	</div>
+	<!-- Javascript -->
+	<script src="assets/js/jquery/jquery-2.1.0.min.js"></script>
+	<script src="assets/js/bootstrap/bootstrap.js"></script>
+	<script src="assets/js/queen-form-layouts.js"></script>
+</body>
 
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Confirm Password</label>
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password_confirmation">
-
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-refresh"></i>Reset Password
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+</html>

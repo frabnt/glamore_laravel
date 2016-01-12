@@ -11,13 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
 
 
+
+
+//email test
 Route::get('/emailtest', function () {
 
 	Mail::send('auth.emails.test', ['name'=> 'Stefano'], function($message){
@@ -30,11 +30,11 @@ Route::get('/emailtest', function () {
     
 });
 
+ 
 
 
 
-
-Route::get('user', function () {
+// Route::get('user', function () {
 //echo "welcome home. " ;
 //$id= Auth::id();
 
@@ -54,9 +54,9 @@ Route::get('user', function () {
 // }
 
 
-return Auth::user();
+// return Auth::user();
 
-});
+// });
 
 
 /*
@@ -75,6 +75,16 @@ return Auth::user();
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
+    //Auth
+    Route::get('/', function () {
+
+       return redirect()->route('home');
+
+    });
+    Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
+
+
+    //Messenger
     Route::group(['prefix' => 'messages'], function () {
     Route::get('/', ['as' => 'messages', 'uses' => 'MessagesController@index']);
     Route::get('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);
@@ -85,5 +95,5 @@ Route::group(['middleware' => 'web'], function () {
 
 
 
-    Route::get('/home', 'HomeController@index');
+    
 });
