@@ -54,131 +54,7 @@
 			<div class="top-bar-right pull-right">
 				<div class="action-group hidden-xs hidden-sm">
 					<ul>
-						<!-- skins -->
-						<li class="action-item skins">
-							<form id="style-switcher">
-								<div class="btn-group open">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="icon ion-ios-gear-outline"></i>
-									</a>
-									<div class="arrow"></div>
-									<ul class="dropdown-menu" role="menu">
-										<li>
-											<p><strong>Dark Side Nav</strong></p>
-											<button type="button" class="btn-skin nav-dark full-dark" data-skin={{ asset('assets/css/skins/full-dark.css') }}></button>
-											<button type="button" class="btn-skin nav-dark green" data-skin={{ asset('assets/css/skins/green.css') }}></button>
-											<button type="button" class="btn-skin nav-dark blue" data-skin={{ asset('assets/css/skins/blue.css') }}></button>
-											<button type="button" class="btn-skin nav-dark darkorange" data-skin={{ asset('assets/css/skins/darkorange.css') }}></button>
-											<button type="button" class="btn-skin nav-dark seagreen" data-skin={{ asset('assets/css/skins/seagreen.css') }}></button>
-										</li>
-										<li>
-											<p><strong>Light Side Nav</strong></p>
-											<button type="button" class="btn-skin nav-light full-white" data-skin={{ asset('assets/css/skins/full-white.css') }}></button>
-											<button type="button" class="btn-skin nav-light green green-light-nav" data-skin={{ asset('assets/css/skins/green-light-nav.css') }}></button>
-											<button type="button" class="btn-skin nav-light blue blue-light-nav" data-skin={{ asset('assets/css/skins/blue-light-nav.css') }}></button>
-											<button type="button" class="btn-skin nav-light darkorange darkorange-light-nav" data-skin={{ asset('assets/css/skins/darkorange-light-nav.css') }}></button>
-											<button type="button" class="btn-skin nav-light seagreen seagreen-light-nav" data-skin={{ asset('assets/css/skins/seagreen-light-nav.css') }}></button>
-										</li>
-										<li>
-											<label class="fancy-checkbox">
-												<input type="checkbox" id="fixed-top-nav" checked="checked"><span>Fixed Top Navigation</span></label>
-										</li>
-										<li data-toggle="popover" data-placement="top" data-container="body" data-content="If checked, try expanding <strong>Pages</strong> menu item on left sidebar. Disabled on minified sidebar." data-trigger="hover">
-											<label class="fancy-checkbox">
-												<input type="checkbox" id="fixed-left-nav"><span>Fixed Left Navigation</span></label>
-										</li>
-										<li class="menu-item-footer"><a href="#" title="Reset Style" class="reset-style">Reset Style</a></li>
-									</ul>
-								</div>
-							</form>
-						</li>
-						<!-- end skins -->
-						<!-- notification: inbox -->
-						<li class="action-item inbox">
-							<div class="btn-group">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									<i class="icon ion-ios-email-outline"></i><span class="count">2</span>
-								</a>
-								<div class="arrow"></div>
-								<ul class="dropdown-menu" role="menu">
-									<li class="menu-item-header">You have 2 unread messages</li>
-									<li class="inbox-item clearfix">
-										<a href="#">
-											<div class="media">
-												<div class="pull-left">
-													<img class="media-object" src="assets/img/user1.png" alt="Antonio">
-												</div>
-												<div class="media-body">
-													<h5 class="media-heading name">Antonius</h5>
-													<p class="text">The problem just happened this morning. I can't see ...</p>
-													<span class="timestamp text-muted">4 minutes ago</span>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="inbox-item unread clearfix">
-										<a href="#">
-											<div class="media">
-												<div class="pull-left">
-													<img class="media-object" src="assets/img/user2.png" alt="Antonio">
-												</div>
-												<div class="media-body">
-													<h5 class="media-heading name">Michael</h5>
-													<p class="text">Hey dude, cool theme!</p>
-													<span class="timestamp text-muted">2 hours ago</span>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="inbox-item unread clearfix">
-										<a href="#">
-											<div class="media">
-												<div class="pull-left">
-													<img class="media-object" src="assets/img/user3.png" alt="Antonio">
-												</div>
-												<div class="media-body">
-													<h5 class="media-heading name">Stella</h5>
-													<p class="text">Ok now I can see the status for each item. Thanks! :D</p>
-													<span class="timestamp text-muted">Oct 6</span>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="inbox-item clearfix">
-										<a href="#">
-											<div class="media">
-												<div class="pull-left">
-													<img class="media-object" src="assets/img/user4.png" alt="Antonio">
-												</div>
-												<div class="media-body">
-													<h5 class="media-heading name">Jane Doe</h5>
-													<p class="text"><i class="icon ion-reply text-muted"></i> Please check the status of your ...</p>
-													<span class="timestamp text-muted">Oct 2</span>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="inbox-item clearfix">
-										<a href="#">
-											<div class="media">
-												<div class="pull-left">
-													<img class="media-object" src="assets/img/user5.png" alt="Antonio">
-												</div>
-												<div class="media-body">
-													<h5 class="media-heading name">John Simmons</h5>
-													<p class="text"><i class="icon ion-reply text-muted"></i> I've fixed the problem :)</p>
-													<span class="timestamp text-muted">Sep 12</span>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="menu-item-footer">
-										<a href="#">View All Messages</a>
-									</li>
-								</ul>
-							</div>
-						</li>
-						<!-- end notification: inbox -->
+
 						<!-- notification: general -->
 						<li class="action-item general">
 							<div class="btn-group">
@@ -255,7 +131,7 @@
 				<div class="logged-user">
 					<div class="btn-group">
 						<a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-							<img src="assets/img/user-loggedin.png" alt="Sebastian" /><span class="name">Sebastian <i class="icon ion-ios-arrow-down"></i></span>
+							<img src={{ asset('assets/img/user-loggedin.png') }} alt="Sebastian" /><span class="name">Sebastian <i class="icon ion-ios-arrow-down"></i></span>
 						</a>
 						<ul class="dropdown-menu" role="menu">
 							<li>
@@ -282,7 +158,7 @@
 				<div class="action-group visible-lg-inline-block">
 					<ul>
 						<li class="action-item chat">
-							<a href="#" id="toggle-right-sidebar" class="toggle-right-sidebar"><i class="icon ion-ios-chatboxes-outline"></i><span class="count">5</span></a>
+							<a href="{{URL::to('messages')}}" id="toggle-right-sidebar" class="toggle-right-sidebar"><i class="icon ion-ios-chatboxes-outline"></i>@include('messenger.unread-count')</a>
 						</li>
 					</ul>
 				</div>
@@ -398,65 +274,7 @@
             @yield('content')
 
 			<div class="right-sidebar">
-				<!-- CHAT -->
-				<div class="widget widget-chat-contacts">
-					<div class="widget-header clearfix">
-						<h3 class="sr-only">CHAT</h3>
-						<div class="btn-group btn-group-justified widget-header-toolbar visible-lg">
-							<div class="btn-group">
-								<button type="button" class="btn btn-primary btn-xs"><i class="icon ion-plus-circled"></i> Add</button>
-							</div>
-							<div class="btn-group">
-								<button type="button" class="btn dropdown-toggle btn-xs btn-success" data-btnclass="btn-success" data-toggle="dropdown">Online <span class="caret"></span></button>
-								<ul class="dropdown-menu dropdown-menu-right chat-status" role="menu">
-									<li><a href="#" class="online" data-btnclass="btn-success">Online</a></li>
-									<li><a href="#" class="away" data-btnclass="btn-warning">Away</a></li>
-									<li><a href="#" class="busy" data-btnclass="btn-danger">Busy</a></li>
-									<li><a href="#" class="offline" data-btnclass="btn-default">Offline</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="widget-content">
-						<strong>Online (4)</strong>
-						<ul class="list-unstyled chat-contacts">
-							<li>
-								<a href="#" id="theusername"><img src="assets/img/user1.png" class="img-circle" alt="Antonius">Antonius</a>
-							</li>
-							<li>
-								<a href="#"><img src="assets/img/user2.png" class="img-circle" alt="Antonius">Michael Smith</a>
-							</li>
-							<li class="away">
-								<a href="#"><img src="assets/img/user3.png" class="img-circle" alt="Antonius">Stella Ray</a>
-							</li>
-							<li class="busy">
-								<a href="#"><img src="assets/img/user4.png" class="img-circle" alt="Antonius">Jane Doe</a>
-							</li>
-						</ul>
-						<strong>Offline (6)</strong>
-						<ul class="list-unstyled chat-contacts contacts-offline">
-							<li>
-								<a href="#"><img src="assets/img/user5.png" class="img-circle" alt="John Simmons">John Simmons</a>
-							</li>
-							<li>
-								<a href="#"><img src="assets/img/user6.png" class="img-circle" alt="Jack Bay">Jack Bay</a>
-							</li>
-							<li>
-								<a href="#"><img src="assets/img/user7.png" class="img-circle" alt="Daraiana">Daraiana</a>
-							</li>
-							<li>
-								<a href="#"><img src="assets/img/user8.png" class="img-circle" alt="Alessio Ferrara">Alessio Ferrara</a>
-							</li>
-							<li>
-								<a href="#"><img src="assets/img/user9.png" class="img-circle" alt="Sorana">Sorana</a>
-							</li>
-							<li>
-								<a href="#"><img src="assets/img/user10.png" class="img-circle" alt="Regan Morton">Regan Morton</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<!-- END CHAT -->
+
 			</div>
 		</div>
 		<!-- END COLUMN RIGHT -->
