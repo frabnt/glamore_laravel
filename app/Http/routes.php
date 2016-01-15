@@ -71,16 +71,22 @@ Route::get('/emailtest', function () {
 */
 
 
+Route::resource('users', 'UserController');
+
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
+    //User
+    Route::get('/user/profile', function () {
+       return view('user.user_profile');
+    });
+
     //Auth
     Route::get('/', function () {
-
        return redirect()->route('home');
-
     });
+
     Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
 
 
@@ -91,6 +97,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/', ['as' => 'messages.store', 'uses' => 'MessagesController@store']);
     Route::get('{id}', ['as' => 'messages.show', 'uses' => 'MessagesController@show']);
     Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);
+
+    
 });
 
 

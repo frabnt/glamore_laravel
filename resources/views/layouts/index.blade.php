@@ -5,7 +5,7 @@
 
 		
 		<!-- COLUMN RIGHT -->
-		
+		<div id="col-right" class="col-right ">
 			<div class="container-fluid primary-content">
 				<!-- PRIMARY CONTENT HEADING -->
 				<div class="primary-content-heading clearfix">
@@ -397,9 +397,7 @@
 					</div>
 				</div>
 			</div>
-
+			</div>
 		@stop
 		<!-- END COLUMN RIGHT -->
-</body>
 
-</html>

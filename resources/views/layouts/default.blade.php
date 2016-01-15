@@ -221,15 +221,13 @@
 
 		
 		<!-- COLUMN RIGHT -->
-		<div id="col-right" class="col-right ">
+		
 			
 			<!-- Content -->
             @yield('content')
 
-			<div class="right-sidebar">
-
-			</div>
-		</div>
+			
+		
 		<!-- END COLUMN RIGHT -->
 	</div>
 	@yield('footer')
@@ -259,6 +257,10 @@
 	<script src={{ asset('assets/js/queen-maps.js') }}></script>
 	<script src={{ asset('assets/js/queen-elements.js') }}></script>
 	@show
+	
+
+
+
 	
 </body>
 
