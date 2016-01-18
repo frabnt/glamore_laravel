@@ -60,6 +60,25 @@
 </form>
 
 
+
+<form id="addUser" class="module">
+<div>
+    <label for="name">Name: </label>
+    <input type="text" id="name" name="name">
+</div> 
+
+
+
+
+
+<div>
+    <input type="submit" value="Add User">
+</div>
+
+
+</form>
+
+
 <table id="allContacts" class="module">
     <thead>
         <tr>
@@ -75,7 +94,7 @@
 
 <!-- Template for contacts -->
 <script id="allContactsTemplate" type="text/template">   
-    <td> <a href="#" class="editable" name="first_name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= first_name %> </a> </td>
+    <td> <a href="#" class="editable" models="contacts" name="first_name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= first_name %> </a> </td>
     <td><%= last_name %></td>
     <td><%= email_address %></td>
     <td><%= description %></td>
@@ -84,10 +103,61 @@
 </script>
 
 
+<table id="allUsers" class="module">
+    <thead>
+        <tr>
+            <td>name</td>
+            
+        </tr>
+    </thead>
+</table>
+
+<!-- Template for users -->
+<script id="allUsersTemplate" type="text/template">   
+    <td> <a href="#" class="editable" models="users" name="name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= name %> </a> </td>
+   
+    <td><a href="#users/<%= id %>/edit" class="edit" >Edit </a></td>
+    <td><a href="#users/<%= id %>" class="delete" >Delete </a></td>
+</script>
+
+<div id="editUser">
+    
+</div>
 
 <div id="editContact">
     
 </div>
+
+
+
+<script id="editUserTemplate" type="text/template">
+<h2>Edit User: <%= name %>    </h2>
+
+// line edit
+<a href="#" class="editable" models="users" value="<%= name %>" name="name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= name %> </a>
+
+
+
+
+<form id="editUser">
+    <div>
+        <label for="edit_name">Name: </label>
+        <input type="text" id="edit_name" name="edit_name" value="<%= name %>">
+    </div> 
+
+
+    
+
+    <div>
+        <input type="submit" value="Mod User">
+        <button type="button" class="cancel"> Cancel </button>
+    </div>
+
+
+    </form>
+
+</script>
+
 
 
 <script id="editContactTemplate" type="text/template">
@@ -159,13 +229,27 @@
     <script src={{ asset('assets/js/views.js') }}></script>
     <script src={{ asset('assets/js/router.js') }}></script>
     
+
+
+
+
     <script>
-    
+   
         new App.Router;
+        //Contacts
         Backbone.history.start();
         App.contacts= new App.Collections.Contacts;
-        App.contacts.fetch().then(function(){
-            new App.Views.App({collection: App.contacts});
+        App.contacts.fetch();
+        //Users
+        App.users= new App.Collections.Users({id:1});
+
+        App.users.fetch().then(function(){
+            //console.log(App.users.get(1).toJSON());
+//console.log(App.users);
+        //var profile=App.users.get(1).toJSON();
+
+        //Istanzio tutte le view   
+        new App.Views.App({collection: App.users, collection: App.contact });    
         });
 
 
@@ -182,9 +266,30 @@ $(document).ready(function() {
             $('.editable').editable({
 
                 success: function(response, newValue) {   
+
+                        
                         var id=$(this).attr('data-pk');
                         var name=$(this).attr('name');
-                        var model= App.contacts.get(id).set(name, newValue);
+                        var modelsName= $(this).attr('models');
+                        console.log(modelsName);
+                        console.log(name);
+                        console.log(newValue);
+
+                      
+
+                        switch (modelsName){
+                            case 'users':
+                                var model= App.users.get(id).set(name, newValue);
+                            break;
+
+                            case 'contacts':
+                                var model= App.contacts.get(id).set(name, newValue);
+                            break;
+                        }
+
+
+
+                        
                         model.save(name, newValue);
                         editableEnabler();
                    },
@@ -219,6 +324,7 @@ $(document).ready(function() {
       editableEnabler();
       event.preventDefault();
     });
+
 editableEnabler();
     //Abilito e disabilito l'editable
     $( "#enable" ).click(function() {

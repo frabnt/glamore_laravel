@@ -220,5 +220,12 @@
 		</div>
 		<!-- END COLUMN RIGHT -->
 
+		@if(Auth::check())
+    <script>
+        var userID = "{{ Auth::user()->id }}";
+        console.log(userID);
+    </script>
+@endif
+
 				@stop
 				<!-- END COLUMN RIGHT -->
