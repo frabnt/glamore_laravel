@@ -72,6 +72,12 @@ Route::get('/emailtest', function () {
 
 
 Route::resource('users', 'UserController');
+    Route::resource('contacts', 'ContactController');
+
+    //contacts
+    Route::get('/bbContact', function () {
+        return view('bbContact');
+    });
 
 
 Route::group(['middleware' => 'web'], function () {

@@ -10,6 +10,12 @@
    <script src={{ asset('assets/js/plugins/select2/select2.min.js') }}></script>
    <script src={{ asset('assets/js/plugins/bootstrap-editable/address.custom.js') }}></script>
    <script src={{ asset('assets/js/plugins/bootstrap-editable/demo-mock.js') }}></script>
+   <!-- Backbone include -->
+    <script src={{ asset('assets/js/main.js') }}></script>
+    <script src={{ asset('assets/js/models.js') }}></script>
+    <script src={{ asset('assets/js/collections.js') }}></script>
+    <script src={{ asset('assets/js/views.js') }}></script>
+    <script src={{ asset('assets/js/router.js') }}></script>
 @stop
 
 @section('content')
