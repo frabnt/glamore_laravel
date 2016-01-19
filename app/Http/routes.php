@@ -70,8 +70,10 @@ Route::get('/emailtest', function () {
 |
 */
 
-
-Route::resource('users', 'UserController');
+    Route::resource('industries', 'IndustryController');
+    Route::resource('experiences', 'ExperienceController');
+    Route::resource('educations', 'EducationController');
+    Route::resource('users', 'UserController');
     Route::resource('contacts', 'ContactController');
 
     //contacts

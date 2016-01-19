@@ -76,9 +76,11 @@
 						<div class="col-md-8">
 							<div class="profile-info-right">
 								<ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom">
-									<li class="active"><a href="#activities" data-toggle="tab">INDUSTRY</a></li>
-									<li><a href="#followers" data-toggle="tab">EXPERIENCE</a></li>
-									<li><a href="#following" data-toggle="tab">EDUCATION</a></li>
+								<li class="active"><a href="#following" data-toggle="tab">EDUCATION</a></li>
+								<li><a href="#followers" data-toggle="tab">EXPERIENCE</a></li>
+								<li><a href="#activities" data-toggle="tab">INDUSTRY</a></li>
+									
+									
 								</ul>
 								<div class="tab-content">
 
