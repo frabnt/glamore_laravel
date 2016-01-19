@@ -258,7 +258,7 @@
 	<script src={{ asset('assets/js/queen-elements.js') }}></script>
 	@show
 	
-
+    @yield('script')
 
 
 	
