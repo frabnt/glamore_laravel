@@ -9,6 +9,32 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+
+
+    public function showProfile(){
+        return view('user.user_profile');
+    }
+
+
+//     public function saveProfileImage($id){
+
+//                 //controllo se il file esiste
+//                 if(null!==Request::file('profile')){
+                    
+//                    // ricavo il nome del file
+//                 $fileName = Request::file('profile')->getClientOriginalName();
+//         //sposto il file nel percorso storage/uploads
+//                 Request::file('profile')->move(Config::get('upload.path'), $fileName); 
+
+//                 return View::make('user.user_profile');
+
+//     }
+// }
+
+
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -101,8 +127,53 @@ class UserController extends Controller
         $user->linkedin_page = $request->linkedin_page; 
         $user->dribbble_page = $request->dribbble_page; 
         $user->gplus_page = $request->gplus_page ; 
+        
+
+
+
+
+
+        if($request->upload!=''){
+
+      
+
+        if($request->profile_image != $user->profile_image){
+            $decode_prifile_image = base64_decode($request->upload);
+            $fileName=time().$request->profile_image;
+            $file = '/Applications/MAMP/htdocs/glamore/storage/app/upload/img/'.$fileName;
+            file_put_contents($file, $decode_prifile_image);
+            $user->profile_image=$fileName;
+        }
+
+        if($request->background_image != $user->background_image){
+            $decode_prifile_image = base64_decode($request->upload);
+            $fileName=time().$request->background_image;
+            $file = '/Applications/MAMP/htdocs/glamore/storage/app/upload/img/'.$fileName;
+            file_put_contents($file, $decode_prifile_image);
+            $user->background_image=$fileName;
+        }
+
+        }
+
+
+
+
+
+
+
+    //return $request->upload;//$decode_prifile_image;
+       
+
+
+        //return $user;
+
+//return $upload.$profile_image;
+
+
+
 
         $user->save();
+        return $request->upload;
     }
 
     /**

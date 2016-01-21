@@ -12,7 +12,7 @@ class Education extends Model
 
 
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo('App\User');
     }

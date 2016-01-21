@@ -267,7 +267,7 @@ App.Collections.Users= Backbone.Collection.extend({
         });
 
 
-// views
+// MAIN VIEWS
 
 App.Views.App=Backbone.View.extend({
 

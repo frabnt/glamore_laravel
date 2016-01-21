@@ -30,6 +30,7 @@ Route::get('/emailtest', function () {
     
 });
 
+
  
 
 
@@ -82,13 +83,41 @@ Route::get('/emailtest', function () {
     });
 
 
-Route::group(['middleware' => 'web'], function () {
+    //Educations
+    //get education by user id
+    Route::get('education/user/{id}', 'educationController@eduByUserId');
+
+
+
+
+    Route::group(['middleware' => 'web'], function () {
+
+
+
+
     Route::auth();
 
+
+    // Route::group(array('before' => 'auth'), function(){
+    //     // your routes
+
+    //     Route::get('/', 'HomeController@index');
+    // });
+
+    //Route::post('/user/{id}','UserController@upload');
+
+    
+    
+
+
+Route::get('/user/{id}','UserController@showProfile');
+
+
+
     //User
-    Route::get('/user/profile', function () {
-       return view('user.user_profile');
-    });
+    // Route::get('/user/{id}', function (App\User $user) {
+    //    return view('user.user_profile');
+    // });
 
     //Auth
     Route::get('/', function () {
@@ -107,6 +136,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);
 
     
+   //Route::post('/user/{id}', array('uses' => 'UserController@upload'));
+
+
+
 });
 
 

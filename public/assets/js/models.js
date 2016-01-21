@@ -13,6 +13,10 @@ App.Models.Contact= Backbone.Model.extend({
 });
 
 App.Models.User= Backbone.Model.extend({
+	defaults:{
+		profile_image:'',
+		background_image:'',
+	},
 	//validate
 	validate: function(attrs){
 		if(! attrs.name){

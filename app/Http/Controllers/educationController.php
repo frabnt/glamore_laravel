@@ -6,16 +6,25 @@ use Illuminate\Http\Request;
 use App\Education;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Auth;
 
 class educationController extends Controller
 {
 
 
 
-    // relazione uno a molti
-    public function user(){
-        return $this->belongsTo('App\User');
+
+ 
+
+
+
+
+    public function eduByUserId($id){
+
+            return Education::where('user_id', '=', $id )->get();
     }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -45,6 +54,7 @@ class educationController extends Controller
     public function store(Request $request)
     {
         $education = new Education;
+        $user= new User;
 
         $education->school = $request->school; 
         $education->dates_attended = $request->dates_attended; 

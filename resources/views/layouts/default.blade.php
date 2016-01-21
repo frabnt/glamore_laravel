@@ -131,11 +131,11 @@
 				<div class="logged-user">
 					<div class="btn-group">
 						<a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-							<img src={{ asset('assets/img/user-loggedin.png') }} alt="Sebastian" /><span class="name">{{Auth::user()->name}} <i class="icon ion-ios-arrow-down"></i></span>
+							<img src={{ asset('assets/img/user-loggedin.png') }} alt="Sebastian" /><span class="name">{{ isset(Auth::user()->name) ? Auth::user()->name:'Not logged'}} <i class="icon ion-ios-arrow-down"></i></span>
 						</a>
 						<ul class="dropdown-menu" role="menu">
 							<li>
-								<a href="#">
+								<a href="{{URL::to('user')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:0}}">
 									<i class="icon ion-ios-person"></i>
 									<span class="text">Profile</span>
 								</a>
@@ -158,7 +158,7 @@
 				<div class="action-group visible-lg-inline-block">
 					<ul>
 						<li class="action-item chat">
-							<a href="{{URL::to('messages')}}" id="toggle-right-sidebar" class="toggle-right-sidebar"><i class="icon ion-ios-chatboxes-outline"></i>@include('messenger.unread-count')</a>
+							<a href="{{URL::to('messages')}}" id="toggle-right-sidebar" class="toggle-right-sidebar"><i class="icon ion-ios-chatboxes-outline"></i>{{--@include('messenger.unread-count')--}}</a>
 						</li>
 					</ul>
 				</div>
