@@ -54,21 +54,23 @@ class educationController extends Controller
     public function store(Request $request)
     {
         $education = new Education;
-        $user= new User;
+        //$user= new User;
 
         $education->school = $request->school; 
-        $education->dates_attended = $request->dates_attended; 
+        $education->date_start = $request->dates_start; 
+        $education->date_end = $request->dates_end;
         $education->degree = $request->degree; 
-        $education->field_of_Study = $request->field_of_Study; 
+        $education->field_of_study = $request->field_of_study; 
         $education->grade = $request->grade; 
         $education->activities_and_societies = $request->activities_and_societies; 
         $education->description = $request->description; 
+        $education->user_id=$request->user_id;
 
         $education->save();
 
         
 
-        return $education;  //importante altrimenti bacbone non riceve l'id in ritorno
+        return  $education;  //importante altrimenti bacbone non riceve l'id in ritorno
     }
 
     /**
@@ -103,17 +105,19 @@ class educationController extends Controller
     public function update(Request $request, $id)
     {
         
-        $user = Education::find($id);
+        $education = Education::find($id);
 
         $education->school = $request->school; 
-        $education->dates_attended = $request->dates_attended; 
+        $education->date_start = $request->dates_start; 
+        $education->date_end = $request->dates_end;
         $education->degree = $request->degree; 
-        $education->field_of_Study = $request->field_of_Study; 
+        $education->field_of_study = $request->field_of_study; 
         $education->grade = $request->grade; 
         $education->activities_and_societies = $request->activities_and_societies; 
         $education->description = $request->description; 
         
         $education->save();
+        return $education;
     }
 
     /**

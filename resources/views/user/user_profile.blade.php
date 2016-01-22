@@ -113,7 +113,7 @@ img:hover {
  						<div class="tab-content">
 
  							<!-- activities -->
- 							<div class="tab-pane fade in active" id="activities">
+ 							<div class="tab-pane fade " id="activities">
  								<a href="#" class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add industry</a>
  								<table id="user" class="table table-bordered table-striped">
  									<tbody>
@@ -161,13 +161,13 @@ img:hover {
  										<tr>
  											<td>Date start</td>
  											<td>
- 												<a href="#" class="editable" id="date_start" data-type="combodate" data-value="1984-05-23" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select Date of birth"></a>
+ 												<a href="#" class="editable" id="date_start" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select Date start"></a>
  											</td>
  										</tr>
  										<tr>
  											<td>Date end</td>
  											<td>
- 												<a href="#" class="editable" id="date_end" data-type="combodate" data-value="1984-05-23" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select Date of birth"></a>
+ 												<a href="#" class="editable" id="date_end" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select Date end"></a>
  											</td>
  										</tr>
 
@@ -191,60 +191,80 @@ img:hover {
  							</div>
  							<!-- end followers -->
  							<!-- following -->
- 							<div class="tab-pane fade" id="following">
+ 							<div class="tab-pane fade in active" id="following">
  							<a href="#" class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add Education</a>
- 								<table id="user" class="table table-bordered table-striped">
- 									<tbody>
- 										<tr>
- 											<td>School</td>
- 											<td><a href="#" class="editable" id="school" data-type="text" data-pk="1" data-value="" data-title="Enter company name"></a></td>
- 										</tr>
- 										<tr>
- 											<td>Dates Attended</td>
- 												<td>
- 													<a href="#" class="editable" id="edu_date_start" data-type="combodate" data-value="1984-05-23" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select Date of birth"></a>
+
+ 							
+
+ 							<form id="addEducation" class="form-horizontal" role="form">
+ 								<fieldset>
+ 									<legend>Add Education</legend>
+ 									<div class="form-group">
+ 										<label for="school" class="col-sm-3 control-label">School</label>
+ 										<div class="col-sm-9">
+ 											<input type="text" class="form-control" name="school" id="school" placeholder="School">
+ 										</div>
+ 									</div>
+ 									<div class="form-group">
+ 										<label for="edu_date_start" class="col-sm-3 control-label">Date start</label>
+ 										<div class="col-sm-9">
+ 											<input type="date" name="edu_date_start" class="form-control" id="edu_date_start" placeholder="Date start">
+ 										</div>
+ 									</div>
+ 									<div class="form-group">
+ 										<label for="edu_date_end" class="col-sm-3 control-label">Date end</label>
+ 										<div class="col-sm-9">
+ 											<input type="date" name="edu_date_end" class="form-control" id="edu_date_end" placeholder="Date end">
+ 										</div>
+ 									</div>
+ 									<div class="form-group">
+ 										<label for="degree" class="col-sm-3 control-label">Degree</label>
+ 										<div class="col-sm-9">
+ 											<input type="text" class="form-control" name="degree" id="degree" placeholder="Degree">
+ 										</div>
+ 									</div>
+ 									<div class="form-group">
+ 										<label for="field_of_study" class="col-sm-3 control-label">Field of Study</label>
+ 										<div class="col-sm-9">
+ 											<input type="text" class="form-control" name="field_of_study" id="field_of_study" placeholder="Field of Study">
+ 										</div>
+ 									</div>
+
+ 									<div class="form-group">
+ 										<label for="grade" class="col-sm-3 control-label">Grade</label>
+ 										<div class="col-sm-9">
+ 											<input type="text" class="form-control" name="grade" id="grade" placeholder="Grade">
+ 										</div>
+ 									</div>
+
+ 									<div class="form-group">
+ 										<label for="activities_and_societies" class="col-sm-3 control-label">Activities and Societies</label>
+ 										<div class="col-sm-9">
+ 											<input type="text" class="form-control" name="activities_and_societies" id="activities_and_societies" placeholder="Activities and Societies">
+ 										</div>
+ 									</div>
+ 									<div class="form-group">
+ 										<label for="description" class="col-sm-3 control-label">Description</label>
+ 										<div class="col-sm-9">
+ 											<input type="text" class="form-control" name="description" id="edu_description" placeholder="Description">
+ 										</div>
+ 									</div>
+ 											<div class="form-group">
+ 												<div class="col-sm-offset-3 col-sm-9">
+ 													
+ 													<input type="submit" class="btn btn-primary btn-block" value="Add Education">
+
+ 												</div>
+ 												<input type="hidden" id="edu_user_id" name="user_id" value={{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}>
  												
- 												
- 													<a href="#" class="editable" id="edu_date_end" data-type="combodate" data-value="1984-05-23" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select Date of birth"></a>
- 												</td>	
- 											</tr>
- 										</tr>
- 										<tr>
- 											<td>Degree</td>
- 											<td>
- 												<a href="#" class="editable" id="degree" data-type="text" data-pk="1" data-value="" data-title="Enter location"></a>
- 											</td>
- 										</tr>
- 										<tr>
- 											<td>Field of Study</td>
- 											<td>
- 												<a href="#" class="editable" id="field_of_study" data-type="text" data-pk="1" data-value="" data-title="Enter location"></a>
- 											</td>
- 										</tr>
- 										<tr>
- 											<td>Grade</td>
- 											<td>
- 												<a href="#" class="editable" id="grade" data-type="text" data-pk="1" data-value="" data-title="Enter location"></a>
- 											</td>
- 										</tr>
+ 											</div>
+ 										</fieldset>
+ 									</form>
 
- 										<tr>
- 											<td>Activities and Societies</td>
- 											<td>
- 												<a href="#" class="editable" id="activities_and_societies" data-type="text" data-pk="1" data-value="" data-title="Enter location"></a>
 
- 											</td>
- 										</tr>
-
- 										<tr>
- 											<td>Description</td>
- 											<td>
- 												<a href="#" class="editable" id="edu_description" data-type="textarea" data-pk="1">awesome comment!</a>
-
- 											</td>
- 										</tr>
- 									</tbody>
- 								</table>
+ 									<div id="allEducations">
+ 									    
+ 									</div>
  							</div>
  							<!-- end following -->
  						</div>
@@ -254,9 +274,30 @@ img:hover {
 
 
 
+
 				</script>
 
-
+<script id="allEducationsTemplate" type="text/template">
+<legend><%= school %></legend>  
+<table class="table table-bordered table-striped">
+    <tr><td>School</td>
+    <td> <a href="#" class="editable" models="educations" name="school" data-type="text" data-url="" data-pk= "<%=id%>" ><%= school %> </a> </td></tr>
+    <tr><td>Dates Attended</td>
+    <td><a href="#" class="editable" models="educations" name="date_start" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date Start"><%= date_start %></a>
+	    <a href="#" class="editable" models="educations" name="date_end" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date End"></a><%= date_end %></td></tr>	
+	<tr><td>Degree</td>
+    <td><a href="#" class="editable" models="educations" name="degree"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= degree %></a></td></tr>
+    <tr><td>Field of Study</td>
+    <td><a href="#" class="editable" models="educations" name="field_of_study" data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= field_of_study %></a></td></tr>
+    <tr><td>Grade</td>
+    <td><a href="#" class="editable" models="educations" name="grade"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= grade %></a></td></tr>
+    <tr><td>Activities and Societies</td>
+    <td><a href="#" class="editable" models="educations" name="activities_and_societies"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= activities_and_societies %></a></td></tr>
+    <tr><td>Description</td>
+    <td><a href="#" class="editable" models="educations" name="description" data-type="textarea" data-pk="<%=id%>"><%= description %></a></td></tr>
+<tr><a href="#educations/<%= id %>" class="delete btn btn-primary btn-block" >Delete </a></tr>
+</table>
+</script>
 
 				
 
@@ -294,7 +335,6 @@ img:hover {
     <script src={{ asset('assets/js/collections.js') }}></script>
     <script src={{ asset('assets/js/router.js') }}></script>
 
-    <script src={{ asset('assets/js/load-image.all.min.js') }}></script>
 
 
 
@@ -338,7 +378,7 @@ img:hover {
 
 
 
-//Collections   	
+//Collections   	**********************************************************************************************************************************
 
 //User collection	
 
@@ -351,24 +391,29 @@ App.Collections.Users= Backbone.Collection.extend({
 //Education collection	
 
 App.Collections.Educations= Backbone.Collection.extend({
-	model:App.Models.User,
-	url:'/{{Config::get('backbone.collection_educations')}}{{Auth::user()->id}}'
+	model:App.Models.Education,
+	url:'/{{Config::get('backbone.collection_educations')}}' //{{Auth::user()->id}}
 });
 
 
 
-//Router
+
+//Router 
 
         new App.Router;
        
         Backbone.history.start();
-       
+        //Educations
+        App.educations= new App.Collections.Educations;
+        App.educations.fetch();
+
         //Users
         App.users= new App.Collections.Users;
 
         App.users.fetch().then(function(){
         
-        new App.Views.App({collection: App.users });    
+        new App.Views.App({collection: App.users, collecitons: App.educations });    
+
         });
 
 
@@ -400,10 +445,11 @@ App.Views.EditUser = Backbone.View.extend({
 });
 
 
+
 // all educations view
 App.Views.Educations=Backbone.View.extend({
     
-    tagName: 'tbody',
+    tagName: 'div',
 
     initialize: function(){
         this.collection.on('add', this.addOne, this); // sync when return data from server
@@ -417,7 +463,7 @@ App.Views.Educations=Backbone.View.extend({
     },
 
     addOne: function(education){
-        var EducationView= new App.Views.Education({ model:education});
+        var educationView= new App.Views.Education({ model:education});
         this.$el.append(educationView.render().el);
     }
 
@@ -425,8 +471,121 @@ App.Views.Educations=Backbone.View.extend({
 
 
 
+// Add education View
 
-// GENERAL VIEW *******************************************************************************************************************************
+App.Views.AddEducation= Backbone.View.extend({
+    el:'#addEducation',
+
+    initialize: function(){
+
+        this.school = $('#school');
+        this.degree = $('#degree');
+        this.grade = $('#grade');
+        this.activities_and_societies = $('#activities_and_societies');
+        this.description = $('#edu_description');
+        this.date_end = $('#edu_date_end');
+        this.date_start = $('#edu_date_start');
+        this.field_of_study = $('#field_of_study');
+        this.user_id=$('#edu_user_id');
+        
+
+    },
+
+    events:{
+        'submit':'addEducation'
+    },
+
+    addEducation: function(e){
+        e.preventDefault();
+
+        //Create contact 
+        this.collection.create({
+
+
+        	school: this.school.val(),
+        	degree: this.degree.val(),
+        	grade: this.grade.val(),
+        	activities_and_societies: this.activities_and_societies.val(),
+        	description: this.description.val(),
+        	date_end: this.date_end.val(),
+        	date_start: this.date_start.val(),
+        	field_of_study: this.field_of_study.val(),
+
+        	user_id:this.user_id.val(),
+
+        }, {wait: true}); //wait the server for save id in attribute
+        this.clearForm();
+    },
+
+    clearForm: function(){
+
+    	this.school.val('');
+    	this.degree.val('');
+    	this.grade.val('');
+    	this.activities_and_societies.val('');
+    	this.description.val('');
+    	this.date_end.val('');
+    	this.date_start.val('');
+    	this.field_of_study.val('');
+    	
+       // $('#addEducation').fadeOut();
+
+    }
+});
+
+
+//Single education view
+
+App.Views.Education= Backbone.View.extend({
+    tagName:'div',
+
+    template: template('allEducationsTemplate'),
+
+    initialize: function(){
+        this.model.on('destroy', this.unrender, this);
+        this.model.on('change', this.render, this); 
+    },
+
+    events:{
+        'click a.delete': 'deleteEducation',
+        'click a.edit': 'editEducation'
+    },
+
+    editEducation: function(){
+        vent.trigger('education:edit', this.model)
+
+    },
+    
+    deleteEducation: function(){
+        this.model.destroy();
+    },
+
+    render: function(){
+        this.$el.html(this.template(this.model.toJSON()));
+        return this;
+    },
+
+    unrender: function(){
+        this.remove(); //this.$el.remove();
+    }
+});
+
+
+// MAIN VIEW *******************************************************************************************************************************
+
+
+// istanzo la view user singola
+$.getJSON('{{Config::get('app.url')}}public/users/{{Auth::user()->id}}', function(data) {
+//console.log(data);
+var user= new App.Models.User(data);
+//user.fetch();
+//console.log(user);
+var editUser= new App.Views.EditUser({ model: user});
+$('#editUser').html(editUser.el);
+});
+
+
+
 
 App.Views.App=Backbone.View.extend({
 
@@ -435,28 +594,35 @@ App.Views.App=Backbone.View.extend({
     // users
     vent.on('user:edit', this.editUser, this);
 
-   
+    setTimeout(function(){ 
+    // educations
+    vent.on('education:edit', this.editEducation, this);
+    
+	
+    var addEducationView= new App.Views.AddEducation({ collection: App.educations});
+    var allEducationsView = new App.Views.Educations({ collection: App.educations}).render();
+    $('#allEducations').append(allEducationsView.el); // appendo la lista dei contatti nella tabella
+    },1000);
+   	
+    },
+    editEducation: function(educations){
+    	//setTimeout(function(){ 
+        var editEducationView= new App.Views.EditEducation({model: educations});
+        $('#editEducation').html(editEducationView.el);
+        //},1500);
     },
 
-
     editUser: function(users){
-
+    	
         var editUserView= new App.Views.EditUser({model: users});
         $('#editUser').html(editUserView.el);
     }
+    
 
     });
 
 
-        // istanzo la view user singola
-        $.getJSON('{{Config::get('app.url')}}public/users/{{Auth::user()->id}}', function(data) {
-        //console.log(data);
-        var user= new App.Models.User(data);
-        //user.fetch();
-        //console.log(user);
-        var editUser= new App.Views.EditUser({ model: user});
-        $('#editUser').html(editUser.el);
-        });
+        
 
 
  $(document).ready(function() {
@@ -572,7 +738,7 @@ App.Views.App=Backbone.View.extend({
 
 
 			$.fn.editable.defaults.mode = 'inline';
-
+			
         	//campo select
 
         			$('#marital_status').editable({
@@ -595,6 +761,20 @@ App.Views.App=Backbone.View.extend({
         	            }
         	    });
 
+        			//campo country
+
+        			var countries = [];
+        			$.each({"BD": "Bangladesh", "BE": "Belgium", "BF": "Burkina Faso", "BG": "Bulgaria", "BA": "Bosnia and Herzegovina", "BB": "Barbados", "WF": "Wallis and Futuna", "BL": "Saint Bartelemey", "BM": "Bermuda", "BN": "Brunei Darussalam", "BO": "Bolivia", "BH": "Bahrain", "BI": "Burundi", "BJ": "Benin", "BT": "Bhutan", "JM": "Jamaica", "BV": "Bouvet Island", "BW": "Botswana", "WS": "Samoa", "BR": "Brazil", "BS": "Bahamas", "JE": "Jersey", "BY": "Belarus", "O1": "Other Country", "LV": "Latvia", "RW": "Rwanda", "RS": "Serbia", "TL": "Timor-Leste", "RE": "Reunion", "LU": "Luxembourg", "TJ": "Tajikistan", "RO": "Romania", "PG": "Papua New Guinea", "GW": "Guinea-Bissau", "GU": "Guam", "GT": "Guatemala", "GS": "South Georgia and the South Sandwich Islands", "GR": "Greece", "GQ": "Equatorial Guinea", "GP": "Guadeloupe", "JP": "Japan", "GY": "Guyana", "GG": "Guernsey", "GF": "French Guiana", "GE": "Georgia", "GD": "Grenada", "GB": "United Kingdom", "GA": "Gabon", "SV": "El Salvador", "GN": "Guinea", "GM": "Gambia", "GL": "Greenland", "GI": "Gibraltar", "GH": "Ghana", "OM": "Oman", "TN": "Tunisia", "JO": "Jordan", "HR": "Croatia", "HT": "Haiti", "HU": "Hungary", "HK": "Hong Kong", "HN": "Honduras", "HM": "Heard Island and McDonald Islands", "VE": "Venezuela", "PR": "Puerto Rico", "PS": "Palestinian Territory", "PW": "Palau", "PT": "Portugal", "SJ": "Svalbard and Jan Mayen", "PY": "Paraguay", "IQ": "Iraq", "PA": "Panama", "PF": "French Polynesia", "BZ": "Belize", "PE": "Peru", "PK": "Pakistan", "PH": "Philippines", "PN": "Pitcairn", "TM": "Turkmenistan", "PL": "Poland", "PM": "Saint Pierre and Miquelon", "ZM": "Zambia", "EH": "Western Sahara", "RU": "Russian Federation", "EE": "Estonia", "EG": "Egypt", "TK": "Tokelau", "ZA": "South Africa", "EC": "Ecuador", "IT": "Italy", "VN": "Vietnam", "SB": "Solomon Islands", "EU": "Europe", "ET": "Ethiopia", "SO": "Somalia", "ZW": "Zimbabwe", "SA": "Saudi Arabia", "ES": "Spain", "ER": "Eritrea", "ME": "Montenegro", "MD": "Moldova, Republic of", "MG": "Madagascar", "MF": "Saint Martin", "MA": "Morocco", "MC": "Monaco", "UZ": "Uzbekistan", "MM": "Myanmar", "ML": "Mali", "MO": "Macao", "MN": "Mongolia", "MH": "Marshall Islands", "MK": "Macedonia", "MU": "Mauritius", "MT": "Malta", "MW": "Malawi", "MV": "Maldives", "MQ": "Martinique", "MP": "Northern Mariana Islands", "MS": "Montserrat", "MR": "Mauritania", "IM": "Isle of Man", "UG": "Uganda", "TZ": "Tanzania, United Republic of", "MY": "Malaysia", "MX": "Mexico", "IL": "Israel", "FR": "France", "IO": "British Indian Ocean Territory", "FX": "France, Metropolitan", "SH": "Saint Helena", "FI": "Finland", "FJ": "Fiji", "FK": "Falkland Islands (Malvinas)", "FM": "Micronesia, Federated States of", "FO": "Faroe Islands", "NI": "Nicaragua", "NL": "Netherlands", "NO": "Norway", "NA": "Namibia", "VU": "Vanuatu", "NC": "New Caledonia", "NE": "Niger", "NF": "Norfolk Island", "NG": "Nigeria", "NZ": "New Zealand", "NP": "Nepal", "NR": "Nauru", "NU": "Niue", "CK": "Cook Islands", "CI": "Cote d'Ivoire", "CH": "Switzerland", "CO": "Colombia", "CN": "China", "CM": "Cameroon", "CL": "Chile", "CC": "Cocos (Keeling) Islands", "CA": "Canada", "CG": "Congo", "CF": "Central African Republic", "CD": "Congo, The Democratic Republic of the", "CZ": "Czech Republic", "CY": "Cyprus", "CX": "Christmas Island", "CR": "Costa Rica", "CV": "Cape Verde", "CU": "Cuba", "SZ": "Swaziland", "SY": "Syrian Arab Republic", "KG": "Kyrgyzstan", "KE": "Kenya", "SR": "Suriname", "KI": "Kiribati", "KH": "Cambodia", "KN": "Saint Kitts and Nevis", "KM": "Comoros", "ST": "Sao Tome and Principe", "SK": "Slovakia", "KR": "Korea, Republic of", "SI": "Slovenia", "KP": "Korea, Democratic People's Republic of", "KW": "Kuwait", "SN": "Senegal", "SM": "San Marino", "SL": "Sierra Leone", "SC": "Seychelles", "KZ": "Kazakhstan", "KY": "Cayman Islands", "SG": "Singapore", "SE": "Sweden", "SD": "Sudan", "DO": "Dominican Republic", "DM": "Dominica", "DJ": "Djibouti", "DK": "Denmark", "VG": "Virgin Islands, British", "DE": "Germany", "YE": "Yemen", "DZ": "Algeria", "US": "United States", "UY": "Uruguay", "YT": "Mayotte", "UM": "United States Minor Outlying Islands", "LB": "Lebanon", "LC": "Saint Lucia", "LA": "Lao People's Democratic Republic", "TV": "Tuvalu", "TW": "Taiwan", "TT": "Trinidad and Tobago", "TR": "Turkey", "LK": "Sri Lanka", "LI": "Liechtenstein", "A1": "Anonymous Proxy", "TO": "Tonga", "LT": "Lithuania", "A2": "Satellite Provider", "LR": "Liberia", "LS": "Lesotho", "TH": "Thailand", "TF": "French Southern Territories", "TG": "Togo", "TD": "Chad", "TC": "Turks and Caicos Islands", "LY": "Libyan Arab Jamahiriya", "VA": "Holy See (Vatican City State)", "VC": "Saint Vincent and the Grenadines", "AE": "United Arab Emirates", "AD": "Andorra", "AG": "Antigua and Barbuda", "AF": "Afghanistan", "AI": "Anguilla", "VI": "Virgin Islands, U.S.", "IS": "Iceland", "IR": "Iran, Islamic Republic of", "AM": "Armenia", "AL": "Albania", "AO": "Angola", "AN": "Netherlands Antilles", "AQ": "Antarctica", "AP": "Asia/Pacific Region", "AS": "American Samoa", "AR": "Argentina", "AU": "Australia", "AT": "Austria", "AW": "Aruba", "IN": "India", "AX": "Aland Islands", "AZ": "Azerbaijan", "IE": "Ireland", "ID": "Indonesia", "UA": "Ukraine", "QA": "Qatar", "MZ": "Mozambique"}, function(k, v) {
+        				countries.push({id: k, text: v});
+        			}); 
+        			$('#country').editable({
+        					source: countries,
+        					select2: {
+        					width: 200,
+        					placeholder: 'Select country',
+        					allowClear: true
+        				} 
+        			});
 
 
 
@@ -607,15 +787,15 @@ App.Views.App=Backbone.View.extend({
                         var id=$(this).attr('data-pk');
                         var name=$(this).attr('name');
                         var modelsName= $(this).attr('models');
-                  console.log(newValue);
+                  console.log(id, name,modelsName, newValue);
 
                         switch (modelsName){
                             case 'users':
                                 var model= App.users.get(id).set(name, newValue);
                             break;
 
-                            case 'contacts':
-                                var model= App.contacts.get(id).set(name, newValue);
+                            case 'educations':
+                                var model= App.educations.get(id).set(name, newValue);
                             break;
                         }
 
@@ -631,7 +811,7 @@ App.Views.App=Backbone.View.extend({
                    }
             });
 
-        }, 1000);
+        }, 1500);
     }   
 
 

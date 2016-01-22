@@ -20,11 +20,11 @@
 //email test
 Route::get('/emailtest', function () {
 
-	Mail::send('auth.emails.test', ['name'=> 'Stefano'], function($message){
+    Mail::send('auth.emails.test', ['name'=> 'Stefano'], function($message){
 
-		$message->to('stefano.stirati@triweb.it', 'test')->subject('Welcome!');
+        $message->to('stefano.stirati@triweb.it', 'test')->subject('Welcome!');
 
-	});
+    });
 
 
     
@@ -47,11 +47,11 @@ Route::get('/emailtest', function () {
 //Debug::dump(Session::get()); // return nothing!!
 // if (Auth::check())
 // {
-//     	//$user = Auth::User();     
+//      //$user = Auth::User();     
 //         //$userId = $user->id;
 //      echo "welcome home. " . Auth::user()->email ;
 // }else{
-// 	return "ko";
+//  return "ko";
 // }
 
 
@@ -71,11 +71,7 @@ Route::get('/emailtest', function () {
 |
 */
 
-    Route::resource('industries', 'IndustryController');
-    Route::resource('experiences', 'ExperienceController');
-    Route::resource('educations', 'EducationController');
-    Route::resource('users', 'UserController');
-    Route::resource('contacts', 'ContactController');
+   
 
     //contacts
     Route::get('/bbContact', function () {
@@ -83,10 +79,12 @@ Route::get('/emailtest', function () {
     });
 
 
-    //Educations
-    //get education by user id
-    Route::get('education/user/{id}', 'educationController@eduByUserId');
-
+    
+    Route::resource('industries', 'IndustryController');
+    Route::resource('experiences', 'ExperienceController');
+    Route::resource('educations', 'EducationController');
+    Route::resource('users', 'UserController');
+    Route::resource('contacts', 'ContactController');
 
 
 
@@ -98,20 +96,15 @@ Route::get('/emailtest', function () {
     Route::auth();
 
 
-    // Route::group(array('before' => 'auth'), function(){
-    //     // your routes
-
-    //     Route::get('/', 'HomeController@index');
-    // });
-
-    //Route::post('/user/{id}','UserController@upload');
 
     
     
 
 
-Route::get('/user/{id}','UserController@showProfile');
-
+    Route::get('/user/{id}','UserController@showProfile');
+   //Educations
+    //get education by user id
+    Route::get('education/user/{id}', 'educationController@eduByUserId');
 
 
     //User

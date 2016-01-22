@@ -27,3 +27,14 @@ App.Models.User= Backbone.Model.extend({
 
 	
 });
+
+App.Models.Education= Backbone.Model.extend({
+	//validate
+	validate: function(attrs){
+
+		if(! attrs.school){
+			return 'Please enter school name.';
+		}
+	},
+	
+});
