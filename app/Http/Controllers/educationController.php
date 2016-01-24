@@ -57,8 +57,8 @@ class educationController extends Controller
         //$user= new User;
 
         $education->school = $request->school; 
-        $education->date_start = $request->dates_start; 
-        $education->date_end = $request->dates_end;
+        $education->date_start = $request->date_start; 
+        $education->date_end = $request->date_end;
         $education->degree = $request->degree; 
         $education->field_of_study = $request->field_of_study; 
         $education->grade = $request->grade; 
@@ -108,8 +108,8 @@ class educationController extends Controller
         $education = Education::find($id);
 
         $education->school = $request->school; 
-        $education->date_start = $request->dates_start; 
-        $education->date_end = $request->dates_end;
+        $education->date_start = $request->date_start; 
+        $education->date_end = $request->date_end;
         $education->degree = $request->degree; 
         $education->field_of_study = $request->field_of_study; 
         $education->grade = $request->grade; 

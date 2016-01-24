@@ -4,11 +4,11 @@
 
 @section('content')
 
-
+{{--content: url({{ asset('assets/img/camera.svg') }}); --}}
 <style type="text/css"> 
-img:hover {
+.profile-header-background:hover, .avatar:hover {
     opacity: 0.7;
-    content: url({{ asset('assets/img/camera.svg') }}); /* no need for qoutes */
+    
     
    
     
@@ -16,6 +16,28 @@ img:hover {
 .hide{
 	display: none;
 }
+
+.show{
+	display: block;
+}
+
+
+
+.profile-header-background{
+height: 310px;
+background: url("{{Config::get('app.url')}}{{Config::get('upload.img')}}{{ $user->background_image or 'Default' }}");
+background-repeat:no-repeat;
+background-size: cover;
+}
+
+.avatar{
+	height: 150px;
+	width:150px;
+}
+
+
+
+
 </style>
 
 
@@ -24,15 +46,13 @@ img:hover {
 <!-- COLUMN RIGHT -->
 <div id="col-right" class="col-right inplace-editing">
 	<div class="container-fluid primary-content ">
+	
 		<div class="user-profile ">
+			<div class="profile-header-background"></div>
+			<div class="row">
+
+<div class="col-md-4">
 			
-				
-
-				
- 		
-
-
-
 
 				<div id="editUser">
 				    
@@ -40,16 +60,13 @@ img:hover {
 
 
 				<script id="editUserTemplate" type="text/template">
-				<div class="profile-header-background"><img src="{{Config::get('app.url')}}{{Config::get('upload.img')}}<%=background_image%>" alt="Profile Header Background" /></div>
-				<div class="row">
-
-				<div class="col-md-4">
+				
 
 
 				<div class="profile-info-left">
 					<div  class="text-center">
-						<img style="height:150px; width:150px" src="{{Config::get('app.url')}}{{Config::get('upload.img')}}<%=profile_image%>" alt="Avatar" class="avatar img-circle" />
-						<h2><a href="#" class="editable" models="users" value="<%= name %>" name="name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= name  %> </a>  <a href="#" class="editable" models="users" value="<%= last_name %>" name="last_name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= last_name  %> </a></h2>
+						<img  src="{{Config::get('app.url')}}{{Config::get('upload.img')}}<%=profile_image%>" alt="Avatar" class="avatar img-circle" />
+						<h2><a  class="editable" models="users" value="<%= name %>" name="name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= name  %> </a>  <a  class="editable" models="users" value="<%= last_name %>" name="last_name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= last_name  %> </a></h2>
 					</div>
 					<div class="action-buttons">
 						<div class="row">
@@ -57,7 +74,7 @@ img:hover {
 							<button id="enable" class="btn btn-success btn-block">Disable</button>
 							</div>
 							<div class="col-xs-6">
-								<a href="#" class="btn btn-primary btn-block"><i class="icon ion-android-mail"></i> Message</a>
+								<a  class="btn btn-primary btn-block"><i class="icon ion-android-mail"></i> Message</a>
 							</div>
 						</div>
 					</div>
@@ -73,25 +90,25 @@ img:hover {
 
 
 						<h3>About Me</h3>
-						<p>	<a href="#" class="editable" models="users" value="<%= about_me %>" name="about_me" data-type="textarea" data-url="" data-pk= "<%=id%>" ><%= about_me %> </a></p>
+						<p>	<a  class="editable" models="users" value="<%= about_me %>" name="about_me" data-type="textarea" data-url="" data-pk= "<%=id%>" ><%= about_me %> </a></p>
 
 					</div>
 					<div class="section">
 						<h3>Personal Details</h3>
 
 						<ul>
-							<li>Birthday  <a href="#" class="editable" models="users" value="<%= birthday_date %>" name="birthday_date" data-type="combodate" data-url="" data-pk= "<%=id%>" ><%= birthday_date %> </a></li>
-							<li>Marital status <a href="#" id="marital_status" class="editable" models="users" value="<%= marital_status %>" name="marital_status" data-type="select" data-url="" data-pk= "<%=id%>" ><%= marital_status %> </a></li>
+							<li>Birthday  <a  class="editable" models="users" value="<%= birthday_date %>" name="birthday_date" data-type="combodate" data-url="" data-pk= "<%=id%>" ><%= birthday_date %> </a></li>
+							<li>Marital status <a  id="marital_status" class="editable" models="users" value="<%= marital_status %>" name="marital_status" data-type="select" data-url="" data-pk= "<%=id%>" ><%= marital_status %> </a></li>
 						</ul>
 					</div>
 					<div class="section">
 						<h3>Social</h3>
 						<ul class="list-unstyled list-social">
-							 <li><a href="#"><i class="icon ion-social-twitter"></i><td><a href="#" class="editable" models="users" value="<%= twitter_page %>" name="twitter_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= twitter_page  %> </a></td></a></li>
-							<li><a href="#"><i class="icon ion-social-facebook"></i><td><a href="#" class="editable" models="users" value="<%= facebook_page %>" name="facebook_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= facebook_page %> </a></td></a></li>
-							<li><a href="#"><i class="icon ion-social-dribbble"></i><td><a href="#" class="editable" models="users" value="<%= dribbble_page %>" name="dribbble_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= dribbble_page  %> </a></td></a></li>
-							<li><a href="#"><i class="icon ion-social-linkedin"></i><td><a href="#" class="editable" models="users" value="<%= linkedin_page %>" name="linkedin_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= linkedin_page  %> </a></td></a></li>
-						  <li><a href="#"><i class="icon ion-social-googleplus"></i><td><a href="#" class="editable" models="users" value="<%= gplus_page %>" name="gplus_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= gplus_page %> </a></td></a></li>
+							 <li><a ><i class="icon ion-social-twitter"></i><td><a  class="editable" models="users" value="<%= twitter_page %>" name="twitter_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= twitter_page  %> </a></td></a></li>
+							<li><a ><i class="icon ion-social-facebook"></i><td><a  class="editable" models="users" value="<%= facebook_page %>" name="facebook_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= facebook_page %> </a></td></a></li>
+							<li><a ><i class="icon ion-social-dribbble"></i><td><a  class="editable" models="users" value="<%= dribbble_page %>" name="dribbble_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= dribbble_page  %> </a></td></a></li>
+							<li><a ><i class="icon ion-social-linkedin"></i><td><a  class="editable" models="users" value="<%= linkedin_page %>" name="linkedin_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= linkedin_page  %> </a></td></a></li>
+						  <li><a ><i class="icon ion-social-googleplus"></i><td><a  class="editable" models="users" value="<%= gplus_page %>" name="gplus_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= gplus_page %> </a></td></a></li>
 
 						</ul>
 					</div>
@@ -99,178 +116,7 @@ img:hover {
 
 
 
- 			</div>
- 			        
- 				<div class="col-md-8">
- 					<div class="profile-info-right">
- 						<ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom">
- 						<li class="active"><a href="#following" data-toggle="tab">EDUCATION</a></li>
- 						<li><a href="#followers" data-toggle="tab">EXPERIENCE</a></li>
- 						<li><a href="#activities" data-toggle="tab">INDUSTRY</a></li>
- 							
- 							
- 						</ul>
- 						<div class="tab-content">
-
- 							<!-- activities -->
- 							<div class="tab-pane fade " id="activities">
- 								<a href="#" class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add industry</a>
- 								<table id="user" class="table table-bordered table-striped">
- 									<tbody>
- 										<tr>
- 											<td>Country</td>
- 											<td><a href="#" class="editable" id="country" data-type="select2" data-pk="1" data-value="" data-title="Select country"></a></td>
- 										</tr>
- 										<tr>
- 											<td>Postal code</td>
- 											<td><a href="#" class="editable" id="postal_code" data-type="text" data-pk="1" data-placement="right" data-placeholder="Required" data-title="Enter postal code"></a></td>
- 										</tr>
- 										<tr>
- 											<td>Industry</td>
- 											<td>
- 												<a href="#" class="editable" id="industry" data-type="text" data-pk="1" data-value="" data-title="Enter industry"></a>
- 											</td>
- 										</tr>
-
- 										
-
- 										<a href="#"  id="options" data-type="checklist" data-pk="1" data-url="/post" data-title="Select options"></a>
- 										
- 									</tbody>
- 								</table>
- 							</div>		
- 							<!-- followers -->
- 							<div class="tab-pane fade" id="followers">
- 								<a href="#" class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add Experience</a>
- 								<table id="user" class="table table-bordered table-striped">
- 									<tbody>
- 										<tr>
- 											<td>Company name</td>
- 											<td><a href="#" class="editable" id="company_name" data-type="text" data-pk="1" data-value="" data-title="Enter company name"></a></td>
- 										</tr>
- 										<tr>
- 											<td>Title</td>
- 											<td><a href="#" class="editable" id="title" data-type="text" data-pk="1" data-placement="right" data-placeholder="Required" data-title="Enter title"></a></td>
- 										</tr>
- 										<tr>
- 											<td>Location</td>
- 											<td>
- 												<a href="#" class="editable" id="location" data-type="text" data-pk="1" data-value="" data-title="Enter location"></a>
- 											</td>
- 										</tr>
- 										<tr>
- 											<td>Date start</td>
- 											<td>
- 												<a href="#" class="editable" id="date_start" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select Date start"></a>
- 											</td>
- 										</tr>
- 										<tr>
- 											<td>Date end</td>
- 											<td>
- 												<a href="#" class="editable" id="date_end" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select Date end"></a>
- 											</td>
- 										</tr>
-
- 										<tr>
- 											<td>I currently work here</td>
- 											<td>
- 												<a href="#" class="editable" id="currently_work_here" data-type="checklist" data-pk="1" data-url="/post" data-title="Select options"></a>
-
- 											</td>
- 										</tr>
-
- 										<tr>
- 											<td>Description</td>
- 											<td>
- 												<a href="#" class="editable" id="description" data-type="textarea" data-pk="1">awesome comment!</a>
-
- 											</td>
- 										</tr>
- 									</tbody>
- 								</table>
- 							</div>
- 							<!-- end followers -->
- 							<!-- following -->
- 							<div class="tab-pane fade in active" id="following">
- 							<a href="#" class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add Education</a>
-
- 							
-
- 							<form id="addEducation" class="form-horizontal" role="form">
- 								<fieldset>
- 									<legend>Add Education</legend>
- 									<div class="form-group">
- 										<label for="school" class="col-sm-3 control-label">School</label>
- 										<div class="col-sm-9">
- 											<input type="text" class="form-control" name="school" id="school" placeholder="School">
- 										</div>
- 									</div>
- 									<div class="form-group">
- 										<label for="edu_date_start" class="col-sm-3 control-label">Date start</label>
- 										<div class="col-sm-9">
- 											<input type="date" name="edu_date_start" class="form-control" id="edu_date_start" placeholder="Date start">
- 										</div>
- 									</div>
- 									<div class="form-group">
- 										<label for="edu_date_end" class="col-sm-3 control-label">Date end</label>
- 										<div class="col-sm-9">
- 											<input type="date" name="edu_date_end" class="form-control" id="edu_date_end" placeholder="Date end">
- 										</div>
- 									</div>
- 									<div class="form-group">
- 										<label for="degree" class="col-sm-3 control-label">Degree</label>
- 										<div class="col-sm-9">
- 											<input type="text" class="form-control" name="degree" id="degree" placeholder="Degree">
- 										</div>
- 									</div>
- 									<div class="form-group">
- 										<label for="field_of_study" class="col-sm-3 control-label">Field of Study</label>
- 										<div class="col-sm-9">
- 											<input type="text" class="form-control" name="field_of_study" id="field_of_study" placeholder="Field of Study">
- 										</div>
- 									</div>
-
- 									<div class="form-group">
- 										<label for="grade" class="col-sm-3 control-label">Grade</label>
- 										<div class="col-sm-9">
- 											<input type="text" class="form-control" name="grade" id="grade" placeholder="Grade">
- 										</div>
- 									</div>
-
- 									<div class="form-group">
- 										<label for="activities_and_societies" class="col-sm-3 control-label">Activities and Societies</label>
- 										<div class="col-sm-9">
- 											<input type="text" class="form-control" name="activities_and_societies" id="activities_and_societies" placeholder="Activities and Societies">
- 										</div>
- 									</div>
- 									<div class="form-group">
- 										<label for="description" class="col-sm-3 control-label">Description</label>
- 										<div class="col-sm-9">
- 											<input type="text" class="form-control" name="description" id="edu_description" placeholder="Description">
- 										</div>
- 									</div>
- 											<div class="form-group">
- 												<div class="col-sm-offset-3 col-sm-9">
- 													
- 													<input type="submit" class="btn btn-primary btn-block" value="Add Education">
-
- 												</div>
- 												<input type="hidden" id="edu_user_id" name="user_id" value={{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}>
- 												
- 											</div>
- 										</fieldset>
- 									</form>
-
-
- 									<div id="allEducations">
- 									    
- 									</div>
- 							</div>
- 							<!-- end following -->
- 						</div>
- 					</div>
- 				</div>
- 			</div>
+ 			
 
 
 
@@ -281,23 +127,196 @@ img:hover {
 <legend><%= school %></legend>  
 <table class="table table-bordered table-striped">
     <tr><td>School</td>
-    <td> <a href="#" class="editable" models="educations" name="school" data-type="text" data-url="" data-pk= "<%=id%>" ><%= school %> </a> </td></tr>
+    <td> <a  class="editable" models="educations" name="school" data-type="text" data-url="" data-pk= "<%=id%>" ><%= school %> </a> </td></tr>
     <tr><td>Dates Attended</td>
-    <td><a href="#" class="editable" models="educations" name="date_start" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date Start"><%= date_start %></a>
-	    <a href="#" class="editable" models="educations" name="date_end" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date End"></a><%= date_end %></td></tr>	
+    <td><a  class="editable" models="educations" name="date_start" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date Start"><%= date_start %></a>
+	    <a  class="editable" models="educations" name="date_end" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date End"><%= date_end %></a></td></tr>	
 	<tr><td>Degree</td>
-    <td><a href="#" class="editable" models="educations" name="degree"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= degree %></a></td></tr>
+    <td><a  class="editable" models="educations" name="degree"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= degree %></a></td></tr>
     <tr><td>Field of Study</td>
-    <td><a href="#" class="editable" models="educations" name="field_of_study" data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= field_of_study %></a></td></tr>
+    <td><a  class="editable" models="educations" name="field_of_study" data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= field_of_study %></a></td></tr>
     <tr><td>Grade</td>
-    <td><a href="#" class="editable" models="educations" name="grade"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= grade %></a></td></tr>
+    <td><a  class="editable" models="educations" name="grade"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= grade %></a></td></tr>
     <tr><td>Activities and Societies</td>
-    <td><a href="#" class="editable" models="educations" name="activities_and_societies"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= activities_and_societies %></a></td></tr>
+    <td><a  class="editable" models="educations" name="activities_and_societies"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= activities_and_societies %></a></td></tr>
     <tr><td>Description</td>
-    <td><a href="#" class="editable" models="educations" name="description" data-type="textarea" data-pk="<%=id%>"><%= description %></a></td></tr>
+    <td><a  class="editable" models="educations" name="description" data-type="textarea" data-pk="<%=id%>"><%= description %></a></td></tr>
 <tr><a href="#educations/<%= id %>" class="delete btn btn-primary btn-block" >Delete </a></tr>
 </table>
 </script>
+
+</div>
+        
+	<div class="col-md-8">
+		<div class="profile-info-right">
+			<ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom">
+			<li class="active"><a href="#following" data-toggle="tab">EDUCATION</a></li>
+			<li><a href="#followers" data-toggle="tab">EXPERIENCE</a></li>
+			<li><a href="#activities" data-toggle="tab">INDUSTRY</a></li>
+				
+				
+			</ul>
+			<div class="tab-content">
+
+				<!-- activities -->
+				<div class="tab-pane fade " id="activities">
+					<a  class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add industry</a>
+					<table id="user" class="table table-bordered table-striped">
+						<tbody>
+							<tr>
+								<td>Country</td>
+								<td><a  class="editable" id="country" data-type="select2" data-pk="1" data-value="" data-title="Select country"></a></td>
+							</tr>
+							<tr>
+								<td>Postal code</td>
+								<td><a  class="editable" id="postal_code" data-type="text" data-pk="1" data-placement="right" data-placeholder="Required" data-title="Enter postal code"></a></td>
+							</tr>
+							<tr>
+								<td>Industry</td>
+								<td>
+									<a  class="editable" id="industry" data-type="text" data-pk="1" data-value="" data-title="Enter industry"></a>
+								</td>
+							</tr>
+
+							
+
+							<a   id="options" data-type="checklist" data-pk="1" data-url="/post" data-title="Select options"></a>
+							
+						</tbody>
+					</table>
+				</div>		
+				<!-- followers -->
+				<div class="tab-pane fade" id="followers">
+					<a  class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add Experience</a>
+					<table id="user" class="table table-bordered table-striped">
+						<tbody>
+							<tr>
+								<td>Company name</td>
+								<td><a  class="editable" id="company_name" data-type="text" data-pk="1" data-value="" data-title="Enter company name"></a></td>
+							</tr>
+							<tr>
+								<td>Title</td>
+								<td><a  class="editable" id="title" data-type="text" data-pk="1" data-placement="right" data-placeholder="Required" data-title="Enter title"></a></td>
+							</tr>
+							<tr>
+								<td>Location</td>
+								<td>
+									<a  class="editable" id="location" data-type="text" data-pk="1" data-value="" data-title="Enter location"></a>
+								</td>
+							</tr>
+							<tr>
+								<td>Date start</td>
+								<td>
+									<a  class="editable" id="date_start" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select Date start"></a>
+								</td>
+							</tr>
+							<tr>
+								<td>Date end</td>
+								<td>
+									<a  class="editable" id="date_end" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select Date end"></a>
+								</td>
+							</tr>
+
+							<tr>
+								<td>I currently work here</td>
+								<td>
+									<a  class="editable" id="currently_work_here" data-type="checklist" data-pk="1" data-url="/post" data-title="Select options"></a>
+
+								</td>
+							</tr>
+
+							<tr>
+								<td>Description</td>
+								<td>
+									<a  class="editable" id="description" data-type="textarea" data-pk="1">awesome comment!</a>
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- end followers -->
+				<!-- following -->
+				<div class="tab-pane fade in active" id="following">
+				<a id="addEducationButton" class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add Education</a>
+
+				
+
+				<form id="addEducation" class="form-horizontal hide" role="form">
+					<fieldset>
+						<legend>Add Education</legend>
+						<div class="form-group">
+							<label for="school" class="col-sm-3 control-label">School</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="school" id="school" placeholder="School">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="edu_date_start" class="col-sm-3 control-label">Date start</label>
+							<div class="col-sm-9">
+								<input type="date" name="edu_date_start" class="form-control" id="edu_date_start" placeholder="Date start">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="edu_date_end" class="col-sm-3 control-label">Date end</label>
+							<div class="col-sm-9">
+								<input type="date" name="edu_date_end" class="form-control" id="edu_date_end" placeholder="Date end">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="degree" class="col-sm-3 control-label">Degree</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="degree" id="degree" placeholder="Degree">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="field_of_study" class="col-sm-3 control-label">Field of Study</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="field_of_study" id="field_of_study" placeholder="Field of Study">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="grade" class="col-sm-3 control-label">Grade</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="grade" id="grade" placeholder="Grade">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="activities_and_societies" class="col-sm-3 control-label">Activities and Societies</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="activities_and_societies" id="activities_and_societies" placeholder="Activities and Societies">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="description" class="col-sm-3 control-label">Description</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="description" id="edu_description" placeholder="Description">
+							</div>
+						</div>
+								<div class="form-group">
+									<div class="col-sm-offset-3 col-sm-9">
+										
+										<input id="submitEducationButton" type="submit" class="btn btn-primary btn-block" value="Add Education">
+   
+									</div>
+									<input type="hidden" id="edu_user_id" name="user_id" value={{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}>
+									
+								</div>
+							</fieldset>
+						</form>
+
+
+						<div id="allEducations">
+						    
+						</div>
+				</div>
+				<!-- end following -->
+			</div>
+		</div>
+	</div>
+</div>
 
 				
 
@@ -403,6 +422,30 @@ App.Collections.Educations= Backbone.Collection.extend({
         new App.Router;
        
         Backbone.history.start();
+
+// istanzo la view user singola
+$.getJSON("{{Config::get('app.url')}}public/users/{{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}", function(data) {
+//console.log(data);
+var user= new App.Models.User(data);
+//user.fetch();
+//console.log(user);
+var editUser= new App.Views.EditUser({ model: user});
+$('#editUser').html(editUser.el);
+App.users= new App.Collections.Users(data);
+
+
+
+});
+
+
+
+// Carico le education by user id
+$.getJSON("/{{Config::get('backbone.collection_educations_by_user_id')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}", function(data) {
+App.educations= new App.Collections.Educations(data);
+});
+
+
+
         //Educations
         App.educations= new App.Collections.Educations;
         App.educations.fetch();
@@ -453,19 +496,95 @@ App.Views.Educations=Backbone.View.extend({
 
     initialize: function(){
         this.collection.on('add', this.addOne, this); // sync when return data from server
-
+           //this.on('render', this.afterRender());
     },
 
     render: function(){
         //this.$el.empty();
         this.collection.each(this.addOne, this);
+
         return this;
+        
+
+    },
+     afterRender: function() { 
+        //alert('afterRender'); 
+        //this.editableEnablerAfterSave();
     },
 
     addOne: function(education){
         var educationView= new App.Views.Education({ model:education});
         this.$el.append(educationView.render().el);
-    }
+        this.editableEnabler(education);
+    },
+    //here
+    editableEnabler: function(education){
+
+    	        	// get file data
+
+    	        	//setTimeout(function(){ 
+    				$.fn.editable.defaults.mode = 'inline';
+    				
+    	        	// tutti gli altri campi		
+    	            $('.editable').editable({
+
+    	                success: function(response, newValue) {   
+    	                        var id=$(this).attr('data-pk');
+    	                        var name=$(this).attr('name');
+    	                        var modelsName= $(this).attr('models');
+    	                  console.log(id, name,modelsName, newValue);
+
+							education.set(name, newValue);
+    	                    //var model= App.educations.get(id).set(name, newValue);
+    	                    //console.log(model);
+
+    	                        education.save(name, newValue);
+    	                       
+    	                   },
+    	                   error: function(response, newValue) {
+    	                       if(response.status === 500) {
+    	                           return 'Service unavailable. Please try later.';
+    	                       } else {
+    	                           return response.responseText;
+    	                       }
+    	                   }
+    	            }); 
+    	             this.editableEnablerAfterSave();
+    },
+
+    editableEnablerAfterSave: function(){
+
+    	        	// get file data
+
+    	        	//setTimeout(function(){ 
+    				$.fn.editable.defaults.mode = 'inline';
+    				
+    	        	// tutti gli altri campi		
+    	            $('.editable').editable({
+
+    	                success: function(response, newValue) {   
+    	                        var id=$(this).attr('data-pk');
+    	                        var name=$(this).attr('name');
+    	                        var modelsName= $(this).attr('models');
+    	                  console.log(id, name,modelsName, newValue);
+
+ 
+                             var model= App.educations.get(id).set(name, newValue);
+
+                       model.save(name, newValue);
+
+
+    	                        this.editableEnablerAfterSave();
+    	                   },
+    	                   error: function(response, newValue) {
+    	                       if(response.status === 500) {
+    	                           return 'Service unavailable. Please try later.';
+    	                       } else {
+    	                           return response.responseText;
+    	                       }
+    	                   }
+    	            }); 
+    },
 
 });
 
@@ -574,49 +693,37 @@ App.Views.Education= Backbone.View.extend({
 // MAIN VIEW *******************************************************************************************************************************
 
 
-// istanzo la view user singola
-$.getJSON('{{Config::get('app.url')}}public/users/{{Auth::user()->id}}', function(data) {
-//console.log(data);
-var user= new App.Models.User(data);
-//user.fetch();
-//console.log(user);
-var editUser= new App.Views.EditUser({ model: user});
-$('#editUser').html(editUser.el);
-});
-
-
-
-
 App.Views.App=Backbone.View.extend({
 
     initialize: function(){
     
     // users
-    vent.on('user:edit', this.editUser, this);
+    //vent.on('user:edit', this.editUser, this);
 
-    setTimeout(function(){ 
+   
     // educations
-    vent.on('education:edit', this.editEducation, this);
+    //vent.on('education:edit', this.editEducation, this);
     
 	
     var addEducationView= new App.Views.AddEducation({ collection: App.educations});
     var allEducationsView = new App.Views.Educations({ collection: App.educations}).render();
     $('#allEducations').append(allEducationsView.el); // appendo la lista dei contatti nella tabella
-    },1000);
-   	
+    
     },
-    editEducation: function(educations){
-    	//setTimeout(function(){ 
-        var editEducationView= new App.Views.EditEducation({model: educations});
-        $('#editEducation').html(editEducationView.el);
-        //},1500);
-    },
+    // editEducation: function(educations){
+    // 	//setTimeout(function(){ 
+    //     var editEducationView= new App.Views.EditEducation({model: educations});
+    //     $('#editEducation').html(editEducationView.el);
+    //     alert('edited');
+    //     //},1500);
+    // },
 
-    editUser: function(users){
+    // editUser: function(users){
     	
-        var editUserView= new App.Views.EditUser({model: users});
-        $('#editUser').html(editUserView.el);
-    }
+    //     var editUserView= new App.Views.EditUser({model: users});
+    //     $('#editUser').html(editUserView.el);
+
+    // }
     
 
     });
@@ -636,12 +743,8 @@ App.Views.App=Backbone.View.extend({
 // }
 
 
-//Change prifile
+//Change profile image
  setTimeout(function(){ 
-
-
-
-
 
  	$('.profile-header-background').click(function() {
  		
@@ -708,22 +811,24 @@ App.Views.App=Backbone.View.extend({
  	if (window.File && window.FileReader && window.FileList && window.Blob) {
  	    document.getElementById('profile_image').addEventListener('change', handleFileSelect, false);
  	    document.getElementById('background_image').addEventListener('change', handleFileSelect, false);
-
-
-
  	} else {
  	    alert('The File APIs are not fully supported in this browser.');
  	}
+ }, 500);
 
 
+$('#addEducationButton').click(function() {
+//alert('ok');
+$( "#addEducation" ).removeClass("hide");
+$( "#addEducation" ).addClass("show");
 
+});
 
-	
-
- }, 1000);
-
-
-
+$('#submitEducationButton').click(function() {
+//alert('ok');
+$( "#addEducation" ).removeClass("show");
+$( "#addEducation" ).addClass("hide");
+});
 
 
 // Imposto i campi editabili
@@ -811,7 +916,7 @@ App.Views.App=Backbone.View.extend({
                    }
             });
 
-        }, 1500);
+        }, 500);
     }   
 
 
