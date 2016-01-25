@@ -160,7 +160,7 @@
 				<div class="action-group visible-lg-inline-block">
 					<ul>
 						<li class="action-item chat">
-							<a href="{{URL::to('messages')}}" id="toggle-right-sidebar" class="toggle-right-sidebar"><i class="icon ion-ios-chatboxes-outline"></i>{{--@include('messenger.unread-count')--}}</a>
+							<a href="#{{--URL::to('messages')--}}" id="toggle-right-sidebar" class="toggle-right-sidebar"><i class="icon ion-ios-chatboxes-outline"></i>{{--@include('messenger.unread-count')--}}</a>
 						</li>
 					</ul>
 				</div>

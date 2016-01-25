@@ -155,7 +155,6 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Cmgmyr\Messenger\MessengerServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
 
     ],
