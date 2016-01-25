@@ -6,13 +6,24 @@
 
 {{--content: url({{ asset('assets/img/camera.svg') }}); --}}
 <style type="text/css"> 
-.profile-header-background:hover, .avatar:hover {
-    opacity: 0.7;
+.profile-header-background:hover{
+    opacity: 0.9;
     
     
    
     
 }
+
+
+.avatar:hover{
+opacity: 0.9;
+
+
+}
+
+
+
+
 .hide{
 	display: none;
 }
@@ -35,7 +46,21 @@ background-size: cover;
 	width:150px;
 }
 
+#imgprofile.ion-ios-reverse-camera {
+  font-size: 90px;
+  color: white;
+  margin-bottom: -144px;
+   
+}
 
+#imgbackground.ion-ios-reverse-camera {
+  font-size: 190px;
+  margin-left: 50%;
+  color: white;
+  opacity: 0.4;
+   
+  
+}
 
 
 </style>
@@ -48,7 +73,9 @@ background-size: cover;
 	<div class="container-fluid primary-content ">
 	
 		<div class="user-profile ">
-			<div class="profile-header-background"></div>
+			<div class="profile-header-background">
+				<div id="imgbackground" class="ion-ios-reverse-camera hide"></div>
+			</div>
 			<div class="row">
 
 <div class="col-md-4">
@@ -61,10 +88,12 @@ background-size: cover;
 
 				<script id="editUserTemplate" type="text/template">
 				
+				
 
 
 				<div class="profile-info-left">
 					<div  class="text-center">
+						<div id="imgprofile" class="ion-ios-reverse-camera hide"></div>
 						<img  src="{{Config::get('app.url')}}{{Config::get('upload.img')}}<%=profile_image%>" alt="Avatar" class="avatar img-circle" />
 						<h2><a  class="editable" models="users" value="<%= name %>" name="name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= name  %> </a>  <a  class="editable" models="users" value="<%= last_name %>" name="last_name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= last_name  %> </a></h2>
 					</div>
@@ -141,7 +170,7 @@ background-size: cover;
     <td><a  class="editable" models="educations" name="activities_and_societies"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= activities_and_societies %></a></td></tr>
     <tr><td>Description</td>
     <td><a  class="editable" models="educations" name="description" data-type="textarea" data-pk="<%=id%>"><%= description %></a></td></tr>
-<tr><a href="#educations/<%= id %>" class="delete btn btn-primary btn-block" >Delete </a></tr>
+<tr><a href="#educations/<%= id %>" class="edu_delete btn btn-primary btn-block" >Delete </a></tr>
 </table>
 </script>
 
@@ -328,7 +357,6 @@ background-size: cover;
 
 
 
-
    
 
 				@stop
@@ -355,6 +383,10 @@ background-size: cover;
     <script src={{ asset('assets/js/router.js') }}></script>
 
 
+	<script src={{ asset('assets/js/plugins/jquery.confirm.min.js') }}></script>
+
+
+	
 
 
 	<script src={{ asset('assets/js/queen-page.js') }}></script>
@@ -370,6 +402,8 @@ background-size: cover;
 	<script src={{ asset('assets/js/plugins/mapael/jquery.mapael.js') }}></script>
 	<script src={{ asset('assets/js/plugins/mapael/maps/world_countries.js') }}></script>
 	<script src={{ asset('assets/js/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js') }}></script>
+	
+
 	<script src={{ asset('assets/js/plugins/jquery-maskedinput/jquery.masked-input.min.js') }}></script>
 	<script src={{ asset('assets/js/queen-charts.js') }}></script>
 	<script src={{ asset('assets/js/queen-maps.js') }}></script>
@@ -666,7 +700,7 @@ App.Views.Education= Backbone.View.extend({
     },
 
     events:{
-        'click a.delete': 'deleteEducation',
+        'click a.edu_delete': 'deleteEducation',
         'click a.edit': 'editEducation'
     },
 
@@ -676,7 +710,33 @@ App.Views.Education= Backbone.View.extend({
     },
     
     deleteEducation: function(){
-        this.model.destroy();
+
+    
+    var self=this;
+    
+
+    $.confirm({
+        text: "Are you sure you want to delete that education?",
+        title: "Confirmation required",
+        confirmButton: "Yes I am",
+        cancelButton: "No",
+        post: false,
+        confirmButtonClass: "btn-danger",
+        cancelButtonClass: "btn-default",
+        dialogClass: "modal-dialog modal-lg",
+        confirm: function() {
+            //this.model.destroy();
+            self.model.destroy();
+        },
+        cancel: function() {
+            // nothing to do
+        }
+    });
+
+    
+
+
+
     },
 
     render: function(){
@@ -734,17 +794,40 @@ App.Views.App=Backbone.View.extend({
 
  $(document).ready(function() {
 
-
-// function getFileData(myFile){
-//    var file = myFile.files[0];  
-//    var filename = file.name;
-
-//    console.log(file);
-// }
-
-
 //Change profile image
  setTimeout(function(){ 
+
+
+ 	//abilito e disabilito la visualizzazione dell'icona image change sul background profile
+ 	$('.profile-header-background').mouseleave(function() {
+
+ 		$('#imgbackground').addClass("hide");
+ 		$('#imgbackground').removeClass("show");
+	});	
+
+	$('.profile-header-background').mouseenter(function() {
+
+ 		$('#imgbackground').addClass("show");
+ 		$('#imgbackground').removeClass("hide");
+	});	
+
+
+
+
+    //abilito e disabilito la visualizzazione dell'icona image change sul profile
+	$('.avatar').mouseleave(function() {
+
+ 		$('#imgprofile').addClass("hide");
+ 		$('#imgprofile').removeClass("show");
+ 		});	
+
+	$('.avatar').mouseenter(function() {
+
+ 		$('#imgprofile').addClass("show");
+ 		$('#imgprofile').removeClass("hide");
+	});	
+	
+
 
  	$('.profile-header-background').click(function() {
  		
