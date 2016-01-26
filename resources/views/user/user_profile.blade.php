@@ -157,7 +157,7 @@ background-size: cover;
 	<tr><td>Degree</td>
     <td><a  class="editable" models="educations" name="degree"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= degree %></a></td></tr>
     <tr><td>Field of Study</td>
-    <td><a  class="editable" models="educations" name="field_of_study" data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= field_of_study %></a></td></tr>
+    <td><a  class="editable" models="educations" name="field_of_study" data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter Field of Study"><%= field_of_study %></a></td></tr>
     <tr><td>Grade</td>
     <td><a  class="editable" models="educations" name="grade"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= grade %></a></td></tr>
     <tr><td>Activities and Societies</td>
@@ -165,6 +165,26 @@ background-size: cover;
     <tr><td>Description</td>
     <td><a  class="editable" models="educations" name="description" data-type="textarea" data-pk="<%=id%>"><%= description %></a></td></tr>
 <tr><a href="#educations/<%= id %>" class="edu_delete btn btn-primary btn-block" >Delete </a></tr>
+</table>
+</script>
+
+<script id="allExperiencesTemplate" type="text/template">
+<legend><%= title %></legend>  
+<table class="table table-bordered table-striped">
+	<tr><td>Company name</td>
+	<td> <a  class="editable" models="experiences" name="company_name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= company_name %> </a> </td></tr>
+    <tr><td>Title</td>
+    <td> <a  class="editable" models="experiences" name="title" data-type="text" data-url="" data-pk= "<%=id%>" ><%= title %> </a> </td></tr>
+    <tr><td>Dates Attended</td>
+    <td><a  class="editable" models="experiences" name="date_start" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date Start"><%= date_start %></a>
+	    <a  class="editable" models="experiences" name="date_end" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date End"><%= date_end %></a></td></tr>	
+	<tr><td>Location</td>
+    <td><a  class="editable" models="experiences" name="location"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= location %></a></td></tr>
+    <tr><td>Currently work here</td>
+    <td><a  class="editable" models="experiences" name="currently_work_here" data-type="checklist" data-pk="<%=id%>" data-value="" data-title="Currently work here"><%= currently_work_here %></a></td></tr>
+    <tr><td>Description</td>
+    <td><a  class="editable" models="experiences" name="description" data-type="textarea" data-pk="<%=id%>"><%= description %></a></td></tr>
+<tr><a href="#experiences/<%= id %>" class="exp_delete btn btn-primary btn-block" >Delete </a></tr>
 </table>
 </script>
 
@@ -210,53 +230,65 @@ background-size: cover;
 				</div>		
 				<!-- followers -->
 				<div class="tab-pane fade" id="followers">
-					<a  class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add Experience</a>
-					<table id="user" class="table table-bordered table-striped">
-						<tbody>
-							<tr>
-								<td>Company name</td>
-								<td><a  class="editable" id="company_name" data-type="text" data-pk="1" data-value="" data-title="Enter company name"></a></td>
-							</tr>
-							<tr>
-								<td>Title</td>
-								<td><a  class="editable" id="title" data-type="text" data-pk="1" data-placement="right" data-placeholder="Required" data-title="Enter title"></a></td>
-							</tr>
-							<tr>
-								<td>Location</td>
-								<td>
-									<a  class="editable" id="location" data-type="text" data-pk="1" data-value="" data-title="Enter location"></a>
-								</td>
-							</tr>
-							<tr>
-								<td>Date start</td>
-								<td>
-									<a  class="editable" id="date_start" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select Date start"></a>
-								</td>
-							</tr>
-							<tr>
-								<td>Date end</td>
-								<td>
-									<a  class="editable" id="date_end" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select Date end"></a>
-								</td>
-							</tr>
+					<a id="addExperienceButton" class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add Experience</a>
 
-							<tr>
-								<td>I currently work here</td>
-								<td>
-									<a  class="editable" id="currently_work_here" data-type="checklist" data-pk="1" data-url="/post" data-title="Select options"></a>
+				
 
-								</td>
-							</tr>
+				<form id="addExperience" class="form-horizontal hide" role="form">
+					<fieldset>
+						<legend>Add Experience</legend>
+						<div class="form-group">
+							<label for="title" class="col-sm-3 control-label">Title</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="title" id="title" placeholder="Title">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="exp_date_start" class="col-sm-3 control-label">Date start</label>
+							<div class="col-sm-9">
+								<input type="date" name="exp_date_start" class="form-control" id="exp_date_start" placeholder="Date start">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="exp_date_end" class="col-sm-3 control-label">Date end</label>
+							<div class="col-sm-9">
+								<input type="date" name="exp_date_end" class="form-control" id="exp_date_end" placeholder="Date end">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="location" class="col-sm-3 control-label">Location</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="location" id="location" placeholder="Location">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="currently_work_here" class="col-sm-3 control-label">Currently work here</label>
+							<div class="col-sm-9">
+								<input type="checkbox" class="form-control" name="currently_work_here" id="currently_work_here" placeholder="Currently work here">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="description" class="col-sm-3 control-label">Description</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="description" id="exp_description" placeholder="Description">
+							</div>
+						</div>
+								<div class="form-group">
+									<div class="col-sm-offset-3 col-sm-9">
+										
+										<input id="submitExperienceButton" type="submit" class="btn btn-primary btn-block" value="Add Education">
+   
+									</div>
+									<input type="hidden" id="exp_user_id" name="user_id" value={{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}>
+									
+								</div>
+							</fieldset>
+						</form>
 
-							<tr>
-								<td>Description</td>
-								<td>
-									<a  class="editable" id="description" data-type="textarea" data-pk="1">awesome comment!</a>
 
-								</td>
-							</tr>
-						</tbody>
-					</table>
+						<div id="allExperiences">
+						    
+						</div>
 				</div>
 				<!-- end followers -->
 				<!-- following -->
@@ -436,10 +468,15 @@ App.Collections.Users= Backbone.Collection.extend({
 });
 
 //Education collection	
-
 App.Collections.Educations= Backbone.Collection.extend({
 	model:App.Models.Education,
 	url:'/{{Config::get('backbone.collection_educations')}}' //{{Auth::user()->id}}
+});
+
+//Experience collection	
+App.Collections.Experiences= Backbone.Collection.extend({
+	model:App.Models.Experience,
+	url:'/{{Config::get('backbone.collection_experiences')}}' //{{Auth::user()->id}}
 });
 
 
@@ -472,18 +509,24 @@ $.getJSON("/{{Config::get('backbone.collection_educations_by_user_id')}}/{{ isse
 App.educations= new App.Collections.Educations(data);
 });
 
+// Carico le experience by user id
+$.getJSON("/{{Config::get('backbone.collection_experiences_by_user_id')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}", function(data) {
+App.experiences= new App.Collections.Experiences(data);
+});
 
 
         //Educations
         App.educations= new App.Collections.Educations;
         App.educations.fetch();
-
+        //Experinces
+        App.experiences= new App.Collections.Experiences;
+        App.experiences.fetch();
         //Users
         App.users= new App.Collections.Users;
 
         App.users.fetch().then(function(){
         
-        new App.Views.App({collection: App.users, collecitons: App.educations });    
+        new App.Views.App({collection: App.users, collecitons: App.educations, collecitons: App.experiences });    
 
         });
 
@@ -617,6 +660,163 @@ App.Views.Educations=Backbone.View.extend({
 });
 
 
+// all experiences view
+App.Views.Experiences=Backbone.View.extend({
+    
+    tagName: 'div',
+
+    initialize: function(){
+        this.collection.on('add', this.addOne, this); // sync when return data from server
+           //this.on('render', this.afterRender());
+    },
+
+    render: function(){
+        //this.$el.empty();
+        this.collection.each(this.addOne, this);
+
+        return this;
+        
+
+    },
+     afterRender: function() { 
+        //alert('afterRender'); 
+        //this.editableEnablerAfterSave();
+    },
+
+    addOne: function(experience){
+        var experienceView= new App.Views.Experience({ model:experience});
+        this.$el.append(experienceView.render().el);
+        this.editableEnabler(experience);
+    },
+    //here
+    editableEnabler: function(experience){
+
+    	        	// get file data
+
+    	        	//setTimeout(function(){ 
+    				$.fn.editable.defaults.mode = 'inline';
+    				
+    	        	// tutti gli altri campi		
+    	            $('.editable').editable({
+
+    	                success: function(response, newValue) {   
+    	                        var id=$(this).attr('data-pk');
+    	                        var name=$(this).attr('name');
+    	                        var modelsName= $(this).attr('models');
+    	                  console.log(id, name,modelsName, newValue);
+
+							experience.set(name, newValue);
+    	                    
+
+    	                        experience.save(name, newValue);
+    	                       
+    	                   },
+    	                   error: function(response, newValue) {
+    	                       if(response.status === 500) {
+    	                           return 'Service unavailable. Please try later.';
+    	                       } else {
+    	                           return response.responseText;
+    	                       }
+    	                   }
+    	            }); 
+    	             this.editableEnablerAfterSave();
+    },
+
+    editableEnablerAfterSave: function(){
+
+    	        	// get file data
+
+    	        	//setTimeout(function(){ 
+    				$.fn.editable.defaults.mode = 'inline';
+    				
+    	        	// tutti gli altri campi		
+    	            $('.editable').editable({
+
+    	                success: function(response, newValue) {   
+    	                        var id=$(this).attr('data-pk');
+    	                        var name=$(this).attr('name');
+    	                        var modelsName= $(this).attr('models');
+    	                  console.log(id, name,modelsName, newValue);
+
+ 
+                             var model= App.experiences.get(id).set(name, newValue);
+
+                       model.save(name, newValue);
+
+
+    	                        this.editableEnablerAfterSave();
+    	                   },
+    	                   error: function(response, newValue) {
+    	                       if(response.status === 500) {
+    	                           return 'Service unavailable. Please try later.';
+    	                       } else {
+    	                           return response.responseText;
+    	                       }
+    	                   }
+    	            }); 
+    },
+
+});
+
+// Add experience View
+
+App.Views.AddExperience= Backbone.View.extend({
+    el:'#addExperience',
+
+    initialize: function(){
+
+        this.title = $('#title');
+        this.company_name = $('#company_name');
+        this.location = $('#location');
+        this.currently_work_here = $('#currently_work_here');
+        this.description = $('#exp_description');
+        this.date_end = $('#exp_date_end');
+        this.date_start = $('#exp_date_start');
+        this.user_id=$('#exp_user_id');
+        },
+
+    events:{
+        'submit':'addExperience'
+    },
+
+    addExperience: function(e){
+        e.preventDefault();
+
+        //Create contact 
+        this.collection.create({
+
+
+        	title: this.title.val(),
+        	location: this.location.val(),
+        	company_name: this.company_name.val(),
+        	currently_work_here: this.currently_work_here.val(),
+        	description: this.description.val(),
+        	date_end: this.date_end.val(),
+        	date_start: this.date_start.val(),
+        	field_of_study: this.field_of_study.val(),
+
+        	user_id:this.user_id.val(),
+
+        }, {wait: true}); //wait the server for save id in attribute
+        this.clearForm();
+    },
+
+    clearForm: function(){
+
+    	this.title.val('');
+    	this.location.val('');
+    	this.company_name.val('');
+    	this.currently_work_here.val('');
+    	this.description.val('');
+    	this.date_end.val('');
+    	this.date_start.val('');
+    	
+    	
+       // $('#addEducation').fadeOut();
+
+    }
+});
+
 
 // Add education View
 
@@ -727,9 +927,63 @@ App.Views.Education= Backbone.View.extend({
         }
     });
 
+    },
+
+    render: function(){
+        this.$el.html(this.template(this.model.toJSON()));
+        return this;
+    },
+
+    unrender: function(){
+        this.remove(); //this.$el.remove();
+    }
+});
+
+//Single experience view
+
+App.Views.Experience= Backbone.View.extend({
+    tagName:'div',
+
+    template: template('allExperiencesTemplate'),
+
+    initialize: function(){
+        this.model.on('destroy', this.unrender, this);
+        this.model.on('change', this.render, this); 
+    },
+
+    events:{
+        'click a.exp_delete': 'deleteExperience',
+        'click a.edit': 'editExperience'
+    },
+
+    editExperience: function(){
+        vent.trigger('education:edit', this.model)
+
+    },
+    
+    deleteExperience: function(){
+
+    
+    var self=this;
     
 
-
+    $.confirm({
+        text: "Are you sure you want to delete that experience?",
+        title: "Confirmation required",
+        confirmButton: "Yes I am",
+        cancelButton: "No",
+        post: false,
+        confirmButtonClass: "btn-danger",
+        cancelButtonClass: "btn-default",
+        dialogClass: "modal-dialog modal-lg",
+        confirm: function() {
+            //this.model.destroy();
+            self.model.destroy();
+        },
+        cancel: function() {
+            // nothing to do
+        }
+    });
 
     },
 
@@ -743,7 +997,6 @@ App.Views.Education= Backbone.View.extend({
     }
 });
 
-
 // MAIN VIEW *******************************************************************************************************************************
 
 
@@ -753,6 +1006,10 @@ App.Views.App=Backbone.View.extend({
     var addEducationView= new App.Views.AddEducation({ collection: App.educations});
     var allEducationsView = new App.Views.Educations({ collection: App.educations}).render();
     $('#allEducations').append(allEducationsView.el); // appendo la lista dei contatti nella tabella
+
+    var addExperienceView= new App.Views.AddExperience({ collection: App.experiences});
+    var allExperiencesView = new App.Views.Experiences({ collection: App.experiences}).render();
+    $('#allExperiences').append(allExperiencesView.el); // appendo la lista dei contatti nella tabella
     
     },
     

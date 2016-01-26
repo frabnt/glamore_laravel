@@ -10,6 +10,13 @@ use App\Http\Controllers\Controller;
 
 class experienceController extends Controller
 {
+
+    public function expByUserId($id){
+
+            return Experience::where('user_id', '=', $id )->get();
+    }
+
+
     /**
      * Display a listing of the resource.
      *

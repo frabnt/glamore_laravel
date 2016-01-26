@@ -26,38 +26,7 @@ Route::get('/emailtest', function () {
 
     });
 
-
-    
 });
-
-
- 
-
-
-
-// Route::get('user', function () {
-//echo "welcome home. " ;
-//$id= Auth::id();
-
-
-//echo $id;
-//return $user=Auth::User();
-//echo Session::get(); 
-//echo Auth::instance()->get_user_id(); //return  an array  containing 'SimpleAuth' and 0
-//Debug::dump(Session::get()); // return nothing!!
-// if (Auth::check())
-// {
-//      //$user = Auth::User();     
-//         //$userId = $user->id;
-//      echo "welcome home. " . Auth::user()->email ;
-// }else{
-//  return "ko";
-// }
-
-
-// return Auth::user();
-
-// });
 
 
 /*
@@ -95,16 +64,13 @@ Route::get('/emailtest', function () {
 
     Route::auth();
 
-
-
-    
-    
-
-
     Route::get('/user/{id}','UserController@showProfile');
-   //Educations
-    //get education by user id
+    //Educations
+    //get educations by user id
     Route::get('education/user/{id}', 'educationController@eduByUserId');
+    //Experience
+    //get experiences by user id
+    Route::get('experience/user/{id}', 'experienceController@expByUserId');
 
 
     //User
@@ -120,20 +86,7 @@ Route::get('/emailtest', function () {
     Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
 
 
-    //Messenger
-    Route::group(['prefix' => 'messages'], function () {
-    Route::get('/', ['as' => 'messages', 'uses' => 'MessagesController@index']);
-    Route::get('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);
-    Route::post('/', ['as' => 'messages.store', 'uses' => 'MessagesController@store']);
-    Route::get('{id}', ['as' => 'messages.show', 'uses' => 'MessagesController@show']);
-    Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);
 
-    
-   //Route::post('/user/{id}', array('uses' => 'UserController@upload'));
-
-
-
-});
 
 
 

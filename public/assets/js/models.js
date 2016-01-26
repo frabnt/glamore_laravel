@@ -38,3 +38,14 @@ App.Models.Education= Backbone.Model.extend({
 	},
 	
 });
+
+App.Models.Experience= Backbone.Model.extend({
+	//validate
+	validate: function(attrs){
+
+		if(! attrs.company_name){
+			return 'Please enter Company name.';
+		}
+	},
+	
+});

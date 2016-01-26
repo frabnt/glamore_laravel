@@ -111,7 +111,7 @@ class educationController extends Controller
         $education->description = $request->description; 
         
         $education->save();
-        return $education;
+        //return $education;
     }
 
     /**
