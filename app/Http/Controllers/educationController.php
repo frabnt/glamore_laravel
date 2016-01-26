@@ -13,12 +13,6 @@ class educationController extends Controller
 
 
 
-
- 
-
-
-
-
     public function eduByUserId($id){
 
             return Education::where('user_id', '=', $id )->get();

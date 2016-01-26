@@ -7,7 +7,7 @@
 {{--content: url({{ asset('assets/img/camera.svg') }}); --}}
 <style type="text/css"> 
 .profile-header-background:hover{
-    opacity: 0.9;
+    opacity: 0.3;
     
     
    
@@ -16,7 +16,7 @@
 
 
 .avatar:hover{
-opacity: 0.9;
+opacity: 0.1;
 
 
 }
@@ -57,7 +57,7 @@ background-size: cover;
   font-size: 190px;
   margin-left: 50%;
   color: white;
-  opacity: 0.4;
+  
    
   
 }
@@ -142,12 +142,6 @@ background-size: cover;
 						</ul>
 					</div>
 				</div>
-
-
-
- 			
-
-
 
 
 				</script>
@@ -755,37 +749,13 @@ App.Views.Education= Backbone.View.extend({
 
 App.Views.App=Backbone.View.extend({
 
-    initialize: function(){
-    
-    // users
-    //vent.on('user:edit', this.editUser, this);
-
-   
-    // educations
-    //vent.on('education:edit', this.editEducation, this);
-    
-	
+    initialize: function(){	
     var addEducationView= new App.Views.AddEducation({ collection: App.educations});
     var allEducationsView = new App.Views.Educations({ collection: App.educations}).render();
     $('#allEducations').append(allEducationsView.el); // appendo la lista dei contatti nella tabella
     
     },
-    // editEducation: function(educations){
-    // 	//setTimeout(function(){ 
-    //     var editEducationView= new App.Views.EditEducation({model: educations});
-    //     $('#editEducation').html(editEducationView.el);
-    //     alert('edited');
-    //     //},1500);
-    // },
-
-    // editUser: function(users){
-    	
-    //     var editUserView= new App.Views.EditUser({model: users});
-    //     $('#editUser').html(editUserView.el);
-
-    // }
     
-
     });
 
 
@@ -849,7 +819,7 @@ App.Views.App=Backbone.View.extend({
  	    var file = files[0];
  	    var fullPath=document.getElementById($(evt.target).attr('name')).value;
 
- 	    console.log(fullPath);
+ 	    //console.log(fullPath);
  	    var imageName= fullPath.slice(12);
 
 
@@ -877,7 +847,12 @@ App.Views.App=Backbone.View.extend({
  	           
  	            model.save();
  	           
+
+
+
+ 	            setTimeout(function(){ 
  	            location.reload();
+ 	        	}, 500);
  	           //console.log(id+name+modelsName);
 
 
