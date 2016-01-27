@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Storage;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests;
@@ -120,16 +120,17 @@ class UserController extends Controller
             if($request->profile_image != $user->profile_image){
                 $decode_prifile_image = base64_decode($request->upload);
                 $fileName=time().$request->profile_image;
-                $file = \Config::get('upload.upload').$fileName;
-                file_put_contents($file, $decode_prifile_image);
+                Storage::disk('userimgupload')->put($fileName, $decode_prifile_image);
+            
+                //$file = \Config::get('upload.upload').$fileName;
+                //file_put_contents($file, $decode_prifile_image);
                 $user->profile_image=$fileName;
             }
     
             if($request->background_image != $user->background_image){
                 $decode_prifile_image = base64_decode($request->upload);
                 $fileName=time().$request->background_image;
-                $file = \Config::get('upload.upload').$fileName;
-                file_put_contents($file, $decode_prifile_image);
+                Storage::disk('userimgupload')->put($fileName, $decode_prifile_image);
                 $user->background_image=$fileName;
             }
 
