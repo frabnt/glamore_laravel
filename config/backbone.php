@@ -2,12 +2,16 @@
 
 return [
 
- 'collection_users' => 'glamore/public/users',
+ 'collection_users' => '/users',
 
- 'collection_educations' => 'glamore/public/educations',
- 'collection_educations_by_user_id' => 'glamore/public/education/user',
 
- 'collection_experiences' => 'glamore/public/experiences',
- 'collection_experiences_by_user_id' => 'glamore/public/experience/user',
+ 'collection_educations' => '/educations',
+ 'collection_educations_by_user_id' => '/education/user',
+
+ 'collection_experiences' => '/experiences',
+ 'collection_experiences_by_user_id' => '/experience/user',
+
+ 'collection_industries' => '/industries',
+ 'collection_industries_by_user_id' => '/industry/user',
 
 ];

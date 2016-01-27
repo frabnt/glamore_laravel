@@ -47,14 +47,14 @@ class experienceController extends Controller
     {
         $experience = new Experience;
 
-        $user->company_name = $request->company_name; 
-        $user->title = $request->title;
-        $user->location   = $request->location  ;
-        $user->date_start = $request->date_start;
-        $user->date_end = $request->date_end;
-        $user->currently_work_here = $request->currently_work_here;
-        $user->description = $request->description;
-
+        $experience->company_name = $request->company_name; 
+        $experience->title = $request->title;
+        $experience->location   = $request->location  ; 
+        $experience->date_start = $request->date_start;
+        $experience->date_end = $request->date_end;
+        $experience->currently_work_here = $request->currently_work_here;
+        $experience->description = $request->description;
+        $experience->user_id=$request->user_id;
         $experience->save();
 
         
@@ -96,13 +96,13 @@ class experienceController extends Controller
         
         $experience = Experience::find($id);
 
-        $user->company_name = $request->company_name; 
-        $user->title = $request->title;
-        $user->location   = $request->location  ;
-        $user->date_start = $request->date_start;
-        $user->date_end = $request->date_end;
-        $user->currently_work_here = $request->currently_work_here;
-        $user->description = $request->description;
+        $experience->company_name = $request->company_name; 
+        $experience->title = $request->title;
+        $experience->location   = $request->location  ;
+        $experience->date_start = $request->date_start;
+        $experience->date_end = $request->date_end;
+        $experience->currently_work_here = $request->currently_work_here;
+        $experience->description = $request->description;
 
         $experience->save();
     }

@@ -49,3 +49,15 @@ App.Models.Experience= Backbone.Model.extend({
 	},
 	
 });
+
+
+App.Models.Industry= Backbone.Model.extend({
+	//validate
+	validate: function(attrs){
+
+		if(! attrs.industry){
+			return 'Please enter industry.';
+		}
+	},
+	
+});

@@ -39,8 +39,8 @@ return [
     |
     */
 
-    'url' => 'http://localhost/glamore/',
-
+    'url' => 'http://localhost:8000',
+    //'url' => 'http://localhost/glamore/public',
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -155,7 +155,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
+        //Collective\Html\HtmlServiceProvider::class,
 
     ],
 

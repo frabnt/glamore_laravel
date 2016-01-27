@@ -36,7 +36,7 @@ opacity: 0.1;
 
 .profile-header-background{
 height: 310px;
-background: url("{{Config::get('app.url')}}{{Config::get('upload.img')}}{{ $user->background_image or 'Default' }}");
+background: url("{{Config::get('upload.img')}}{{ $user->background_image or 'Default' }}");
 background-repeat:no-repeat;
 background-size: cover;
 }
@@ -94,7 +94,7 @@ background-size: cover;
 				<div class="profile-info-left">
 					<div  class="text-center">
 						<div id="imgprofile" class="ion-ios-reverse-camera hide"></div>
-						<img  src="{{Config::get('app.url')}}{{Config::get('upload.img')}}<%=profile_image%>" alt="Avatar" class="avatar img-circle" />
+						<img  src="{{Config::get('upload.img')}}<%=profile_image%>" alt="Avatar" class="avatar img-circle" />
 						<h2><a  class="editable" models="users" value="<%= name %>" name="name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= name  %> </a>  <a  class="editable" models="users" value="<%= last_name %>" name="last_name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= last_name  %> </a></h2>
 					</div>
 					<div class="action-buttons">
@@ -146,13 +146,26 @@ background-size: cover;
 
 				</script>
 
+<script id="allIndustriesTemplate" type="text/template">
+<legend><%= industry %></legend>  
+<table class="table table-bordered table-striped">
+    <tr><td>Country</td>
+    <td> <a class="editable edit_country" models="industries" name="country" data-type="select2" data-url="" data-pk= "<%=id%>" ><%= country %> </a> </td></tr>
+    <tr><td>Postal code</td>
+    <td><a  class="editable" models="industries" name="postal_code"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= postal_code %></a></td></tr>
+    <tr><td>Industry</td>
+    <td><a  class="editable" models="industries" name="industry" data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter Field of Study"><%= industry %></a></td></tr>
+<tr><a href="#industries/<%= id %>" class="ind_delete btn btn-primary btn-block" >Delete </a></tr>
+</table>
+</script>				
+
 <script id="allEducationsTemplate" type="text/template">
 <legend><%= school %></legend>  
 <table class="table table-bordered table-striped">
     <tr><td>School</td>
     <td> <a  class="editable" models="educations" name="school" data-type="text" data-url="" data-pk= "<%=id%>" ><%= school %> </a> </td></tr>
     <tr><td>Dates Attended</td>
-    <td><a  class="editable" models="educations" name="date_start" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date Start"><%= date_start %></a>
+    <td><a  class="editable" models="educations" name="date_start" data-type="combodate" data-pk="<%=id%>" data-title="Select Date Start"><%= date_start %></a> /
 	    <a  class="editable" models="educations" name="date_end" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date End"><%= date_end %></a></td></tr>	
 	<tr><td>Degree</td>
     <td><a  class="editable" models="educations" name="degree"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= degree %></a></td></tr>
@@ -169,19 +182,19 @@ background-size: cover;
 </script>
 
 <script id="allExperiencesTemplate" type="text/template">
-<legend><%= title %></legend>  
+<legend><%= company_name %></legend>  
 <table class="table table-bordered table-striped">
 	<tr><td>Company name</td>
 	<td> <a  class="editable" models="experiences" name="company_name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= company_name %> </a> </td></tr>
     <tr><td>Title</td>
     <td> <a  class="editable" models="experiences" name="title" data-type="text" data-url="" data-pk= "<%=id%>" ><%= title %> </a> </td></tr>
     <tr><td>Dates Attended</td>
-    <td><a  class="editable" models="experiences" name="date_start" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date Start"><%= date_start %></a>
+    <td><a  class="editable" models="experiences" name="date_start" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date Start"><%= date_start %></a> /
 	    <a  class="editable" models="experiences" name="date_end" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date End"><%= date_end %></a></td></tr>	
 	<tr><td>Location</td>
     <td><a  class="editable" models="experiences" name="location"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= location %></a></td></tr>
     <tr><td>Currently work here</td>
-    <td><a  class="editable" models="experiences" name="currently_work_here" data-type="checklist" data-pk="<%=id%>" data-value="" data-title="Currently work here"><%= currently_work_here %></a></td></tr>
+    <td><a  class="editable currently_work_here" models="experiences" name="currently_work_here" data-type="select2" data-pk="<%=id%>" data-value="<%= currently_work_here %>" data-title="Currently work here"></a></td></tr>
     <tr><td>Description</td>
     <td><a  class="editable" models="experiences" name="description" data-type="textarea" data-pk="<%=id%>"><%= description %></a></td></tr>
 <tr><a href="#experiences/<%= id %>" class="exp_delete btn btn-primary btn-block" >Delete </a></tr>
@@ -203,30 +216,46 @@ background-size: cover;
 
 				<!-- activities -->
 				<div class="tab-pane fade " id="activities">
-					<a  class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add industry</a>
-					<table id="user" class="table table-bordered table-striped">
-						<tbody>
-							<tr>
-								<td>Country</td>
-								<td><a  class="editable" id="country" data-type="select2" data-pk="1" data-value="" data-title="Select country"></a></td>
-							</tr>
-							<tr>
-								<td>Postal code</td>
-								<td><a  class="editable" id="postal_code" data-type="text" data-pk="1" data-placement="right" data-placeholder="Required" data-title="Enter postal code"></a></td>
-							</tr>
-							<tr>
-								<td>Industry</td>
-								<td>
-									<a  class="editable" id="industry" data-type="text" data-pk="1" data-value="" data-title="Enter industry"></a>
-								</td>
-							</tr>
+					<a id="addIndustryButton" class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add Industry</a>
 
-							
+				
 
-							<a   id="options" data-type="checklist" data-pk="1" data-url="/post" data-title="Select options"></a>
-							
-						</tbody>
-					</table>
+				<form id="addIndustry" class="form-horizontal hide" role="form">
+					<fieldset>
+						<legend>Add Industry</legend>
+						<div class="form-group">
+							<label for="country" class="col-sm-3 control-label">Country</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="country" id="country" placeholder="Title">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="postal_code" class="col-sm-3 control-label">Postal code</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="postal_code" id="postal_code" placeholder="Title">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="industry" class="col-sm-3 control-label">Industry</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="industry" id="industry" placeholder="industry">
+							</div>
+						</div>
+								<div class="form-group">
+									<div class="col-sm-offset-3 col-sm-9">
+										
+										<input id="submitIndustryButton" type="submit" class="btn btn-primary btn-block" value="Add Industry">
+   
+									</div>
+									<input type="hidden" id="ind_user_id" name="user_id" value={{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}>
+								</div>
+							</fieldset>
+						</form>
+
+
+						<div id="allIndustries">
+						    
+						</div>
 				</div>		
 				<!-- followers -->
 				<div class="tab-pane fade" id="followers">
@@ -237,6 +266,12 @@ background-size: cover;
 				<form id="addExperience" class="form-horizontal hide" role="form">
 					<fieldset>
 						<legend>Add Experience</legend>
+						<div class="form-group">
+							<label for="company_name" class="col-sm-3 control-label">Company name</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="company_name" id="company_name" placeholder="Title">
+							</div>
+						</div>
 						<div class="form-group">
 							<label for="title" class="col-sm-3 control-label">Title</label>
 							<div class="col-sm-9">
@@ -464,19 +499,25 @@ background-size: cover;
 
 App.Collections.Users= Backbone.Collection.extend({
 	model:App.Models.User,
-	url:'/{{Config::get('backbone.collection_users')}}'
+	url:'{{Config::get('app.url')}}{{Config::get('backbone.collection_users')}}'
 });
 
 //Education collection	
 App.Collections.Educations= Backbone.Collection.extend({
 	model:App.Models.Education,
-	url:'/{{Config::get('backbone.collection_educations')}}' //{{Auth::user()->id}}
+	url:'{{Config::get('app.url')}}{{Config::get('backbone.collection_educations')}}' //{{Auth::user()->id}}
 });
 
 //Experience collection	
 App.Collections.Experiences= Backbone.Collection.extend({
 	model:App.Models.Experience,
-	url:'/{{Config::get('backbone.collection_experiences')}}' //{{Auth::user()->id}}
+	url:'{{Config::get('app.url')}}{{Config::get('backbone.collection_experiences')}}' //{{Auth::user()->id}}
+});
+
+//Industry collection	
+App.Collections.Industries= Backbone.Collection.extend({
+	model:App.Models.Industry,
+	url:'{{Config::get('app.url')}}{{Config::get('backbone.collection_industries')}}' //{{Auth::user()->id}}
 });
 
 
@@ -489,8 +530,8 @@ App.Collections.Experiences= Backbone.Collection.extend({
         Backbone.history.start();
 
 // istanzo la view user singola
-$.getJSON("{{Config::get('app.url')}}public/users/{{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}", function(data) {
-//console.log(data);
+$.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_users')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}", function(data) {
+
 var user= new App.Models.User(data);
 //user.fetch();
 //console.log(user);
@@ -498,26 +539,32 @@ var editUser= new App.Views.EditUser({ model: user});
 $('#editUser').html(editUser.el);
 App.users= new App.Collections.Users(data);
 
-
-
 });
 
 
 
 // Carico le education by user id
-$.getJSON("/{{Config::get('backbone.collection_educations_by_user_id')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}", function(data) {
+$.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_educations_by_user_id')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}", function(data) {
 App.educations= new App.Collections.Educations(data);
 });
 
 // Carico le experience by user id
-$.getJSON("/{{Config::get('backbone.collection_experiences_by_user_id')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}", function(data) {
+$.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_experiences_by_user_id')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}", function(data) {
 App.experiences= new App.Collections.Experiences(data);
 });
 
+// Carico le industries by user id
+$.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_industries_by_user_id')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}", function(data) {
+App.industries= new App.Collections.Industries(data);
+//console.log(data);
+});
 
         //Educations
         App.educations= new App.Collections.Educations;
         App.educations.fetch();
+        //Industries
+        App.industries= new App.Collections.Industries;
+        App.industries.fetch();
         //Experinces
         App.experiences= new App.Collections.Experiences;
         App.experiences.fetch();
@@ -526,7 +573,7 @@ App.experiences= new App.Collections.Experiences(data);
 
         App.users.fetch().then(function(){
         
-        new App.Views.App({collection: App.users, collecitons: App.educations, collecitons: App.experiences });    
+        new App.Views.App({collection: App.users, collecitons: App.educations, collecitons: App.experiences, collecitons: App.industries });    
 
         });
 
@@ -586,78 +633,41 @@ App.Views.Educations=Backbone.View.extend({
     addOne: function(education){
         var educationView= new App.Views.Education({ model:education});
         this.$el.append(educationView.render().el);
-        this.editableEnabler(education);
-    },
-    //here
-    editableEnabler: function(education){
-
-    	        	// get file data
-
-    	        	//setTimeout(function(){ 
-    				$.fn.editable.defaults.mode = 'inline';
-    				
-    	        	// tutti gli altri campi		
-    	            $('.editable').editable({
-
-    	                success: function(response, newValue) {   
-    	                        var id=$(this).attr('data-pk');
-    	                        var name=$(this).attr('name');
-    	                        var modelsName= $(this).attr('models');
-    	                  console.log(id, name,modelsName, newValue);
-
-							education.set(name, newValue);
-    	                    //var model= App.educations.get(id).set(name, newValue);
-    	                    //console.log(model);
-
-    	                        education.save(name, newValue);
-    	                       
-    	                   },
-    	                   error: function(response, newValue) {
-    	                       if(response.status === 500) {
-    	                           return 'Service unavailable. Please try later.';
-    	                       } else {
-    	                           return response.responseText;
-    	                       }
-    	                   }
-    	            }); 
-    	             this.editableEnablerAfterSave();
-    },
-
-    editableEnablerAfterSave: function(){
-
-    	        	// get file data
-
-    	        	//setTimeout(function(){ 
-    				$.fn.editable.defaults.mode = 'inline';
-    				
-    	        	// tutti gli altri campi		
-    	            $('.editable').editable({
-
-    	                success: function(response, newValue) {   
-    	                        var id=$(this).attr('data-pk');
-    	                        var name=$(this).attr('name');
-    	                        var modelsName= $(this).attr('models');
-    	                  console.log(id, name,modelsName, newValue);
-
- 
-                             var model= App.educations.get(id).set(name, newValue);
-
-                       model.save(name, newValue);
-
-
-    	                        this.editableEnablerAfterSave();
-    	                   },
-    	                   error: function(response, newValue) {
-    	                       if(response.status === 500) {
-    	                           return 'Service unavailable. Please try later.';
-    	                       } else {
-    	                           return response.responseText;
-    	                       }
-    	                   }
-    	            }); 
+        editableEnabler();
     },
 
 });
+
+// all industries view
+App.Views.Industries=Backbone.View.extend({
+    
+    tagName: 'div',
+
+    initialize: function(){
+        this.collection.on('add', this.addOne, this); // sync when return data from server
+           //this.on('render', this.afterRender());
+    },
+
+    render: function(){
+        //this.$el.empty();
+        this.collection.each(this.addOne, this);
+        return this;
+        
+
+    },
+     afterRender: function() { 
+        //alert('afterRender'); 
+        //this.editableEnablerAfterSave();
+    },
+
+    addOne: function(industry){
+        var industryView= new App.Views.Industry({ model:industry});
+        this.$el.append(industryView.render().el);
+        editableEnabler();
+    },
+   
+});
+
 
 
 // all experiences view
@@ -686,74 +696,8 @@ App.Views.Experiences=Backbone.View.extend({
     addOne: function(experience){
         var experienceView= new App.Views.Experience({ model:experience});
         this.$el.append(experienceView.render().el);
-        this.editableEnabler(experience);
-    },
-    //here
-    editableEnabler: function(experience){
-
-    	        	// get file data
-
-    	        	//setTimeout(function(){ 
-    				$.fn.editable.defaults.mode = 'inline';
-    				
-    	        	// tutti gli altri campi		
-    	            $('.editable').editable({
-
-    	                success: function(response, newValue) {   
-    	                        var id=$(this).attr('data-pk');
-    	                        var name=$(this).attr('name');
-    	                        var modelsName= $(this).attr('models');
-    	                  console.log(id, name,modelsName, newValue);
-
-							experience.set(name, newValue);
-    	                    
-
-    	                        experience.save(name, newValue);
-    	                       
-    	                   },
-    	                   error: function(response, newValue) {
-    	                       if(response.status === 500) {
-    	                           return 'Service unavailable. Please try later.';
-    	                       } else {
-    	                           return response.responseText;
-    	                       }
-    	                   }
-    	            }); 
-    	             this.editableEnablerAfterSave();
-    },
-
-    editableEnablerAfterSave: function(){
-
-    	        	// get file data
-
-    	        	//setTimeout(function(){ 
-    				$.fn.editable.defaults.mode = 'inline';
-    				
-    	        	// tutti gli altri campi		
-    	            $('.editable').editable({
-
-    	                success: function(response, newValue) {   
-    	                        var id=$(this).attr('data-pk');
-    	                        var name=$(this).attr('name');
-    	                        var modelsName= $(this).attr('models');
-    	                  console.log(id, name,modelsName, newValue);
-
- 
-                             var model= App.experiences.get(id).set(name, newValue);
-
-                       model.save(name, newValue);
-
-
-    	                        this.editableEnablerAfterSave();
-    	                   },
-    	                   error: function(response, newValue) {
-    	                       if(response.status === 500) {
-    	                           return 'Service unavailable. Please try later.';
-    	                       } else {
-    	                           return response.responseText;
-    	                       }
-    	                   }
-    	            }); 
+        //this.editableEnabler(experience);
+         editableEnabler();
     },
 
 });
@@ -780,6 +724,7 @@ App.Views.AddExperience= Backbone.View.extend({
     },
 
     addExperience: function(e){
+    	//console.log(this);
         e.preventDefault();
 
         //Create contact 
@@ -793,8 +738,6 @@ App.Views.AddExperience= Backbone.View.extend({
         	description: this.description.val(),
         	date_end: this.date_end.val(),
         	date_start: this.date_start.val(),
-        	field_of_study: this.field_of_study.val(),
-
         	user_id:this.user_id.val(),
 
         }, {wait: true}); //wait the server for save id in attribute
@@ -817,6 +760,52 @@ App.Views.AddExperience= Backbone.View.extend({
     }
 });
 
+// Add industry View
+
+App.Views.AddIndustry= Backbone.View.extend({
+    el:'#addIndustry',
+
+    initialize: function(){
+
+        this.country = $('#country');
+        this.postal_code = $('#postal_code');
+        this.industry = $('#industry');
+        this.user_id=$('#ind_user_id');
+        },
+
+    events:{
+        'submit':'addIndustry'
+    },
+
+    addIndustry: function(e){
+    	//console.log(this);
+        e.preventDefault();
+        //Create contact 
+        this.collection.create({
+
+
+        	country: this.country.val(),
+        	postal_code: this.postal_code.val(),
+        	industry: this.industry.val(),
+        	user_id:this.user_id.val(),
+
+
+        }, {wait: true}); //wait the server for save id in attribute
+        this.clearForm();
+    },
+
+    clearForm: function(){
+
+    	this.country.val('');
+    	this.postal_code.val('');
+    	this.industry.val('');
+    	
+    	
+    	
+       // $('#addEducation').fadeOut();
+
+    }
+});
 
 // Add education View
 
@@ -939,6 +928,67 @@ App.Views.Education= Backbone.View.extend({
     }
 });
 
+
+//Single industry view
+
+App.Views.Industry= Backbone.View.extend({
+    tagName:'div',
+
+    template: template('allIndustriesTemplate'),
+
+    initialize: function(){
+        this.model.on('destroy', this.unrender, this);
+        this.model.on('change', this.render, this); 
+    },
+
+    events:{
+        'click a.ind_delete': 'deleteIndustry',
+        'click a.edit': 'editIndustry'
+    },
+
+    editIndustry: function(){
+        vent.trigger('education:edit', this.model)
+
+    },
+    
+    deleteIndustry: function(){
+
+    
+    var self=this;
+    
+
+    $.confirm({
+        text: "Are you sure you want to delete that industry?",
+        title: "Confirmation required",
+        confirmButton: "Yes I am",
+        cancelButton: "No",
+        post: false,
+        confirmButtonClass: "btn-danger",
+        cancelButtonClass: "btn-default",
+        dialogClass: "modal-dialog modal-lg",
+        confirm: function() {
+            //this.model.destroy();
+            self.model.destroy();
+        },
+        cancel: function() {
+            // nothing to do
+        }
+    });
+
+    },
+
+    render: function(){
+        this.$el.html(this.template(this.model.toJSON()));
+        return this;
+    },
+
+    unrender: function(){
+        this.remove(); //this.$el.remove();
+    }
+});
+
+
+
 //Single experience view
 
 App.Views.Experience= Backbone.View.extend({
@@ -1011,6 +1061,10 @@ App.Views.App=Backbone.View.extend({
     var allExperiencesView = new App.Views.Experiences({ collection: App.experiences}).render();
     $('#allExperiences').append(allExperiencesView.el); // appendo la lista dei contatti nella tabella
     
+
+    var addIndustryView= new App.Views.AddIndustry({ collection: App.industries});
+    var allIndustriesView = new App.Views.Industries({ collection: App.industries}).render();
+    $('#allIndustries').append(allIndustriesView.el); // appendo la lista dei contatti nella tabella
     },
     
     });
@@ -1132,22 +1186,45 @@ App.Views.App=Backbone.View.extend({
  }, 500);
 
 
+
+//Add education / show hide form
 $('#addEducationButton').click(function() {
-//alert('ok');
 $( "#addEducation" ).removeClass("hide");
 $( "#addEducation" ).addClass("show");
 
 });
 
 $('#submitEducationButton').click(function() {
-//alert('ok');
 $( "#addEducation" ).removeClass("show");
 $( "#addEducation" ).addClass("hide");
 });
 
+//Add experiences / show hide form
+$('#addExperienceButton').click(function() {
+$( "#addExperience" ).removeClass("hide");
+$( "#addExperience" ).addClass("show");
+
+});
+
+$('#submitExperienceButton').click(function() {
+$( "#addExperience" ).removeClass("show");
+$( "#addExperience" ).addClass("hide");
+});
+
+//Add Industries / show hide form
+$('#addIndustryButton').click(function() {
+$( "#addIndustry" ).removeClass("hide");
+$( "#addIndustry" ).addClass("show");
+
+});
+
+$('#submitIndustryButton').click(function() {
+$( "#addIndustry" ).removeClass("show");
+$( "#addIndustry" ).addClass("hide");
+});
 
 // Imposto i campi editabili
-    function editableEnabler(){
+    window.editableEnabler = function(){
 
 
 
@@ -1159,7 +1236,8 @@ $( "#addEducation" ).addClass("hide");
 
 			$.fn.editable.defaults.mode = 'inline';
 			
-        	//campo select
+
+        	//campo select (user)
 
         			$('#marital_status').editable({
         	        value: '',    
@@ -1175,29 +1253,68 @@ $( "#addEducation" ).addClass("hide");
         	                 var name=$(this).attr('name');
         	                 var modelsName= $(this).attr('models');
         	                 var model= App.users.get(id).set(name, newValue);
- 
+ 						     console.log(id, name,modelsName, newValue);
         	                 model.save(name, newValue);
         	                 editableEnabler();
         	            }
         	    });
+        			       		
 
-        			//campo country
+        			$('.currently_work_here').editable({
 
+        			  source: [{id:0, text: "No"},{id:1, text: "Yes"}],
+        			  select2: {
+        			  width: 200,
+        			  placeholder: 'Select country',
+        			  allowClear: false,
+        			},
+
+
+        			  
+        			     success: function(response, newValue) {  
+        		              var id=$(this).attr('data-pk');
+        		              var name=$(this).attr('name');
+        		              var modelsName= $(this).attr('models');
+        		              var model= App.experiences.get(id).set(name, newValue);
+        					  console.log(id, name,modelsName, newValue);
+        		              model.save(name, newValue);
+        		              editableEnabler();
+        		         }
+        			});
+        			    
+        			   
+        		
+
+
+        			
+
+
+
+        			//campo country (industry)
         			var countries = [];
         			$.each({"BD": "Bangladesh", "BE": "Belgium", "BF": "Burkina Faso", "BG": "Bulgaria", "BA": "Bosnia and Herzegovina", "BB": "Barbados", "WF": "Wallis and Futuna", "BL": "Saint Bartelemey", "BM": "Bermuda", "BN": "Brunei Darussalam", "BO": "Bolivia", "BH": "Bahrain", "BI": "Burundi", "BJ": "Benin", "BT": "Bhutan", "JM": "Jamaica", "BV": "Bouvet Island", "BW": "Botswana", "WS": "Samoa", "BR": "Brazil", "BS": "Bahamas", "JE": "Jersey", "BY": "Belarus", "O1": "Other Country", "LV": "Latvia", "RW": "Rwanda", "RS": "Serbia", "TL": "Timor-Leste", "RE": "Reunion", "LU": "Luxembourg", "TJ": "Tajikistan", "RO": "Romania", "PG": "Papua New Guinea", "GW": "Guinea-Bissau", "GU": "Guam", "GT": "Guatemala", "GS": "South Georgia and the South Sandwich Islands", "GR": "Greece", "GQ": "Equatorial Guinea", "GP": "Guadeloupe", "JP": "Japan", "GY": "Guyana", "GG": "Guernsey", "GF": "French Guiana", "GE": "Georgia", "GD": "Grenada", "GB": "United Kingdom", "GA": "Gabon", "SV": "El Salvador", "GN": "Guinea", "GM": "Gambia", "GL": "Greenland", "GI": "Gibraltar", "GH": "Ghana", "OM": "Oman", "TN": "Tunisia", "JO": "Jordan", "HR": "Croatia", "HT": "Haiti", "HU": "Hungary", "HK": "Hong Kong", "HN": "Honduras", "HM": "Heard Island and McDonald Islands", "VE": "Venezuela", "PR": "Puerto Rico", "PS": "Palestinian Territory", "PW": "Palau", "PT": "Portugal", "SJ": "Svalbard and Jan Mayen", "PY": "Paraguay", "IQ": "Iraq", "PA": "Panama", "PF": "French Polynesia", "BZ": "Belize", "PE": "Peru", "PK": "Pakistan", "PH": "Philippines", "PN": "Pitcairn", "TM": "Turkmenistan", "PL": "Poland", "PM": "Saint Pierre and Miquelon", "ZM": "Zambia", "EH": "Western Sahara", "RU": "Russian Federation", "EE": "Estonia", "EG": "Egypt", "TK": "Tokelau", "ZA": "South Africa", "EC": "Ecuador", "IT": "Italy", "VN": "Vietnam", "SB": "Solomon Islands", "EU": "Europe", "ET": "Ethiopia", "SO": "Somalia", "ZW": "Zimbabwe", "SA": "Saudi Arabia", "ES": "Spain", "ER": "Eritrea", "ME": "Montenegro", "MD": "Moldova, Republic of", "MG": "Madagascar", "MF": "Saint Martin", "MA": "Morocco", "MC": "Monaco", "UZ": "Uzbekistan", "MM": "Myanmar", "ML": "Mali", "MO": "Macao", "MN": "Mongolia", "MH": "Marshall Islands", "MK": "Macedonia", "MU": "Mauritius", "MT": "Malta", "MW": "Malawi", "MV": "Maldives", "MQ": "Martinique", "MP": "Northern Mariana Islands", "MS": "Montserrat", "MR": "Mauritania", "IM": "Isle of Man", "UG": "Uganda", "TZ": "Tanzania, United Republic of", "MY": "Malaysia", "MX": "Mexico", "IL": "Israel", "FR": "France", "IO": "British Indian Ocean Territory", "FX": "France, Metropolitan", "SH": "Saint Helena", "FI": "Finland", "FJ": "Fiji", "FK": "Falkland Islands (Malvinas)", "FM": "Micronesia, Federated States of", "FO": "Faroe Islands", "NI": "Nicaragua", "NL": "Netherlands", "NO": "Norway", "NA": "Namibia", "VU": "Vanuatu", "NC": "New Caledonia", "NE": "Niger", "NF": "Norfolk Island", "NG": "Nigeria", "NZ": "New Zealand", "NP": "Nepal", "NR": "Nauru", "NU": "Niue", "CK": "Cook Islands", "CI": "Cote d'Ivoire", "CH": "Switzerland", "CO": "Colombia", "CN": "China", "CM": "Cameroon", "CL": "Chile", "CC": "Cocos (Keeling) Islands", "CA": "Canada", "CG": "Congo", "CF": "Central African Republic", "CD": "Congo, The Democratic Republic of the", "CZ": "Czech Republic", "CY": "Cyprus", "CX": "Christmas Island", "CR": "Costa Rica", "CV": "Cape Verde", "CU": "Cuba", "SZ": "Swaziland", "SY": "Syrian Arab Republic", "KG": "Kyrgyzstan", "KE": "Kenya", "SR": "Suriname", "KI": "Kiribati", "KH": "Cambodia", "KN": "Saint Kitts and Nevis", "KM": "Comoros", "ST": "Sao Tome and Principe", "SK": "Slovakia", "KR": "Korea, Republic of", "SI": "Slovenia", "KP": "Korea, Democratic People's Republic of", "KW": "Kuwait", "SN": "Senegal", "SM": "San Marino", "SL": "Sierra Leone", "SC": "Seychelles", "KZ": "Kazakhstan", "KY": "Cayman Islands", "SG": "Singapore", "SE": "Sweden", "SD": "Sudan", "DO": "Dominican Republic", "DM": "Dominica", "DJ": "Djibouti", "DK": "Denmark", "VG": "Virgin Islands, British", "DE": "Germany", "YE": "Yemen", "DZ": "Algeria", "US": "United States", "UY": "Uruguay", "YT": "Mayotte", "UM": "United States Minor Outlying Islands", "LB": "Lebanon", "LC": "Saint Lucia", "LA": "Lao People's Democratic Republic", "TV": "Tuvalu", "TW": "Taiwan", "TT": "Trinidad and Tobago", "TR": "Turkey", "LK": "Sri Lanka", "LI": "Liechtenstein", "A1": "Anonymous Proxy", "TO": "Tonga", "LT": "Lithuania", "A2": "Satellite Provider", "LR": "Liberia", "LS": "Lesotho", "TH": "Thailand", "TF": "French Southern Territories", "TG": "Togo", "TD": "Chad", "TC": "Turks and Caicos Islands", "LY": "Libyan Arab Jamahiriya", "VA": "Holy See (Vatican City State)", "VC": "Saint Vincent and the Grenadines", "AE": "United Arab Emirates", "AD": "Andorra", "AG": "Antigua and Barbuda", "AF": "Afghanistan", "AI": "Anguilla", "VI": "Virgin Islands, U.S.", "IS": "Iceland", "IR": "Iran, Islamic Republic of", "AM": "Armenia", "AL": "Albania", "AO": "Angola", "AN": "Netherlands Antilles", "AQ": "Antarctica", "AP": "Asia/Pacific Region", "AS": "American Samoa", "AR": "Argentina", "AU": "Australia", "AT": "Austria", "AW": "Aruba", "IN": "India", "AX": "Aland Islands", "AZ": "Azerbaijan", "IE": "Ireland", "ID": "Indonesia", "UA": "Ukraine", "QA": "Qatar", "MZ": "Mozambique"}, function(k, v) {
         				countries.push({id: k, text: v});
         			}); 
-        			$('#country').editable({
+        			$('.edit_country').editable({
         					source: countries,
         					select2: {
         					width: 200,
         					placeholder: 'Select country',
         					allowClear: true
-        				} 
+        				},
+        				success: function(response, newValue) {   
+
+        	                 
+        	                 var id=$(this).attr('data-pk');
+        	                 var name=$(this).attr('name');
+        	                 var modelsName= $(this).attr('models');
+        	                 var model= App.industries.get(id).set(name, newValue);
+ 							 console.log(id, name,modelsName, newValue);
+        	                 model.save(name, newValue);
+        	                 editableEnabler();
+        	            }
+
         			});
-
-
-
 
             
         	// tutti gli altri campi		
@@ -1216,6 +1333,14 @@ $( "#addEducation" ).addClass("hide");
 
                             case 'educations':
                                 var model= App.educations.get(id).set(name, newValue);
+                            break;
+
+                            case 'experiences':
+                                var model= App.experiences.get(id).set(name, newValue);
+                            break;
+
+                            case 'industries':
+                                var model= App.industries.get(id).set(name, newValue);
                             break;
                         }
 
@@ -1253,8 +1378,6 @@ function enableToggle(){
     	        }
     	 
     	});
-
-
 
 
     }, 1000);

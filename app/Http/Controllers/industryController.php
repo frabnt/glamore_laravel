@@ -10,6 +10,11 @@ use App\Http\Controllers\Controller;
 
 class industryController extends Controller
 {
+
+    public function indByUserId($id){
+
+            return Industry::where('user_id', '=', $id )->get();
+    }
      /**
      * Display a listing of the resource.
      *
@@ -43,8 +48,7 @@ class industryController extends Controller
         $industry->country = $request->country; 
         $industry->postal_code = $request->postal_code; 
         $industry->industry = $request->industry; 
-
-
+        $industry->user_id=$request->user_id;
 
 
         

@@ -71,6 +71,9 @@ Route::get('/emailtest', function () {
     //Experience
     //get experiences by user id
     Route::get('experience/user/{id}', 'experienceController@expByUserId');
+    //Industry
+    //get industries by user id
+    Route::get('industry/user/{id}', 'industryController@indByUserId');
 
 
     //User
