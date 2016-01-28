@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost:8000',
+    'url' => env('URL', 'http://localhost:8000'),
     //'url' => 'http://localhost/glamore/public',
     /*
     |--------------------------------------------------------------------------
