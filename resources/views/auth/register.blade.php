@@ -45,6 +45,20 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label for="last_name" class="control-label sr-only">Last Name</label>
+					<div class="col-sm-12">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="icon ion-person"></i></span>
+							<input type="text" class="form-control" id="last_name" placeholder="Last Name" name="last_name" value="{{ old('last_name') }}">
+						</div>
+						 @if ($errors->has('last_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('last_name') }}</strong>
+                                    </span>
+                         @endif
+					</div>
+				</div>
+				<div class="form-group">
 					<label for="email" class="control-label sr-only">Email</label>
 					<div class="col-sm-12">
 						<div class="input-group">
@@ -95,9 +109,10 @@
 					</div> -->
 					<div class="col-sm-12">
 						<label class="fancy-checkbox">
-							<input type="checkbox">
+							<input type="checkbox" name="terms" id="terms">
 							<span>I accept the <a href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Agreement</a></span>
 						</label>
+						<strong>{{ $errors->first('terms') }}</strong>
 					</div>
 				</div>
 				<div class="form-group">

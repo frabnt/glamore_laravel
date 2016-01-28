@@ -132,7 +132,7 @@
 					<div class="btn-group">
 						<a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
 							<!-- <img src={{ asset('assets/img/user-loggedin.png') }} alt="Sebastian" /><span class="name">{{ isset(Auth::user()->name) ? Auth::user()->name:'Not logged'}} <i class="icon ion-ios-arrow-down"></i></span> -->
-							<img style="height:32px;" src="{{ asset('/assets/upload/img/user')}}/{{ isset(Auth::user()->profile_image) ? Auth::user()->profile_image:'Not logged'}}" alt="Sebastian" /><span class="name">{{ isset(Auth::user()->name) ? Auth::user()->name:'Not logged'}} <i class="icon ion-ios-arrow-down"></i></span>
+							<img style="height:32px;" src="{{ asset('/assets/upload/img/user')}}/{{ isset(Auth::user()->profile_image) ? Auth::user()->profile_image:'avatar.png'}}" alt="Sebastian" /><span class="name">{{ isset(Auth::user()->name) ? Auth::user()->name:'Not logged'}} <i class="icon ion-ios-arrow-down"></i></span>
 																														
 						</a>
 						<ul class="dropdown-menu" role="menu">

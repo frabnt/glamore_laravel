@@ -36,7 +36,7 @@ opacity: 0.1;
 
 .profile-header-background{
 height: 310px;
-background: url("{{ asset('/assets/upload/img/user')}}/{{ $user->background_image or 'Default' }}");
+background: url("{{ asset('/assets/upload/img/user')}}/{{ $user->background_image or 'city.jpg' }}");
 background-repeat:no-repeat;
 background-size: cover;
 }
@@ -94,7 +94,7 @@ background-size: cover;
 				<div class="profile-info-left">
 					<div  class="text-center">
 						<div id="imgprofile" class="ion-ios-reverse-camera hide"></div>
-						<img  src="{{ asset('/assets/upload/img/user')}}/<%=profile_image%>" alt="Avatar" class="avatar img-circle" />
+						<img  src="{{ asset('/assets/upload/img/user')}}/{{ $user->profile_image or 'avatar.png' }}" alt="Avatar" class="avatar img-circle" />
 						<h2><a  class="editable" models="users" value="<%= name %>" name="name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= name  %> </a>  <a  class="editable" models="users" value="<%= last_name %>" name="last_name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= last_name  %> </a></h2>
 					</div>
 					<div class="action-buttons">
@@ -1162,7 +1162,7 @@ App.Views.App=Backbone.View.extend({
 
 
  	            setTimeout(function(){ 
- 	            //location.reload();
+ 	            location.reload();
  	        	}, 500);
  	           //console.log(id+name+modelsName);
 
