@@ -40,7 +40,10 @@ Route::get('/emailtest', function () {
 |
 */
 
-   
+   Route::get('register/verify/{confirmationCode}', [
+       'as' => 'confirmation_path',
+       'uses' => 'RegistrationController@confirm'
+   ]);
 
     //contacts
     Route::get('/bbContact', function () {
@@ -49,9 +52,9 @@ Route::get('/emailtest', function () {
 
 
     
-    Route::resource('industries', 'IndustryController');
-    Route::resource('experiences', 'ExperienceController');
-    Route::resource('educations', 'EducationController');
+    Route::resource('industries', 'industryController');
+    Route::resource('experiences', 'experienceController');
+    Route::resource('educations', 'educationController');
     Route::resource('users', 'UserController');
     Route::resource('contacts', 'ContactController');
 
