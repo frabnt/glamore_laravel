@@ -109,10 +109,10 @@
 					</div> -->
 					<div class="col-sm-12">
 						<label class="fancy-checkbox">
-							<input type="checkbox" name="terms" id="terms">
-							<span>I accept the <a href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Agreement</a></span>
+							<input type="checkbox" name="terms_agreement" id="terms_agreement">
+							<span>I accept the <a href="#" data-toggle="modal" >Terms &amp; Agreement</a></span>
 						</label>
-						<strong>{{ $errors->first('terms') }}</strong>
+						<strong>{{ $errors->first('terms_agreement') }}</strong>
 					</div>
 				</div>
 				<div class="form-group">

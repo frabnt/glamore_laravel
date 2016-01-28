@@ -7,6 +7,9 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Http\Requests;
+use Illuminate\Http\Request;
+
 
 class AuthController extends Controller
 {
@@ -53,7 +56,7 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
-            'terms'=>'required',
+            'terms_agreement'=>'required',
         ]);
     }
 
@@ -69,8 +72,8 @@ class AuthController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            //'terms_agreement' => $data['terms'],
-            'last_name' => 'pippo',
+            'terms_agreement' => 1,
+            'last_name' => $data['last_name'],
 
         ]);
     }
