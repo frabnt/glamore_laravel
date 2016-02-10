@@ -100,7 +100,7 @@ background-size: cover;
 					<div class="action-buttons">
 						<div class="row">
 							<div class="col-xs-6">
-							<button id="enable" class="btn btn-success btn-block">Disable</button>
+							<button id="enable" class="btn btn-success btn-block">Disable Edit</button>
 							</div>
 							<div class="col-xs-6">
 								<a  class="btn btn-primary btn-block"><i class="icon ion-android-mail"></i> Message</a>
@@ -126,7 +126,7 @@ background-size: cover;
 						<h3>Personal Details</h3>
 
 						<ul>
-							<li>Birthday  <a  class="editable" models="users" value="<%= birthday_date %>" name="birthday_date" data-type="combodate" data-url="" data-pk= "<%=id%>" ><%= birthday_date %> </a></li>
+							<li>Birthday  <a  class="editable combodate" models="users" value="<%= birthday_date %>" name="birthday_date" data-type="combodate" data-url="" data-pk= "<%=id%>" ><%= birthday_date %> </a></li>
 							<li>Marital status <a  id="marital_status" class="editable" models="users" value="<%= marital_status %>" name="marital_status" data-type="select" data-url="" data-pk= "<%=id%>" ><%= marital_status %> </a></li>
 						</ul>
 					</div>
@@ -165,8 +165,8 @@ background-size: cover;
     <tr><td>School</td>
     <td> <a  class="editable" models="educations" name="school" data-type="text" data-url="" data-pk= "<%=id%>" ><%= school %> </a> </td></tr>
     <tr><td>Dates Attended</td>
-    <td><a  class="editable" models="educations" name="date_start" data-type="combodate" data-pk="<%=id%>" data-title="Select Date Start"><%= date_start %></a> /
-	    <a  class="editable" models="educations" name="date_end" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date End"><%= date_end %></a></td></tr>	
+    <td><a  class="editable combodate" value="<%= date_start %>" models="educations" name="date_start" data-type="combodate" data-pk="<%=id%>" data-title="Select Date Start"><%= date_start %></a> /
+	    <a  class="editable combodate" value="<%= date_end %>" models="educations" name="date_end" data-type="combodate" data-pk="<%=id%>" data-title="Select Date End"><%= date_end %></a></td></tr>	
 	<tr><td>Degree</td>
     <td><a  class="editable" models="educations" name="degree"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= degree %></a></td></tr>
     <tr><td>Field of Study</td>
@@ -189,8 +189,8 @@ background-size: cover;
     <tr><td>Title</td>
     <td> <a  class="editable" models="experiences" name="title" data-type="text" data-url="" data-pk= "<%=id%>" ><%= title %> </a> </td></tr>
     <tr><td>Dates Attended</td>
-    <td><a  class="editable" models="experiences" name="date_start" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date Start"><%= date_start %></a> /
-	    <a  class="editable" models="experiences" name="date_end" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="<%=id%>" data-title="Select Date End"><%= date_end %></a></td></tr>	
+    <td><a  class="editable combodate" value="<%= date_start %>" models="experiences" name="date_start" data-type="combodate"   data-pk="<%=id%>" data-title="Select Date Start"><%= date_start %></a> /
+	    <a  class="editable combodate" value="<%= date_end %>"  models="experiences" name="date_end" data-type="combodate"  data-pk="<%=id%>" data-title="Select Date End"><%= date_end %></a></td></tr>	
 	<tr><td>Location</td>
     <td><a  class="editable" models="experiences" name="location"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= location %></a></td></tr>
     <tr><td>Currently work here</td>
@@ -1281,9 +1281,74 @@ $( "#addIndustry" ).addClass("hide");
         		              editableEnabler();
         		         }
         			});
-        			    
-        			   
-        		
+        		// date fields	    
+        		date = new Date();	   
+
+        		$('.combodate').editable({
+                     
+                     combodate: {
+                             minYear: date.getFullYear()-116,
+                             maxYear: date.getFullYear(),
+                             //minuteStep: 1,
+                             
+                             yearDescending: true,
+
+                             format: 'YYYY-MM-DD',      
+                             //in this format items in dropdowns are displayed
+                             template: 'YYYY / MMM /D',
+                             //initial value, can be `new Date()`    
+                                           
+                             
+                              
+                            
+                             
+                             
+                             errorClass: null,
+                             roundTime: false, // whether to round minutes and seconds if step > 1
+                             smartDays: true, // whether days in combo depend on selected month: 31, 30, 28
+                        },
+                                        success: function(response, newValue) {   
+
+                        var id=$(this).attr('data-pk');
+                        var name=$(this).attr('name');
+                        var modelsName= $(this).attr('models');
+                  
+                  var mese = parseInt(newValue._i[1])+1;
+
+                  var dataForBb=newValue._i[0]+'-'+mese+'-'+newValue._i[2];
+
+                  var dataForBbFormatted= moment(dataForBb).format('YYYY-MM-DD');
+
+                         switch (modelsName){
+                            case 'users':
+                                var model= App.users.get(id).set(name, dataForBbFormatted);
+                            break;
+
+                            case 'educations':
+                                var model= App.educations.get(id).set(name, dataForBbFormatted);
+                            break;
+
+                            case 'experiences':
+                                var model= App.experiences.get(id).set(name, dataForBbFormatted);
+                            break;
+
+                            case 'industries':
+                                var model= App.industries.get(id).set(name, dataForBbFormatted);
+                            break;
+                        }
+
+                        model.save(name, dataForBbFormatted);
+                        editableEnabler();
+                   },
+                   error: function(response, newValue) {
+                       if(response.status === 500) {
+                           return 'Service unavailable. Please try later.';
+                       } else {
+                           return response.responseText;
+                       }
+                   }
+                     
+                 });
 
 
         			
@@ -1324,7 +1389,7 @@ $( "#addIndustry" ).addClass("hide");
                         var id=$(this).attr('data-pk');
                         var name=$(this).attr('name');
                         var modelsName= $(this).attr('models');
-                  console.log(id, name,modelsName, newValue);
+                  //console.log(id, name,modelsName, newValue);
 
                         switch (modelsName){
                             case 'users':
@@ -1371,10 +1436,10 @@ function enableToggle(){
     	
     	        $('.editable').editable('toggleDisabled');
     	        var text=$('#enable').text();
-    	        if(text=='Enable'){
-    	            $('#enable').text('Disable');
+    	        if(text=='Enable Edit'){
+    	            $('#enable').text('Disable Edit');
     	        }else{
-    	            $('#enable').text('Enable');
+    	            $('#enable').text('Enable Edit');
     	        }
     	 
     	});
