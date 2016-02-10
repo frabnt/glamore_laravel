@@ -102,9 +102,7 @@ background-size: cover;
 							<div class="col-xs-6">
 							<button id="enable" class="btn btn-success btn-block">Disable Edit</button>
 							</div>
-							<div class="col-xs-6">
-								<a  class="btn btn-primary btn-block"><i class="icon ion-android-mail"></i> Message</a>
-							</div>
+							{{-- <div class="col-xs-6"> <a  class="btn btn-primary btn-block"><i class="icon ion-android-mail"></i> Message</a> </div>  --}}
 						</div>
 					</div>
 					<div class="section">
