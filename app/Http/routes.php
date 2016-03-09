@@ -50,13 +50,16 @@ Route::get('/emailtest', function () {
         return view('bbContact');
     });
 
-
-    
+Route::group(['middleware' => 'cors'], function(){
     Route::resource('industries', 'industryController');
     Route::resource('experiences', 'experienceController');
     Route::resource('educations', 'educationController');
     Route::resource('users', 'UserController');
     Route::resource('contacts', 'ContactController');
+});
+
+    
+    
 
 
 
