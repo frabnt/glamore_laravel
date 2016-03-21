@@ -200,7 +200,7 @@
 							<a href="#" class="submenu-toggle"><i class="icon ion-person"></i><span class="text">Affiliates</span></a>
 							<ul class="list-unstyled sub-menu collapse">
 								<li><a href="form-fancy-elements.html"><span class="text">BIO Affiliate</span></a></li>
-								<li><a href="form-fancy-elements.html"><span class="text">Search for Affiliate</span></a></li>
+								<li><a href="{{ url('/search-for-affiliate') }}"><span class="text">Search for Affiliate</span></a></li>
 								<li><a href="form-fancy-elements.html"><span class="text">Activities diary</span></a></li>
 								<li><a href="form-fancy-elements.html"><span class="text">Search and join projects</span></a></li>
 							</ul>

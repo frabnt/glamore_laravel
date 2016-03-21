@@ -56,6 +56,15 @@ Route::group(['middleware' => 'cors'], function(){
     Route::resource('educations', 'educationController');
     Route::resource('users', 'UserController');
     Route::resource('contacts', 'ContactController');
+    //Educations
+    //get educations by user id
+    Route::get('education/user/{id}', 'educationController@eduByUserId');
+    //Experience
+    //get experiences by user id
+    Route::get('experience/user/{id}', 'experienceController@expByUserId');
+    //Industry
+    //get industries by user id
+    Route::get('industry/user/{id}', 'industryController@indByUserId');
 });
 
     
@@ -71,15 +80,11 @@ Route::group(['middleware' => 'cors'], function(){
     Route::auth();
 
     Route::get('/user/{id}','UserController@showProfile');
-    //Educations
-    //get educations by user id
-    Route::get('education/user/{id}', 'educationController@eduByUserId');
-    //Experience
-    //get experiences by user id
-    Route::get('experience/user/{id}', 'experienceController@expByUserId');
-    //Industry
-    //get industries by user id
-    Route::get('industry/user/{id}', 'industryController@indByUserId');
+
+    Route::get('/search-for-affiliate', function () {
+        return view('affiliates.search_for_affiliate');
+    });
+    
 
 
     //User
