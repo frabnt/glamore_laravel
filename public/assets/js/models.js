@@ -61,3 +61,14 @@ App.Models.Industry= Backbone.Model.extend({
 	},
 	
 });
+
+App.Models.Project= Backbone.Model.extend({
+	//validate
+	validate: function(attrs){
+
+		if(! attrs.title){
+			return 'Please enter project title.';
+		}
+	},
+	
+});

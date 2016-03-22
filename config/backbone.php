@@ -14,4 +14,7 @@ return [
  'collection_industries' => '/industries',
  'collection_industries_by_user_id' => '/industry/user',
 
+ 'collection_projects' => '/projects',
+ 'collection_projects_by_user_id' => '/project/user',
+ 
 ];

@@ -189,7 +189,7 @@ App.Collections.Users= Backbone.Collection.extend({
         $.getScript('{{ asset("assets/js/queen-table.js") }}', function(){});
 
 
-        	console.log(App.users);
+        	//console.log(App.users);
         
         new App.Views.App({collection: App.users});    
 
@@ -211,7 +211,7 @@ App.Views.App=Backbone.View.extend({
 
     initialize: function(){	
     vent.on('user:edit', this.editUser, this);
-    var addUsersView= new App.Views.AddUser({ collection: App.users});
+    //var addUsersView= new App.Views.AddUser({ collection: App.users});
     var allUsersView = new App.Views.Users({ collection: App.users}).render();
     $('.allUsers').append(allUsersView.el); // appendo la lista dei contatti nella tabella
 

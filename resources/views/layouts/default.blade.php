@@ -187,7 +187,8 @@
 							<a href="#" class="submenu-toggle"><i class="icon ion-ios-paper-outline"></i><span class="text">Projects</span></a>
 							<ul class="list-unstyled sub-menu collapse">
 								<li><a href="form-fancy-elements.html"><span class="text">Post a project</span></a></li>
-								<li><a href="form-fancy-elements.html"><span class="text">My project</span></a></li>
+								<li><a href="{{ url('/my-project') }}"><span class="text">My project</span></a></li>
+								<li><a href="{{ url('/project-detail') }}"><span class="text">Project detail</span></a></li>
 								<li><a href="form-fancy-elements.html"><span class="text">Activities (task/meeting/call)</span></a></li>
 								<li><a href="form-fancy-elements.html"><span class="text">Documents and note</span></a></li>
 								<li><a href="form-fancy-elements.html"><span class="text">Videoconference</span></a></li>

@@ -56,6 +56,7 @@ Route::group(['middleware' => 'cors'], function(){
     Route::resource('educations', 'educationController');
     Route::resource('users', 'UserController');
     Route::resource('contacts', 'ContactController');
+    Route::resource('projects', 'ProjectController');
     //Educations
     //get educations by user id
     Route::get('education/user/{id}', 'educationController@eduByUserId');
@@ -65,6 +66,9 @@ Route::group(['middleware' => 'cors'], function(){
     //Industry
     //get industries by user id
     Route::get('industry/user/{id}', 'industryController@indByUserId');
+    //Project
+    //get projects by user id
+    Route::get('project/user/{id}', 'projectController@prjByUserId');
 });
 
     

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Team;
 use App\Http\Requests;
 
 class TeamController extends Controller

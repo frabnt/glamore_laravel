@@ -1,9 +1,9 @@
 <?php
 
-titlespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Project;
 use App\Http\Requests;
 
 class ProjectController extends Controller
@@ -75,11 +75,26 @@ class ProjectController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+
+
+
+
+
+
+
      */
     public function edit($id)
     {
         //
     }
+
+
+
+     public function prjByUserId($id){
+
+            return Project::where('user_id', '=', $id )->get();
+    }
+
 
     /**
      * Update the specified resource in storage.
