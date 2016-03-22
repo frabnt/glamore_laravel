@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+titlespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
@@ -15,7 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        return Project::all();
     }
 
     /**
@@ -36,7 +36,27 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $project = new Project;
+
+        $project->title = $request->title; 
+        $project->description=$request->description;
+        $project->date_start=$request->date_start;
+        $project->date_end=$request->date_end;
+        $project->duration_day=$request->duration_day;
+        $project->progress=$request->progress;
+        $project->priority=$request->priority;
+        $project->client=$request->client;
+        $project->status=$request->status;
+        $project->team_id=$request->team_id;
+        $project->user_id=$request->user_id;
+        
+
+        
+        $project->save();
+
+
+
+        return $project;  //importante altrimenti bacbone non riceve l'id in ritorno
     }
 
     /**
@@ -47,7 +67,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        return Project::find($id);
     }
 
     /**
@@ -70,7 +90,22 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $project = Project::find($id); 
+        $project->title = $request->title; 
+        $project->description=$request->description;
+        $project->date_start=$request->date_start;
+        $project->date_end=$request->date_end;
+        $project->duration_day=$request->duration_day;
+        $project->progress=$request->progress;
+        $project->priority=$request->priority;
+        $project->client=$request->client;
+        $project->status=$request->status;
+        $project->team_id=$request->team_id;
+        $project->user_id=$request->user_id;
+        
+
+        
+        $project->save();
     }
 
     /**
@@ -81,6 +116,6 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $project= Project::find($id)->delete();
     }
 }

@@ -15,7 +15,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        //
+        return Todo::all();
     }
 
     /**
@@ -36,7 +36,18 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $todo = new Todo;
+
+        $todo->title = $request->title; 
+        $todo->done = $request->done; 
+        $todo->project_id=$request->project_id;
+        $todo->user_id=$request->user_id;
+
+
+        
+        $todo->save();
+
+        return $todo;  //importante altrimenti bacbone non riceve l'id in ritorno
     }
 
     /**
@@ -47,7 +58,7 @@ class TodoController extends Controller
      */
     public function show($id)
     {
-        //
+        return Todo::find($id);
     }
 
     /**
@@ -70,7 +81,16 @@ class TodoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $todo = Todo::find($id); 
+
+        $todo->title = $request->title; 
+        $todo->done = $request->done; 
+        $todo->project_id=$request->project_id;
+        $todo->user_id=$request->user_id;
+
+
+        
+        $todo->save();
     }
 
     /**
@@ -81,6 +101,6 @@ class TodoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $todo= Todo::find($id)->delete();
     }
 }

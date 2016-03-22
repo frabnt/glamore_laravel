@@ -15,7 +15,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        //
+        return Team::all();
     }
 
     /**
@@ -36,7 +36,18 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $team = new Team;
+
+        $team->name = $request->name; 
+        $team->project_id=$request->project_id;
+        //reration to users
+        $team->users()->attach($request->user_id);
+
+        $team->save();
+
+
+
+        return $team;  //importante altrimenti bacbone non riceve l'id in ritorno
     }
 
     /**
@@ -47,7 +58,7 @@ class TeamController extends Controller
      */
     public function show($id)
     {
-        //
+         return Team::find($id);
     }
 
     /**
@@ -70,7 +81,14 @@ class TeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $team = Team::find($id); 
+
+        $team->name = $request->name; 
+        $team->project_id=$request->project_id;
+        //reration to users
+        $team->users()->attach($request->user_id);
+
+        $team->save();
     }
 
     /**
@@ -81,6 +99,6 @@ class TeamController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $team= Team::find($id)->delete();
     }
 }
