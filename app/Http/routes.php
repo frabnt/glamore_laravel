@@ -84,6 +84,14 @@ Route::group(['middleware' => 'cors'], function(){
     Route::get('/search-for-affiliate', function () {
         return view('affiliates.search_for_affiliate');
     });
+
+    Route::get('/my-project', function () {
+        return view('projects.my-project');
+    });
+
+    Route::get('/project-detail/', function () {
+        return view('projects.project-detail');
+    });
     
 
 
