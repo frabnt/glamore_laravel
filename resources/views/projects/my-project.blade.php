@@ -153,7 +153,11 @@ App.Collections.Projects= Backbone.Collection.extend({
 
 
 
-
+// Carico i project by user id
+$.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_projects_by_user_id')}}/"+user_id, function(data) {
+App.projects= new App.Collections.Projects(data);
+console.log(data);
+});
 
 
 
