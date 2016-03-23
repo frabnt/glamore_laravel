@@ -25,6 +25,8 @@ class CreateProjectsTable extends Migration
             $table->string('status')->nullable(); 
             $table->integer('team_id')->nullable(); 
             $table->integer('user_id')->nullable(); 
+            $table->string('class_priority')->default("label-success");
+            $table->string('class_status')->default("label-success");
             $table->timestamps();
         });
     }

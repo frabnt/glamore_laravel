@@ -70,9 +70,9 @@
 					<td><div class="progress">
 						<div class="progress-bar" data-transitiongoal="<%= progress %>" aria-valuenow="<%= progress %>" style="width: <%= progress %>%;"><%= progress %>% </div>
 					</td></div>
-					<td><span class="label label-warning"><%= priority %></span></td>
-					<td><img src="assets/img/user2.png" alt="Avatar" class="avatar"> <a href="#"><%= user_id %></a></td>
-					<td><span class="label label-success"><%= status %></span></td>
+					<td><span class="label <%= class_priority %>"><%= priority %></span></td>
+					<td><img src="{{ asset('/assets/upload/img/user')}}/{{ $user->profile_image or 'avatar.png' }}" alt="Avatar" class="avatar"> <a href="#">{{ $user->name}} </a></td>
+					<td><span class="label <%= class_status %>"><%= status %></span></td>
 					<td><a href="#projects/<%= id %>" class="prj_delete btn btn-primary btn-block" >Delete </a></td>
 				</script>
 
@@ -323,11 +323,12 @@ App.Views.AddProject= Backbone.View.extend({
         //this.team_id=;
         this.user_id="";
 
+
     },
 
     getProgress:function(){
 
-    	return "50";
+    	return "0";
     },
     getEndDate:function(date, amount){
     	
@@ -356,6 +357,8 @@ App.Views.AddProject= Backbone.View.extend({
         status: "ACTIVE",
         //team_id: this.team_id.val(),
         user_id: user_id,
+        class_priority:"label-success",
+        class_status:"label-success",
 
             
 

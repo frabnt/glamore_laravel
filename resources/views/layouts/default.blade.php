@@ -177,21 +177,19 @@
 							<a href="#" class="submenu-toggle"><i class="icon ion-ios-speedometer-outline"></i><span class="text">Dashboards</span></a>
 							<ul class="list-unstyled sub-menu collapse in">
 								<li class="active"><a href="{{URL::to('home')}}"><span class="text">Dashboard</span></a></li>
-								<li><a href="index2.html"><span class="text">Next meetings</span></a></li>
-								<li><a href="index2.html"><span class="text">Task to do</span></a></li>
-								<li><a href="index2.html"><span class="text">Card of the last project</span></a></li>
-								<li><a href="index2.html"><span class="text">Chart of earnings</span></a></li>
+								<li><a href="#"><span class="text">Next meetings</span></a></li>
+								<li><a href="#"><span class="text">Task to do</span></a></li>
+								<li><a href="#"><span class="text">Card of the last project</span></a></li>
+								<li><a href="#"><span class="text">Chart of earnings</span></a></li>
 							</ul>
 						</li>
 						<li class="has-submenu">
 							<a href="#" class="submenu-toggle"><i class="icon ion-ios-paper-outline"></i><span class="text">Projects</span></a>
 							<ul class="list-unstyled sub-menu collapse">
-								<li><a href="form-fancy-elements.html"><span class="text">Post a project</span></a></li>
-								<li><a href="{{ url('/my-project') }}"><span class="text">My project</span></a></li>
-								<li><a href="{{ url('/project-detail') }}"><span class="text">Project detail</span></a></li>
-								<li><a href="form-fancy-elements.html"><span class="text">Activities (task/meeting/call)</span></a></li>
-								<li><a href="form-fancy-elements.html"><span class="text">Documents and note</span></a></li>
-								<li><a href="form-fancy-elements.html"><span class="text">Videoconference</span></a></li>
+								<li><a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}"><span class="text">Post a project</span></a></li>
+								<li><a href="#"><span class="text">Activities (task/meeting/call)</span></a></li>
+								<li><a href="#"><span class="text">Documents and note</span></a></li>
+								<li><a href="#"><span class="text">Videoconference</span></a></li>
 							</ul>
 						</li>
 
@@ -200,20 +198,20 @@
 						<li class="has-submenu">
 							<a href="#" class="submenu-toggle"><i class="icon ion-person"></i><span class="text">Affiliates</span></a>
 							<ul class="list-unstyled sub-menu collapse">
-								<li><a href="form-fancy-elements.html"><span class="text">BIO Affiliate</span></a></li>
+								<li><a href="#"><span class="text">BIO Affiliate</span></a></li>
 								<li><a href="{{ url('/search-for-affiliate') }}"><span class="text">Search for Affiliate</span></a></li>
-								<li><a href="form-fancy-elements.html"><span class="text">Activities diary</span></a></li>
-								<li><a href="form-fancy-elements.html"><span class="text">Search and join projects</span></a></li>
+								<li><a href="#"><span class="text">Activities diary</span></a></li>
+								<li><a href="#"><span class="text">Search and join projects</span></a></li>
 							</ul>
 						</li>
 
 						<li class="has-submenu">
 							<a href="#" class="submenu-toggle"><i class="icon ion-stats-bars"></i><span class="text">Reports</span></a>
 							<ul class="list-unstyled sub-menu collapse">
-								<li><a href="form-fancy-elements.html"><span class="text">payments received</span></a></li>
-								<li><a href="form-fancy-elements.html"><span class="text">summary of earnings</span></a></li>
-								<li><a href="form-fancy-elements.html"><span class="text">details of tax</span></a></li>
-								<li><a href="form-fancy-elements.html"><span class="text">invoice and remittance</span></a></li>
+								<li><a href="#"><span class="text">payments received</span></a></li>
+								<li><a href="#"><span class="text">summary of earnings</span></a></li>
+								<li><a href="#"><span class="text">details of tax</span></a></li>
+								<li><a href="#"><span class="text">invoice and remittance</span></a></li>
 							</ul>
 						</li>
 					</ul>

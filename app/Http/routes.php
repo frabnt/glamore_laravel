@@ -69,6 +69,7 @@ Route::group(['middleware' => 'cors'], function(){
     //Project
     //get projects by user id
     Route::get('project/user/{id}', 'projectController@prjByUserId');
+   
 });
 
     
@@ -89,13 +90,19 @@ Route::group(['middleware' => 'cors'], function(){
         return view('affiliates.search_for_affiliate');
     });
 
-    Route::get('/my-project', function () {
-        return view('projects.my-project');
-    });
+    // Route::get('/my-project', function () {
+    //     return view('projects.my-project');
+    // });
 
-    Route::get('/project-detail/', function () {
-        return view('projects.project-detail');
-    });
+
+    Route::get('/my-project/{id}','projectController@show_my_project');
+
+    // Route::get('/project-detail/{id}', function () {
+    //     //return view('projects.project-detail');
+        
+    // });
+
+ Route::get('project-detail/{id}', 'projectController@project_detail');
     
 
 

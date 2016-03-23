@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Project;
 use App\Http\Requests;
-
+use View;
+use App\User;
 class ProjectController extends Controller
 {
     /**
@@ -13,6 +14,18 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+public function show_my_project($id){
+    $user = User::find($id);   
+    return view('projects.my-project', compact('user'));
+}
+
+
+    public function project_detail($id){
+        $project= Project::find($id);
+
+        return View('projects.project-detail')->with('project_id', $project->id );
+    }
     public function index()
     {
         return Project::all();
@@ -45,8 +58,10 @@ class ProjectController extends Controller
         $project->duration_day=$request->duration_day;
         $project->progress=$request->progress;
         $project->priority=$request->priority;
+        $project->class_priority=$request->class_priority;
         $project->client=$request->client;
         $project->status=$request->status;
+        $project->class_status=$request->class_status;
         $project->team_id=$request->team_id;
         $project->user_id=$request->user_id;
         
@@ -117,6 +132,9 @@ class ProjectController extends Controller
         $project->status=$request->status;
         $project->team_id=$request->team_id;
         $project->user_id=$request->user_id;
+        $project->class_status=$request->class_status;
+        $project->class_priority=$request->class_priority;
+
         
 
         

@@ -8,6 +8,8 @@
 
 
 <!-- COLUMN RIGHT -->
+
+
 		<div id="col-right" class="col-right ">
 			<div class="container-fluid primary-content">
 				<!-- PRIMARY CONTENT HEADING -->
@@ -66,23 +68,27 @@
 				<!-- END PRIMARY CONTENT HEADING -->
 				<div class="row">
 					<div class="col-md-8">
+					<div id="editProject"></div>
+
+
+				<script id="editProjectTemplate" type="text/template">
 						<div class="project-section general-info">
 							<h3>General Info</h3>
-							<button type="button" class="btn btn-sm btn-default pull-right"><i class="icon ion-compose"></i> Edit Project</button>
-							<p>Rapidiously monetize orthogonal platforms with 24/7 convergence. Uniquely create error-free alignments for customized users. Credibly facilitate just in time benefits rather than user friendly imperatives. Continually promote extensible process improvements whereas virtual. Enthusiastically pontificate proactive infrastructures vis-a-vis value-added products. Enthusiastically coordinate pandemic platforms rather than team building best practices. Globally facilitate plug-and-play materials and interoperable interfaces. Enthusiastically.</p>
+							
+							<p><%= title %></p>
 							<div class="row">
 								<div class="col-sm-9">
 									<dl class="dl-horizontal">
 										<dt>Date:</dt>
-										<dd>20-09-2014 - 20-12-2014</dd>
+										<dd> <a  class="editable combodate" models="projects" value="<%= date_start %>" name="date_start" data-type="combodate" data-url="" data-pk= "<%=id%>" ><%= date_start %> </a> - <a  class="editable combodate" models="projects" value="<%= date_end %>" name="date_end" data-type="combodate" data-url="" data-pk= "<%=id%>" ><%= date_end %> </a></dd>
 										<dt>Duration:</dt>
-										<dd>90 days <span class="text-muted"><small>(50 days remaining)</small></span></dd>
+										<dd><a  class="editable" models="projects" value="<%= duration_day %>" name="duration_day" data-type="number" data-url="" data-pk= "<%=id%>" ><%= duration_day  %> </a> days <span class="text-muted"><small>(50 days remaining)</small></span></dd>
 										<dt>Client:</dt>
-										<dd><a href="#">ZenArt</a></dd>
+										<dd><a  class="editable" models="projects" value="<%= client %>" name="client" data-type="text" data-url="" data-pk= "<%=id%>" ><%= client  %> </a></dd>
 										<dt>Priority:</dt>
-										<dd><span class="label label-danger">HIGH</span></dd>
+										<dd><a  id="priority" class="editable" models="projects" value="<%= priority %>" name="priority" data-type="select" data-url="" data-pk= "<%=id%>" ><%= priority %> </a></dd>
 										<dt>Status:</dt>
-										<dd><span class="label label-success">ACTIVE</span></dd>
+										<dd><a  id="status" class="editable" models="projects" value="<%= status %>" name="status" data-type="select" data-url="" data-pk= "<%=id%>" ><%= status %> </a></dd>
 										<dt>Team:</dt>
 										<dd>
 											<ul class="list-inline team-list">
@@ -121,12 +127,13 @@
 								</div>
 								<div class="col-sm-3">
 									<div class="status-chart project-progress bottom-30px">
-										<div class="pie-chart" data-percent="60"><span class="percent">60%</span></div>
+										<div class="pie-chart" data-percent="<%= progress %>"><span class="percent"><%= progress %>%</span></div>
 										<span class="chart-title">OVERALL PROGRESS</span>
 									</div>
 								</div>
 							</div>
 						</div>
+						</script>
 <!-- 						<div class="project-section activity">
 							<h3>Activity</h3>
 							<ul class="list-unstyled project-activity-list">
@@ -329,8 +336,9 @@
 				@section('footer_script')
 
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
+<script src={{ asset('assets/js/jquery/jquery-2.1.0.min.js') }}></script>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
 
 
 
@@ -338,32 +346,575 @@
 	<script src={{ asset('assets/js/models.js') }}></script>
 	<script src={{ asset('assets/js/collections.js') }}></script>
 	<script src={{ asset('assets/js/router.js') }}></script>
-	<script src={{ asset('assets/js/jquery/jquery-2.1.0.min.js') }}></script>"></script>
+	
 	<script src={{ asset('assets/js/bootstrap/bootstrap.js') }}></script>"></script>
 	<script src={{ asset('assets/js/plugins/bootstrap-multiselect/bootstrap-multiselect.js') }}></script>"></script>
 	<script src={{ asset('assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}></script>"></script>
 	<script src={{ asset('assets/js/queen-common.js') }}></script>"></script>
 	<script src={{ asset('assets/js/plugins/stat/jquery-easypiechart/jquery.easypiechart.min.js') }}></script>"></script>
 	<script src={{ asset('assets/js/queen-page.js') }}></script>"></script>
+	<script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script>"></script>
 
 
  
 	<script src={{ asset('assets/js/plugins/jquery.confirm.min.js') }}></script>
 
- 
-
-
+ <script src={{ asset('assets/js/plugins/jquery-maskedinput/jquery.masked-input.min.js') }}></script>
+	<script src={{ asset('assets/js/queen-charts.js') }}></script>
+	<script src={{ asset('assets/js/queen-maps.js') }}></script>
+	<script src={{ asset('assets/js/queen-elements.js') }}></script>
+   <script src={{ asset('assets/js/plugins/bootstrap-editable/jquery.mockjax.min.js') }}></script>
+   <script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script>
+   <script src={{ asset('assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.js') }}></script>
+   <script src={{ asset('assets/js/plugins/bootstrap-editable/bootstrap-editable.min.js') }}></script>
+   <script src={{ asset('assets/js/plugins/typeahead/typeahead.js') }}></script>
+   <script src={{ asset('assets/js/plugins/typeahead/typeaheadjs.1.5.1.js') }}></script>
+   <script src={{ asset('assets/js/plugins/select2/select2.min.js') }}></script>
+   <script src={{ asset('assets/js/plugins/bootstrap-editable/address.custom.js') }}></script>
+   <script src={{ asset('assets/js/plugins/bootstrap-editable/demo-mock.js') }}></script>
 
 
 @stop
 
 
 @section('script')
+<script> window.user_id = {!! auth()->user()->id !!}; </script>
+<script>window.project_id={{$project_id}}; </script>
  <script >
     
-   
+   //Collections   	**********************************************************************************************************************************
+
+   //User collection	
 
 
+   App.Collections.Projects= Backbone.Collection.extend({
+   	model:App.Models.Project,
+   	url:'{{Config::get('app.url')}}{{Config::get('backbone.collection_projects')}}'
+   });
+
+
+
+
+
+
+   // //Router 
+
+           new App.Router;
+          
+           Backbone.history.start();
+
+
+           // Carico il project by user id
+           $.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_projects')}}/"+project_id, function(data) {
+  
+           	   var project= new App.Models.Project(data);
+           	   var editProject= new App.Views.EditProject({ model: project});
+           	   $('#editProject').html(editProject.el);
+           		
+
+            App.projects= new App.Collections.Projects(data);
+           });
+          
+           App.projects= new App.Collections.Projects;
+           App.projects.fetch().then(function(){
+
+           new App.Views.App({collection: App.projects});    
+
+           });
+
+
+
+
+
+
+   //VIEWS  **********************************************************************************************************************************
+
+
+
+   // MAIN VIEW *******************************************************************************************************************************
+
+
+   App.Views.App=Backbone.View.extend({
+
+       initialize: function(){	
+       vent.on('project:edit', this.editProject, this);
+       //var addProjectsView= new App.Views.AddProject({ collection: App.projects});
+       //var allProjectsView = new App.Views.Projects({ collection: App.projects}).render();
+       //$('#allProjects').append(allProjectsView.el); // appendo la lista dei contatti nella tabella
+
+
+
+       },
+
+
+       
+       });
+
+
+           
+
+      //USER VIEWS************************************************************************************************************************************************************************************
+
+   //Edit user View
+
+   // App.Views.EditUser = Backbone.View.extend({
+   //     template: template('editUserTemplate'),
+
+   //     initialize: function(){
+   //         this.render();
+   //     },
+
+   //     events:{
+           
+   //     },
+
+   //     render: function(){
+   //         var html =this.template(this.model.toJSON());
+
+   //         this.$el.html(html);
+   //         return this;
+   //     }
+
+   // });
+
+   //Single user view
+
+   // App.Views.Project= Backbone.View.extend({
+   //     tagName:'tr',
+
+   //     template: template('allProjectsTemplate'),
+
+   //     initialize: function(){
+   //         this.model.on('destroy', this.unrender, this);
+   //         this.model.on('change', this.render, this); 
+   //     },
+
+   //     events:{
+   //         'click a.prj_delete': 'deleteProject',
+   //         'click a.edit': 'editProject'
+   //     },
+
+   //     editProject: function(){
+   //         vent.trigger('project:edit', this.model);
+
+
+   //     },
+
+
+       
+       
+   //     deleteProject: function(){
+
+       
+   //     var self=this;
+       
+
+   //     $.confirm({
+   //         text: "Are you sure you want to delete that project?",
+   //         title: "Confirmation required",
+   //         confirmButton: "Yes I am",
+   //         cancelButton: "No",
+   //         post: false,
+   //         confirmButtonClass: "btn-danger",
+   //         cancelButtonClass: "btn-default",
+   //         dialogClass: "modal-dialog modal-lg",
+   //         confirm: function() {
+   //             //this.model.destroy();
+   //             self.model.destroy();
+   //         },
+   //         cancel: function() {
+   //             // nothing to do
+   //         }
+   //     });
+
+   //     },
+
+   //     render: function(){
+   //         this.$el.html(this.template(this.model.toJSON()));
+
+   //         return this;
+   //     },
+
+   //     unrender: function(){
+   //         this.remove(); //this.$el.remove();
+   //     }
+   // });
+
+   // // Add project View
+
+   // App.Views.AddProject= Backbone.View.extend({
+   //     el:'#addProject',
+
+   //     initialize: function(){
+
+   //         this.title = $('#title');
+   //         this.description = $('#description');
+   //         this.date_start = moment();
+   //         this.duration_day=$('#duration_day');
+   //         this.progress="";
+   //         this.priority="";
+   //         //this.client=$('#client');
+   //         this.status="";
+   //         this.date_end = "";
+   //         //this.team_id=;
+   //         this.user_id="";
+
+   //     },
+
+   //     getProgress:function(){
+
+   //     	return "50";
+   //     },
+   //     getEndDate:function(date, amount){
+       	
+       	
+   // 		return moment(date).add(amount, 'day');
+   //     },
+
+   //     events:{
+   //         'submit':'addProject'
+   //     },
+
+   //     addProject: function(e){
+   //         e.preventDefault();
+
+   //         //Create contact 
+   //         this.collection.create({
+
+   //         title: this.title.val(),
+   //         description: this.description.val(),
+   //         date_start: this.date_start.format("YYYY-MM-DD"),
+   //         date_end: this.getEndDate(this.date_start, this.duration_day),
+   //         duration_day: this.duration_day.val(),
+   //         progress: this.getProgress(),
+   //         priority: "LOW",
+   //         //client: this.client.val(),
+   //         status: "ACTIVE",
+   //         //team_id: this.team_id.val(),
+   //         user_id: user_id,
+
+               
+
+   //         }, {wait: true}); //wait the server for save id in attribute
+   //         this.clearForm();
+   //     },
+
+   //     clearForm: function(){
+
+           
+   //         this.title.val('');
+   //         this.description.val('');
+   //         //this.date_start.val('');
+   //         //this.date_end.val('');
+   //         this.duration_day.val('');
+   //         // this.progress.val('');
+   //         // this.priority.val('');
+   //         //this.client.val('');
+   //         // this.status.val('');
+   //         // this.team_id.val('');
+   //         // this.user_id.val('');
+
+   //     }
+   // });
+
+
+   // //All project View
+
+   // App.Views.Projects=Backbone.View.extend({
+       
+   //     tagName: 'tbody',
+
+   //     initialize: function(){
+   //         this.collection.on('add', this.addOne, this); // sync when return data from server
+
+   //     },
+
+   //     render: function(){
+   //         //this.$el.empty();
+   //         this.collection.each(this.addOne, this);
+   //         return this;
+   //     },
+
+   //     addOne: function(project){
+   //         var projectView= new App.Views.Project({ model:project});
+   //         this.$el.append(projectView.render().el);
+   //     }
+
+   // });
+
+
+//Edit user View
+
+App.Views.EditProject = Backbone.View.extend({
+    template: template('editProjectTemplate'),
+
+    initialize: function(){
+
+       
+        
+        this.render();
+    },
+
+    events:{
+       'change #priority': 'priorityChanged'
+    },
+
+    priorityChanged:function(){
+    	console.log('ciao');
+    },
+
+    render: function(){
+
+
+    	
+
+
+
+
+        var html =this.template(this.model.toJSON());
+
+        this.$el.html(html);
+        return this;
+    }
+
+});
+
+ $(document).ready(function() {
+
+ 
+// Imposto i campi editabili
+    window.editableEnabler = function(){
+    	//var newValue=$(this).val();
+    	
+
+        setTimeout(function(){ 
+
+        	 	     
+	
+      
+        	// get file data
+
+
+			$.fn.editable.defaults.mode = 'inline';
+
+
+			$('#priority').editable({
+        	        value: '',    
+        	        source: [
+        	              {value: 'LOW', text: 'LOW'},
+        	              {value: 'MEDIUM', text: 'MEDIUM'},
+        	              {value: 'HIGH', text: 'HIGH'}
+        	           ],
+        	         success: function(response, newValue) {  
+        	          	      
+        	                 var id=$(this).attr('data-pk');
+        	                 var name=$(this).attr('name');
+        	                 var modelsName= $(this).attr('models');
+        	                 var model= App.projects.models[0].attributes;
+        	                if(newValue=="LOW"){
+        	                 model.class_priority='label-success';
+        	                 model.priority= newValue;
+        	                 App.projects.models[0].save();
+        	                // App.projects.models[0].save("priority",newValue);
+        	                // App.projects.models[0].save("class_priority",'label-success');
+        	                // App.projects.models[0].save("title",'probva');
+        	                
+        	                }else if(newValue=='MEDIUM'){
+        	                model.class_priority='label-warning';
+        	                model.priority= newValue;
+        	                App.projects.models[0].save();
+        	                // App.projects.models[0].save("priority",newValue);
+        	                // App.projects.models[0].save("class_priority",'label-warning');
+        	               
+        	                }else{	
+        	                	model.class_priority='label-danger';
+        	                	model.priority= newValue;
+        	                	App.projects.models[0].save();
+        	                	// App.projects.models[0].save("priority",newValue);
+        	                	// App.projects.models[0].save("class_priority",'label-danger');
+
+        	               
+        	                }
+
+
+
+ 						     //console.log(id, name,modelsName, newValue);
+        	                 
+        	                 editableEnabler();
+        	            }
+        	    });
+			
+						$('#status').editable({
+			        	        value: '',    
+			        	        source: [
+			        	              {value: 'ACTIVE', text: 'ACTIVE'},
+			        	              {value: 'PENDING', text: 'PENDING'},
+			        	              {value: 'CLOSED', text: 'CLOSED'}
+			        	           ],
+			        	         success: function(response, newValue) {   
+
+			        	                 
+			        	                 var id=$(this).attr('data-pk');
+			        	                 var name=$(this).attr('name');
+			        	                 var modelsName= $(this).attr('models');
+			        	                 var model= App.projects.get(id).set(name, newValue);
+
+
+
+			 						     console.log(id, name,modelsName, newValue);
+			        	                 model.save(name, newValue);
+			        	                 editableEnabler();
+			        	            }
+			        	    });
+
+        		// date fields	    
+        		date = new Date();	   
+
+        		$('.combodate').editable({
+                     
+                     combodate: {
+                             minYear: date.getFullYear()-116,
+                             maxYear: date.getFullYear(),
+                             //minuteStep: 1,
+                             
+                             yearDescending: true,
+
+                             format: 'YYYY-MM-DD',      
+                             //in this format items in dropdowns are displayed
+                             template: 'YYYY / MMM /D',
+                             //initial value, can be `new Date()`    
+                             errorClass: null,
+                             roundTime: false, // whether to round minutes and seconds if step > 1
+                             smartDays: true, // whether days in combo depend on selected month: 31, 30, 28
+                        },
+                                        success: function(response, newValue) {   
+
+                        var id=$(this).attr('data-pk');
+                        var name=$(this).attr('name');
+                        var modelsName= $(this).attr('models');
+                  
+                  var mese = parseInt(newValue._i[1])+1;
+
+                  var dataForBb=newValue._i[0]+'-'+mese+'-'+newValue._i[2];
+
+                  var dataForBbFormatted= moment(dataForBb).format('YYYY-MM-DD');
+
+                         switch (modelsName){
+                            case 'users':
+                                var model= App.users.get(id).set(name, dataForBbFormatted);
+                            break;
+
+                            case 'educations':
+                                var model= App.educations.get(id).set(name, dataForBbFormatted);
+                            break;
+
+                            case 'experiences':
+                                var model= App.experiences.get(id).set(name, dataForBbFormatted);
+                            break;
+
+                            case 'industries':
+                                var model= App.industries.get(id).set(name, dataForBbFormatted);
+                            break;
+
+                            case 'projects':
+                                var model= App.projects.get(id).set(name, dataForBbFormatted);
+                            break;
+                        }
+
+                        model.save(name, dataForBbFormatted);
+                        editableEnabler();
+                   },
+                   error: function(response, newValue) {
+                       if(response.status === 500) {
+                           return 'Service unavailable. Please try later.';
+                       } else {
+                           return response.responseText;
+                       }
+                   }
+                     
+                 });
+
+
+        	// tutti gli altri campi		
+            $('.editable').editable({
+
+                success: function(response, newValue) {   
+                        var id=$(this).attr('data-pk');
+                        var name=$(this).attr('name');
+                        var modelsName= $(this).attr('models');
+                  //console.log(id, name,modelsName, newValue);
+
+                        switch (modelsName){
+                            case 'users':
+                                var model= App.users.get(id).set(name, newValue);
+                            break;
+
+                            case 'educations':
+                                var model= App.educations.get(id).set(name, newValue);
+                            break;
+
+                            case 'experiences':
+                                var model= App.experiences.get(id).set(name, newValue);
+                            break;
+
+                            case 'industries':
+                                var model= App.industries.get(id).set(name, newValue);
+                            break;
+
+                            case 'projects':
+                                var model= App.projects.get(id).set(name, newValue);
+                            break;
+                        }
+
+                        model.save(name, newValue);
+                        editableEnabler();
+                   },
+                   error: function(response, newValue) {
+                       if(response.status === 500) {
+                           return 'Service unavailable. Please try later.';
+                       } else {
+                           return response.responseText;
+                       }
+                   }
+            });
+
+        }, 500);
+    }   
+
+
+
+//toggle enable 
+
+function enableToggle(){
+    setTimeout(function(){
+
+    	    //Abilito e disabilito l'editable
+    	    $( "#enable" ).click(function() {
+    	
+    	        $('.editable').editable('toggleDisabled');
+    	        var text=$('#enable').text();
+    	        if(text=='Enable Edit'){
+    	            $('#enable').text('Disable Edit');
+    	        }else{
+    	            $('#enable').text('Enable Edit');
+    	        }
+    	 
+    	});
+
+
+    }, 1000);
+
+}
+
+
+editableEnabler();
+enableToggle();
+
+
+
+
+
+});
 
 
 
