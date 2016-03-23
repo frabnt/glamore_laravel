@@ -7,6 +7,7 @@ use App\Project;
 use App\Http\Requests;
 use View;
 use App\User;
+use App\Team;
 class ProjectController extends Controller
 {
     /**
@@ -23,9 +24,35 @@ public function show_my_project($id){
 
     public function project_detail($id){
         $project= Project::find($id);
+        //$user_id=$project->user_id;
+        $user=User::all();
 
-        return View('projects.project-detail')->with('project_id', $project->id );
+        return View('projects.project-detail', ['user' => $user, 'project'=>$project]); 
     }
+
+    public function addUserToTeam(Request $request, $id){
+        $array_id_user=$request->input('*');
+        unset($array_id_user[0]) ;
+        //var_dump($array) ;
+
+        return $array_id_user ;
+
+        // $project= Project::find($id);
+        // //$user_id=$project->user_id;
+        // $user=User::all();
+
+        // if($project->team_id!=""||$project->team_id!=null){
+        //     $team= new Team;
+        //     $team->name=$project->title;
+        //     $team->save;
+        //     $project->team_id=$team->id;
+        // }
+
+        // return View('projects.project-detail', ['user' => $user, 'project'=>$project]); 
+
+
+    }
+
     public function index()
     {
         return Project::all();
@@ -90,13 +117,6 @@ public function show_my_project($id){
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-
-
-
-
-
-
-
      */
     public function edit($id)
     {

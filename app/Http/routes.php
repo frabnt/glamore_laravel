@@ -102,7 +102,8 @@ Route::group(['middleware' => 'cors'], function(){
         
     // });
 
- Route::get('project-detail/{id}', 'projectController@project_detail');
+    Route::get('project-detail/{id}', 'projectController@project_detail');
+    Route::post('project-detail/{id}', 'projectController@addUserToTeam');
     
 
 

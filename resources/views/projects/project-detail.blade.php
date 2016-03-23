@@ -14,24 +14,13 @@
 			<div class="container-fluid primary-content">
 				<!-- PRIMARY CONTENT HEADING -->
 				<div class="primary-content-heading clearfix">
-					<h2>PROJECT 123GO</h2>
+					<h2><a  class="editable" models="projects" value="<%= tittle %>" name="title" data-type="text" data-url="" data-pk= "{{$project->id}}" >{{$project->title}} </a></h2>
 					<ul class="breadcrumb pull-left">
 						<li><i class="icon ion-home"></i><a href="#">Home</a></li>
 						<li><a href="#">Pages</a></li>
 						<li class="active">Project Detail</li>
 					</ul>
 					<div class="sticky-content pull-right">
-						<div class="btn-group btn-dropdown">
-							<button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
-							<ul class="dropdown-menu dropdown-menu-right list-inline">
-								<li><a href="#"><i class="icon ion-pie-graph"></i> <span>Statistics</span></a></li>
-								<li><a href="#"><i class="icon ion-email"></i> <span>Inbox</span></a></li>
-								<li><a href="#"><i class="icon ion-chatboxes"></i> <span>Chat</span></a></li>
-								<li><a href="#"><i class="icon ion-help-circled"></i> <span>Help</span></a></li>
-								<li><a href="#"><i class="icon ion-gear-a"></i> <span>Settings</span></a></li>
-								<li><a href="#"><i class="icon ion-help-buoy"></i> <span>Support</span></a></li>
-							</ul>
-						</div>
 						<button type="button" class="btn btn-default btn-sm btn-quick-task" data-toggle="modal" data-target="#quick-task-modal"><i class="icon ion-edit"></i> Quick Task</button>
 					</div>
 					<!-- quick task modal -->
@@ -64,6 +53,65 @@
 						</div>
 					</div>
 					<!-- end quick task modal -->
+					<!-- quick add user -->
+					<div class="modal fade" id="add_user_to_team" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="myModalLabel">Add User</h4>
+								</div>
+								<div class="modal-body">
+									<form action="{{URL::to('project-detail')}}/{{$project->id}}" method="post" class="form-horizontal" role="form">
+										<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+										<!-- SCROLLING DATA TABLE -->
+										<div class="widget">
+											<div class="widget-header clearfix">
+												<h3><i class="icon ion-ios-grid-view-outline"></i> <span>Users List</span></h3>
+												<div class="btn-group widget-header-toolbar visible-lg">
+													<a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
+													<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
+												</div>
+											</div>
+											<div class="widget-content">
+												<div class="table-responsive">
+													<table id="datatable-basic-scrolling" class="table table-sorting table-hover datatable">
+														<thead>
+															<tr>
+																<th>Name</th>
+																<th>Surname</th>
+																<th>Add</th>
+															</tr>
+														</thead>
+														<tbody>
+														@foreach ($user as $u)
+															<tr>
+																<td>{{ $u->name }}</td>
+																<td>{{ $u->last_name }}</td>
+																<td>
+																<label class="fancy-checkbox">
+																	<input type="checkbox" name="user.team.{{ $u->id }}" value="{{ $u->id }}">
+																	<span class="todo-text"></span>
+																</label>
+  																</td>
+															</tr>
+															@endforeach
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<!-- END SCROLLING DATA TABLE -->
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn btn-primary">Save Task</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- end quick add user -->
+
 				</div>
 				<!-- END PRIMARY CONTENT HEADING -->
 				<div class="row">
@@ -75,7 +123,7 @@
 						<div class="project-section general-info">
 							<h3>General Info</h3>
 							
-							<p><%= title %></p>
+							<p> <a  class="editable" models="projects" name="description" data-type="textarea" data-pk="<%=id%>"><%= description %></a> </p>
 							<div class="row">
 								<div class="col-sm-9">
 									<dl class="dl-horizontal">
@@ -119,7 +167,7 @@
 												</li>
 												<li class="team-add">
 													<i class="icon ion-person"></i>
-													<button type="button" class="btn btn-sm btn-default"><i class="icon ion-plus-circled"></i> Add</button>
+													<button type="button" data-toggle="modal" data-target="#add_user_to_team" class="btn btn-sm btn-default"><i class="icon ion-plus-circled"></i> Add</button>
 												</li>
 											</ul>
 										</dd>
@@ -373,13 +421,20 @@
    <script src={{ asset('assets/js/plugins/bootstrap-editable/address.custom.js') }}></script>
    <script src={{ asset('assets/js/plugins/bootstrap-editable/demo-mock.js') }}></script>
 
+   	<script src={{ asset('assets/js/plugins/datatable/jquery.dataTables.min.js') }}></script>
+	<script src={{ asset('assets/js/plugins/datatable/exts/dataTables.colVis.bootstrap.js') }}></script>
+	<script src={{ asset('assets/js/plugins/datatable/exts/dataTables.colReorder.min.js') }}></script>
+	<script src={{ asset('assets/js/plugins/datatable/exts/dataTables.tableTools.min.js') }}></script>
+	<script src={{ asset('assets/js/plugins/datatable/dataTables.bootstrap.js') }}></script>
+	<script src={{ asset('assets/js/queen-table.js') }}></script>
+
 
 @stop
 
 
 @section('script')
 <script> window.user_id = {!! auth()->user()->id !!}; </script>
-<script>window.project_id={{$project_id}}; </script>
+<script>window.project_id={{$project->id}}; </script>
  <script >
     
    //Collections   	**********************************************************************************************************************************

@@ -250,7 +250,7 @@ App.Views.Project= Backbone.View.extend({
 
     initialize: function(){
         this.model.on('destroy', this.unrender, this);
-        //this.model.on('change', this.render, this); 
+        this.model.on('change', this.render, this); 
     },
 
     events:{
