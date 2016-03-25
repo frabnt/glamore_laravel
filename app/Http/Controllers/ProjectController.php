@@ -26,29 +26,105 @@ public function show_my_project($id){
         $project= Project::find($id);
         //$user_id=$project->user_id;
         $user=User::all();
+        // new team if not present
+        if($project->team_id==""||$project->team_id==null){
+            $team= new Team;
+            $team->name=$project->title;
+            $team->project_id=$id;
+           
+            $team->save();
+            
+            $team= \DB::table('teams')->select('id')->where('project_id', '=', $id)->get();
+            $team_id='';
+            foreach ($team as $key => $value) {
+                    
+               $team_id=$value->id;
+               break;
 
-        return View('projects.project-detail', ['user' => $user, 'project'=>$project]); 
+            }
+             $project->team_id=$team_id;
+             $project->save();
+
+             $team= Team::find($team_id);
+
+             $team->users()->attach($project->user_id);
+
+             
+        }
+
+        
+        //utenti nel team
+        $users_in_team= \DB::table('users')
+        ->join('user_team', 'users.id', '=', 'user_team.user_id')
+        ->join('teams', 'teams.id', '=', 'user_team.team_id')
+        ->select('users.id', 'users.last_name', 'users.profile_image', 'users.name')
+        ->where('teams.id', '=', $project->team_id)->get();
+
+        //array id utenti nel team
+        $user_id_array=array();
+            foreach ($users_in_team as $key => $value) {
+                    
+               $user_id_array[]=$value->id;
+               
+
+            }
+
+        $user_to_add=User::select('name', 'last_name', 'profile_image', 'id')->whereNotIn('id', $user_id_array)->get();
+
+        $user_to_del=User::select('name', 'last_name', 'profile_image', 'id')->whereIn('id', $user_id_array)->get();
+
+
+        return  View('projects.project-detail', ['user_to_add' => $user_to_add, 'user_to_del' => $user_to_del, 'users_in_team' => $users_in_team,  'project'=>$project]); 
     }
 
     public function addUserToTeam(Request $request, $id){
+
+
+        //get all users id to add 
         $array_id_user=$request->input('*');
+        //delete token from json
         unset($array_id_user[0]) ;
-        //var_dump($array) ;
 
-        return $array_id_user ;
+        $arr=array();
+        foreach ($array_id_user as $key => $value) {
+                
+           $arr[]=$value;
 
-        // $project= Project::find($id);
+        }
+
+       // return $arr;
+
+        //App\User::find(1)->roles()->save($role, ['expires' => $expires]);
+        //$project->teams()->attach($userId);
+
+        $project= Project::find($id);
         // //$user_id=$project->user_id;
-        // $user=User::all();
+        //$user=User::all();
 
-        // if($project->team_id!=""||$project->team_id!=null){
-        //     $team= new Team;
-        //     $team->name=$project->title;
-        //     $team->save;
-        //     $project->team_id=$team->id;
-        // }
 
-        // return View('projects.project-detail', ['user' => $user, 'project'=>$project]); 
+
+        $team= Team::find($project->team_id);
+       
+        foreach ($arr as $value ) {
+        $team->users()->attach($value);
+        }
+
+       return $this->project_detail($id);
+
+        
+
+
+      //  $users_added=$team->users()->get();
+        
+        // $users = DB::table('users')
+        //              ->select(DB::raw('count(*) as user_count, status'))
+        //              ->where('status', '<>', 1)
+        //              ->groupBy('status')
+        //              ->get();
+        
+              
+
+         //return $users_added ; //View('projects.project-detail', ['user' => $user, 'project'=>$project]); 
 
 
     }

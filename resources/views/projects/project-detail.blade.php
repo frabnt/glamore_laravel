@@ -64,6 +64,7 @@
 								<div class="modal-body">
 									<form action="{{URL::to('project-detail')}}/{{$project->id}}" method="post" class="form-horizontal" role="form">
 										<input type="hidden" name="_token" value="{{ csrf_token() }}">
+										<input type="hidden" name="user_action" value="add">
 
 										<!-- SCROLLING DATA TABLE -->
 										<div class="widget">
@@ -85,7 +86,8 @@
 															</tr>
 														</thead>
 														<tbody>
-														@foreach ($user as $u)
+														@if($user_to_add)
+														@foreach ($user_to_add as $u)
 															<tr>
 																<td>{{ $u->name }}</td>
 																<td>{{ $u->last_name }}</td>
@@ -97,6 +99,7 @@
   																</td>
 															</tr>
 															@endforeach
+														@endif	
 														</tbody>
 													</table>
 												</div>
@@ -111,6 +114,67 @@
 						</div>
 					</div>
 					<!-- end quick add user -->
+										<!-- quick add user -->
+										<div class="modal fade" id="del_user_to_team" tabindex="-1" role="dialog" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+														<h4 class="modal-title" id="myModalLabel">Remove User</h4>
+													</div>
+													<div class="modal-body">
+														<form action="{{URL::to('project-detail')}}/{{$project->id}}" method="post" class="form-horizontal" role="form">
+															<input type="hidden" name="_token" value="{{ csrf_token() }}">
+															<input type="hidden" name="user_action" value="rm">
+
+															<!-- SCROLLING DATA TABLE -->
+															<div class="widget">
+																<div class="widget-header clearfix">
+																	<h3><i class="icon ion-ios-grid-view-outline"></i> <span>Users List</span></h3>
+																	<div class="btn-group widget-header-toolbar visible-lg">
+																		<a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
+																		<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
+																	</div>
+																</div>
+																<div class="widget-content">
+																	<div class="table-responsive">
+																		<table id="datatable-basic-scrolling" class="table table-sorting table-hover datatable">
+																			<thead>
+																				<tr>
+																					<th>Name</th>
+																					<th>Surname</th>
+																					<th>Add</th>
+																				</tr>
+																			</thead>
+																			<tbody>
+																			@if($user_to_del)
+																			@foreach ($user_to_del as $u)
+																				<tr>
+																					<td>{{ $u->name }}</td>
+																					<td>{{ $u->last_name }}</td>
+																					<td>
+																					<label class="fancy-checkbox">
+																						<input type="checkbox" name="user.team.{{ $u->id }}" value="{{ $u->id }}">
+																						<span class="todo-text"></span>
+																					</label>
+					  																</td>
+																				</tr>
+																				@endforeach
+																			@endif	
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+															</div>
+															<!-- END SCROLLING DATA TABLE -->
+															<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+															<button type="submit" class="btn btn-primary">Save Task</button>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- end quick add user -->
 
 				</div>
 				<!-- END PRIMARY CONTENT HEADING -->
@@ -140,31 +204,16 @@
 										<dt>Team:</dt>
 										<dd>
 											<ul class="list-inline team-list">
+											@if($users_in_team)
+											@foreach ($users_in_team as $u_in_team)
 												<li>
-													<img src="assets/img/user1.png" class="img-circle" alt="Avatar" />
-													<p><a href="#"><strong>Antonius</strong></a></p>
-													<span class="text-muted">Project Leader</span>
+													<img src="{{ asset('/assets/upload/img/user')}}/{{ $u_in_team->profile_image or 'avatar.png' }}" class="img-circle" alt="Avatar" />
+													<p><a href="#"><strong>{{ $u_in_team->name }} {{ $u_in_team->last_name }}</strong></a></p>
+													
 												</li>
-												<li>
-													<img src="assets/img/user2.png" class="img-circle" alt="Avatar" />
-													<p><a href="#"><strong>Michael</strong></a></p>
-													<span class="text-muted">Art Director</span>
-												</li>
-												<li>
-													<img src="assets/img/user3.png" class="img-circle" alt="Avatar" />
-													<p><a href="#"><strong>Stella Ray</strong></a></p>
-													<span class="text-muted">Account Executive</span>
-												</li>
-												<li>
-													<img src="assets/img/user4.png" class="img-circle" alt="Avatar" />
-													<p><a href="#"><strong>Jane Doe</strong></a></p>
-													<span class="text-muted">Marketing</span>
-												</li>
-												<li>
-													<img src="assets/img/user5.png" class="img-circle" alt="Avatar" />
-													<p><a href="#"><strong>Jason</strong></a></p>
-													<span class="text-muted">Operational</span>
-												</li>
+											@endforeach
+											@endif	
+												
 												<li class="team-add">
 													<i class="icon ion-person"></i>
 													<button type="button" data-toggle="modal" data-target="#add_user_to_team" class="btn btn-sm btn-default"><i class="icon ion-plus-circled"></i> Add</button>
@@ -711,11 +760,7 @@ App.Views.EditProject = Backbone.View.extend({
     },
 
     events:{
-       'change #priority': 'priorityChanged'
-    },
-
-    priorityChanged:function(){
-    	console.log('ciao');
+       
     },
 
     render: function(){
