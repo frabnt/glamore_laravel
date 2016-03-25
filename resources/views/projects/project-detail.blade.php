@@ -217,6 +217,8 @@
 												<li class="team-add">
 													<i class="icon ion-person"></i>
 													<button type="button" data-toggle="modal" data-target="#add_user_to_team" class="btn btn-sm btn-default"><i class="icon ion-plus-circled"></i> Add</button>
+													<button type="button" data-toggle="modal" data-target="#del_user_to_team" class="btn btn-sm btn-default"><i class="icon ion-minus-circled"></i> Del</button>
+
 												</li>
 											</ul>
 										</dd>
