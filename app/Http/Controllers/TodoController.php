@@ -14,6 +14,20 @@ class TodoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    public function todoByUserId($id){
+
+            return Todo::where('user_id', '=', $id )->get();
+    }
+
+    public function todoByProjectId($id){
+
+            return Todo::where('project_id', '=', $id )->get();
+    }
+
+
+
     public function index()
     {
         return Todo::all();
@@ -41,6 +55,8 @@ class TodoController extends Controller
 
         $todo->title = $request->title; 
         $todo->done = $request->done; 
+        $todo->description = $request->description; 
+        $todo->checked = $request->checked; 
         $todo->project_id=$request->project_id;
         $todo->user_id=$request->user_id;
 
@@ -86,6 +102,8 @@ class TodoController extends Controller
 
         $todo->title = $request->title; 
         $todo->done = $request->done; 
+        $todo->description = $request->description; 
+        $todo->checked = $request->checked; 
         $todo->project_id=$request->project_id;
         $todo->user_id=$request->user_id;
 

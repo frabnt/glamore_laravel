@@ -16,5 +16,9 @@ return [
 
  'collection_projects' => '/projects',
  'collection_projects_by_user_id' => '/project/user',
+
+ 'collection_todos' => '/todos',
+ 'collection_todos_by_user_id' => '/todo/user',
+ 'collection_todos_by_project_id' => '/todo/project',
  
 ];

@@ -57,18 +57,20 @@ Route::group(['middleware' => 'cors'], function(){
     Route::resource('users', 'UserController');
     Route::resource('contacts', 'ContactController');
     Route::resource('projects', 'ProjectController');
-    //Educations
+    Route::resource('todos', 'TodoController');
     //get educations by user id
     Route::get('education/user/{id}', 'educationController@eduByUserId');
-    //Experience
     //get experiences by user id
     Route::get('experience/user/{id}', 'experienceController@expByUserId');
     //Industry
     //get industries by user id
     Route::get('industry/user/{id}', 'industryController@indByUserId');
-    //Project
     //get projects by user id
     Route::get('project/user/{id}', 'projectController@prjByUserId');
+    //get todos by user id
+    Route::get('todo/user/{id}', 'TodoController@todoByUserId');
+    //get todos by project id
+    Route::get('todo/project/{id}', 'TodoController@todoByProjectId');
    
 });
 

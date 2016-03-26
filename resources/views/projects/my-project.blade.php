@@ -105,7 +105,7 @@
 				<!-- END COLUMN RIGHT -->
 				@section('footer_script')
 
-<script src={{ asset('assets/js/jquery/jquery-2.1.0.min.js') }}></script>"></script>
+<script src={{ asset('assets/js/jquery/jquery-2.1.0.min.js') }}></script></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
 
@@ -116,13 +116,13 @@
 	<script src={{ asset('assets/js/collections.js') }}></script>
 	<script src={{ asset('assets/js/router.js') }}></script>
 	
-	<script src={{ asset('assets/js/bootstrap/bootstrap.js') }}></script>"></script>
-	<script src={{ asset('assets/js/plugins/bootstrap-multiselect/bootstrap-multiselect.js') }}></script>"></script>
-	<script src={{ asset('assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}></script>"></script>
-	<script src={{ asset('assets/js/queen-common.js') }}></script>"></script>
-	<script src={{ asset('assets/js/plugins/stat/jquery-easypiechart/jquery.easypiechart.min.js') }}></script>"></script>
-	<script src={{ asset('assets/js/queen-page.js') }}></script>"></script>
-	<script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script>"></script>
+	<script src={{ asset('assets/js/bootstrap/bootstrap.js') }}></script></script>
+	<script src={{ asset('assets/js/plugins/bootstrap-multiselect/bootstrap-multiselect.js') }}></script></script>
+	<script src={{ asset('assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}></script></script>
+	<script src={{ asset('assets/js/queen-common.js') }}></script></script>
+	<script src={{ asset('assets/js/plugins/stat/jquery-easypiechart/jquery.easypiechart.min.js') }}></script></script>
+	<script src={{ asset('assets/js/queen-page.js') }}></script></script>
+	<script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script></script>
 
 
  

@@ -54,6 +54,12 @@ return [
 
         ],//app/upload/img/user
 
+        'projectfileupload' => [
+            'driver' => 'local',
+            'root'   => public_path('/assets/upload/file/project'),
+
+        ],//app/upload/img/user
+
         'ftp' => [
             'driver'   => 'ftp',
             'host'     => 'ftp.example.com',

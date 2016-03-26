@@ -21,7 +21,7 @@
 						<li class="active">Project Detail</li>
 					</ul>
 					<div class="sticky-content pull-right">
-						<button type="button" class="btn btn-default btn-sm btn-quick-task" data-toggle="modal" data-target="#quick-task-modal"><i class="icon ion-edit"></i> Quick Task</button>
+						<button type="button" class="btn btn-default btn-sm btn-quick-task" data-toggle="modal" data-target="#quick-task-modal"><i class="icon ion-edit"></i> New Todo</button>
 					</div>
 					<!-- quick task modal -->
 					<div class="modal fade" id="quick-task-modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -29,24 +29,24 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="myModalLabel">Quick Task</h4>
+									<h4 class="modal-title" id="myModalLabel">New Todo</h4>
 								</div>
 								<div class="modal-body">
-									<form class="form-horizontal" role="form">
+									<form id="addTodo" class="form-horizontal" role="form">
 										<div class="form-group">
 											<label for="task-title" class="control-label sr-only">Title</label>
 											<div class="col-sm-12">
-												<input type="text" class="form-control" id="task-title" placeholder="Title">
+												<input type="text" class="form-control" id="title" placeholder="Title">
 											</div>
 										</div>
-										<div class="form-group">
+<!-- 										<div class="form-group">
 											<label class="control-label sr-only">Description</label>
 											<div class="col-sm-12">
 												<textarea class="form-control" name="task-description" rows="5" cols="30" placeholder="Description"></textarea>
 											</div>
-										</div>
+										</div> -->
 										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-										<button type="button" class="btn btn-primary">Save Task</button>
+										<button id="submitTodoButton" type="submit" class="btn btn-primary">Save Todo</button>
 									</form>
 								</div>
 							</div>
@@ -365,38 +365,10 @@
 								</div>
 							</div>
 							<div class="widget-content">
-								<ul class="list-unstyled simple-todo-list">
-									<li>
-										<label class="fancy-checkbox">
-											<input type="checkbox" checked="checked">
-											<span class="todo-text">Upload new revision</span>
-										</label>
-									</li>
-									<li>
-										<label class="fancy-checkbox">
-											<input type="checkbox">
-											<span class="todo-text">Responsive test</span>
-										</label>
-									</li>
-									<li>
-										<label class="fancy-checkbox">
-											<input type="checkbox" checked="checked">
-											<span class="todo-text">Cross-browser check</span>
-										</label>
-									</li>
-									<li>
-										<label class="fancy-checkbox">
-											<input type="checkbox">
-											<span class="todo-text">Social media research</span>
-										</label>
-									</li>
-									<li>
-										<label class="fancy-checkbox">
-											<input type="checkbox">
-											<span class="todo-text">Conduct A/B test</span>
-										</label>
-									</li>
-								</ul>
+
+								
+								<div id="allTodos"></div>
+						
 							</div>
 						</div>
 						<!-- END MY TODO LIST -->
@@ -410,7 +382,8 @@
 								</div>
 							</div>
 							<div class="widget-content">
-								<ul class="fa-ul recent-file-list bottom-30px">
+							
+								<ul  class="fa-ul recent-file-list bottom-30px">
 									<li><i class="fa-li fa fa-file-pdf-o"></i><a href="#">Project Requirements.pdf</a></li>
 									<li><i class="fa-li fa fa-file-word-o"></i><a href="#">[DRAFT] System Specifications.docx</a></li>
 									<li><i class="fa-li fa fa-file-picture-o"></i><a href="#">Marketing Content-v2.jpg</a></li>
@@ -424,6 +397,20 @@
 				</div>
 			</div>
 		</div>
+
+
+
+
+<script id="allTodosTemplate" type="text/template">
+<ul class="list-unstyled simple-todo-list">
+<li>
+	<label class="fancy-checkbox">
+		<input type="checkbox" <%=checked%> >
+		<span class="todo-text"><%=title%></span>
+	</label>
+</li>
+</ul>
+</script>				
 		<!-- END COLUMN RIGHT -->
 
 
@@ -435,7 +422,7 @@
 				@section('footer_script')
 
 
-<script src={{ asset('assets/js/jquery/jquery-2.1.0.min.js') }}></script>"></script>
+<script src={{ asset('assets/js/jquery/jquery-2.1.0.min.js') }}></script></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
 
@@ -446,13 +433,13 @@
 	<script src={{ asset('assets/js/collections.js') }}></script>
 	<script src={{ asset('assets/js/router.js') }}></script>
 	
-	<script src={{ asset('assets/js/bootstrap/bootstrap.js') }}></script>"></script>
-	<script src={{ asset('assets/js/plugins/bootstrap-multiselect/bootstrap-multiselect.js') }}></script>"></script>
-	<script src={{ asset('assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}></script>"></script>
-	<script src={{ asset('assets/js/queen-common.js') }}></script>"></script>
-	<script src={{ asset('assets/js/plugins/stat/jquery-easypiechart/jquery.easypiechart.min.js') }}></script>"></script>
-	<script src={{ asset('assets/js/queen-page.js') }}></script>"></script>
-	<script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script>"></script>
+	<script src={{ asset('assets/js/bootstrap/bootstrap.js') }}></script></script>
+	<script src={{ asset('assets/js/plugins/bootstrap-multiselect/bootstrap-multiselect.js') }}></script></script>
+	<script src={{ asset('assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}></script></script>
+	<script src={{ asset('assets/js/queen-common.js') }}></script></script>
+	<script src={{ asset('assets/js/plugins/stat/jquery-easypiechart/jquery.easypiechart.min.js') }}></script></script>
+	<script src={{ asset('assets/js/queen-page.js') }}></script></script>
+	<script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script></script>
 
 
  
@@ -490,7 +477,7 @@
     
    //Collections   	**********************************************************************************************************************************
 
-   //User collection	
+   //project collection	
 
 
    App.Collections.Projects= Backbone.Collection.extend({
@@ -499,7 +486,11 @@
    });
 
 
-
+//todos collection	
+App.Collections.Todos= Backbone.Collection.extend({
+	model:App.Models.Todo,
+	url:'{{Config::get('app.url')}}{{Config::get('backbone.collection_todos')}}' //{{Auth::user()->id}}
+});
 
 
 
@@ -517,14 +508,23 @@
            	   var editProject= new App.Views.EditProject({ model: project});
            	   $('#editProject').html(editProject.el);
            		
+           // Carico i todo by project id
+           $.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_todos_by_project_id')}}/"+project_id, function(data) {
+           	console.log(data);
+           App.todos= new App.Collections.Todos(data);
+           });
+
 
             App.projects= new App.Collections.Projects(data);
            });
+
+           App.todos= new App.Collections.Todos;
+           App.todos.fetch();
           
            App.projects= new App.Collections.Projects;
            App.projects.fetch().then(function(){
 
-           new App.Views.App({collection: App.projects});    
+           new App.Views.App({collection: App.projects, collection:App.todos});    
 
            });
 
@@ -547,7 +547,9 @@
        //var addProjectsView= new App.Views.AddProject({ collection: App.projects});
        //var allProjectsView = new App.Views.Projects({ collection: App.projects}).render();
        //$('#allProjects').append(allProjectsView.el); // appendo la lista dei contatti nella tabella
-
+       var addTodoView= new App.Views.AddTodo({ collection: App.todos});
+       var allTodosView = new App.Views.Todos({ collection: App.todos}).render();
+       $('#allTodos').append(allTodosView.el); // appendo la lista dei contatti nella tabella
 
 
        },
@@ -558,195 +560,152 @@
 
 
            
+//Single todo view
 
-      //USER VIEWS************************************************************************************************************************************************************************************
+App.Views.Todo= Backbone.View.extend({
+    tagName:'div',
 
-   //Edit user View
+    template: template('allTodosTemplate'),
 
-   // App.Views.EditUser = Backbone.View.extend({
-   //     template: template('editUserTemplate'),
+    initialize: function(){
+        this.model.on('destroy', this.unrender, this);
+        this.model.on('change', this.render, this); 
+    },
 
-   //     initialize: function(){
-   //         this.render();
-   //     },
+    events:{
+        'click a.ind_delete': 'deleteTodo',
+        'click a.edit': 'editTodo',
+        'click [type="checkbox"]': 'todoChecked',
+    },
 
-   //     events:{
-           
-   //     },
-
-   //     render: function(){
-   //         var html =this.template(this.model.toJSON());
-
-   //         this.$el.html(html);
-   //         return this;
-   //     }
-
-   // });
-
-   //Single user view
-
-   // App.Views.Project= Backbone.View.extend({
-   //     tagName:'tr',
-
-   //     template: template('allProjectsTemplate'),
-
-   //     initialize: function(){
-   //         this.model.on('destroy', this.unrender, this);
-   //         this.model.on('change', this.render, this); 
-   //     },
-
-   //     events:{
-   //         'click a.prj_delete': 'deleteProject',
-   //         'click a.edit': 'editProject'
-   //     },
-
-   //     editProject: function(){
-   //         vent.trigger('project:edit', this.model);
+    todoChecked: function (e) {
+        var checked=this.model.attributes.checked;
+        if(checked==null){
+        	this.model.attributes.checked='checked="checked"';
+        	this.model.save();
+        }else{
+        	this.model.attributes.checked=null;
+        	this.model.save();
+        }
+    },
 
 
-   //     },
+    editTodo: function(){
+        vent.trigger('todo:edit', this.model)
+
+    },
+    
+    deleteTodo: function(){
+
+    
+    var self=this;
+    
+
+    $.confirm({
+        text: "Are you sure you want to delete that Todo?",
+        title: "Confirmation required",
+        confirmButton: "Yes I am",
+        cancelButton: "No",
+        post: false,
+        confirmButtonClass: "btn-danger",
+        cancelButtonClass: "btn-default",
+        dialogClass: "modal-dialog modal-lg",
+        confirm: function() {
+            //this.model.destroy();
+            self.model.destroy();
+        },
+        cancel: function() {
+            // nothing to do
+        }
+    });
+
+    },
+
+    render: function(){
+        this.$el.html(this.template(this.model.toJSON()));
+        return this;
+    },
+
+    unrender: function(){
+        this.remove(); //this.$el.remove();
+    }
+});
 
 
-       
-       
-   //     deleteProject: function(){
+    // Add todo View
 
-       
-   //     var self=this;
-       
+   App.Views.AddTodo= Backbone.View.extend({
+       el:'#addTodo',
 
-   //     $.confirm({
-   //         text: "Are you sure you want to delete that project?",
-   //         title: "Confirmation required",
-   //         confirmButton: "Yes I am",
-   //         cancelButton: "No",
-   //         post: false,
-   //         confirmButtonClass: "btn-danger",
-   //         cancelButtonClass: "btn-default",
-   //         dialogClass: "modal-dialog modal-lg",
-   //         confirm: function() {
-   //             //this.model.destroy();
-   //             self.model.destroy();
-   //         },
-   //         cancel: function() {
-   //             // nothing to do
-   //         }
-   //     });
+       initialize: function(){
 
-   //     },
-
-   //     render: function(){
-   //         this.$el.html(this.template(this.model.toJSON()));
-
-   //         return this;
-   //     },
-
-   //     unrender: function(){
-   //         this.remove(); //this.$el.remove();
-   //     }
-   // });
-
-   // // Add project View
-
-   // App.Views.AddProject= Backbone.View.extend({
-   //     el:'#addProject',
-
-   //     initialize: function(){
-
-   //         this.title = $('#title');
-   //         this.description = $('#description');
-   //         this.date_start = moment();
-   //         this.duration_day=$('#duration_day');
-   //         this.progress="";
-   //         this.priority="";
-   //         //this.client=$('#client');
-   //         this.status="";
-   //         this.date_end = "";
-   //         //this.team_id=;
-   //         this.user_id="";
-
-   //     },
-
-   //     getProgress:function(){
-
-   //     	return "50";
-   //     },
-   //     getEndDate:function(date, amount){
        	
-       	
-   // 		return moment(date).add(amount, 'day');
-   //     },
 
-   //     events:{
-   //         'submit':'addProject'
-   //     },
+           this.title = $('#title');
+           //this.done = $('#done');
+           this.user_id="";
+           this.project_id="";
+           this.checked="";
 
-   //     addProject: function(e){
-   //         e.preventDefault();
+       },
 
-   //         //Create contact 
-   //         this.collection.create({
+       events:{
+           'submit':'addTodo'
+       },
 
-   //         title: this.title.val(),
-   //         description: this.description.val(),
-   //         date_start: this.date_start.format("YYYY-MM-DD"),
-   //         date_end: this.getEndDate(this.date_start, this.duration_day),
-   //         duration_day: this.duration_day.val(),
-   //         progress: this.getProgress(),
-   //         priority: "LOW",
-   //         //client: this.client.val(),
-   //         status: "ACTIVE",
-   //         //team_id: this.team_id.val(),
-   //         user_id: user_id,
+       addTodo: function(e){
+           e.preventDefault();
+
+           //Create contact 
+           this.collection.create({
+
+           title: this.title.val(),
+           done: false,
+           checked:null,
+           //team_id: this.team_id.val(),
+           user_id: user_id,
+           project_id: project_id,
 
                
 
-   //         }, {wait: true}); //wait the server for save id in attribute
-   //         this.clearForm();
-   //     },
+           }, {wait: true}); //wait the server for save id in attribute
+           this.clearForm();
+       },
 
-   //     clearForm: function(){
+       clearForm: function(){
 
            
-   //         this.title.val('');
-   //         this.description.val('');
-   //         //this.date_start.val('');
-   //         //this.date_end.val('');
-   //         this.duration_day.val('');
-   //         // this.progress.val('');
-   //         // this.priority.val('');
-   //         //this.client.val('');
-   //         // this.status.val('');
-   //         // this.team_id.val('');
-   //         // this.user_id.val('');
+           this.title.val('');
+           //this.done.val(false);
+           
 
-   //     }
-   // });
+       }
+   });
 
 
-   // //All project View
+   //All Todo View
 
-   // App.Views.Projects=Backbone.View.extend({
+   App.Views.Todos=Backbone.View.extend({
        
-   //     tagName: 'tbody',
+       tagName: 'div',
 
-   //     initialize: function(){
-   //         this.collection.on('add', this.addOne, this); // sync when return data from server
+       initialize: function(){
+           this.collection.on('add', this.addOne, this); // sync when return data from server
 
-   //     },
+       },
 
-   //     render: function(){
-   //         //this.$el.empty();
-   //         this.collection.each(this.addOne, this);
-   //         return this;
-   //     },
+       render: function(){
+           //this.$el.empty();
+           this.collection.each(this.addOne, this);
+           return this;
+       },
 
-   //     addOne: function(project){
-   //         var projectView= new App.Views.Project({ model:project});
-   //         this.$el.append(projectView.render().el);
-   //     }
+       addOne: function(todo){
+           var todoView= new App.Views.Todo({ model:todo});
+           this.$el.append(todoView.render().el);
+       }
 
-   // });
+   });
 
 
 //Edit user View

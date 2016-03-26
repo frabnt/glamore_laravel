@@ -15,6 +15,8 @@ class CreateTodosTable extends Migration
         Schema::create('todos', function (Blueprint $table) {
             $table->increments('id'); 
             $table->string('title')->nullable();  
+            $table->string('checked')->nullable();
+            $table->string('description')->nullable();
             $table->boolean('done')->default(0);
             $table->integer('user_id')->nullable();  
             $table->integer('project_id')->nullable();  

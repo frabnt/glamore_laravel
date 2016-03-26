@@ -72,3 +72,14 @@ App.Models.Project= Backbone.Model.extend({
 	},
 	
 });
+
+App.Models.Todo= Backbone.Model.extend({
+	//validate
+	validate: function(attrs){
+
+		if(! attrs.title){
+			return 'Please enter todo title.';
+		}
+	},
+	
+});
