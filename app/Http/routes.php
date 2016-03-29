@@ -107,7 +107,9 @@ Route::group(['middleware' => 'cors'], function(){
     Route::get('project-detail/{id}', 'projectController@project_detail');
     Route::post('project-detail/{id}', 'projectController@addUserToTeam');
     
-
+    Route::get('/settings', function () {
+        return view('settings');
+    });
 
     //User
     // Route::get('/user/{id}', function (App\User $user) {

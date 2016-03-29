@@ -143,7 +143,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="#">
+								<a href="{{URL::to('settings')}}">
 									<i class="icon ion-ios-gear"></i>
 									<span class="text">Settings</span>
 								</a>
