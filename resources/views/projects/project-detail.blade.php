@@ -59,7 +59,7 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="myModalLabel">Add User</h4>
+									<h4 class="modal-title" id="myModalLabel">Invite User</h4>
 								</div>
 								<div class="modal-body">
 									<form action="{{URL::to('project-detail')}}/{{$project->id}}" method="post" class="form-horizontal" role="form">
@@ -107,7 +107,7 @@
 										</div>
 										<!-- END SCROLLING DATA TABLE -->
 										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-										<button type="submit" class="btn btn-primary">Save Task</button>
+										<button type="submit" class="btn btn-primary">Send</button>
 									</form>
 								</div>
 							</div>
@@ -120,7 +120,7 @@
 												<div class="modal-content">
 													<div class="modal-header">
 														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-														<h4 class="modal-title" id="myModalLabel">Remove User</h4>
+														<h4 class="modal-title" id="myModalLabel">Disable User</h4>
 													</div>
 													<div class="modal-body">
 														<form action="{{URL::to('project-detail')}}/{{$project->id}}" method="post" class="form-horizontal" role="form">
@@ -168,7 +168,7 @@
 															</div>
 															<!-- END SCROLLING DATA TABLE -->
 															<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-															<button type="submit" class="btn btn-primary">Save Task</button>
+															<button type="submit" class="btn btn-primary">Save</button>
 														</form>
 													</div>
 												</div>
@@ -216,8 +216,8 @@
 												
 												<li class="team-add">
 													<i class="icon ion-person"></i>
-													<button type="button" data-toggle="modal" data-target="#add_user_to_team" class="btn btn-sm btn-default"><i class="icon ion-plus-circled"></i> Add</button>
-													<button type="button" data-toggle="modal" data-target="#del_user_to_team" class="btn btn-sm btn-default"><i class="icon ion-minus-circled"></i> Del</button>
+													<button type="button" data-toggle="modal" data-target="#add_user_to_team" class="btn btn-sm btn-default"><i class="icon ion-plus-circled"></i> Invite</button>
+													<button type="button" data-toggle="modal" data-target="#del_user_to_team" class="btn btn-sm btn-default"><i class="icon ion-minus-circled"></i>Disable</button>
 
 												</li>
 											</ul>
@@ -422,49 +422,48 @@
 				@section('footer_script')
 
 
-<script src={{ asset('assets/js/jquery/jquery-2.1.0.min.js') }}></script></script>
+<script src={{ asset('assets/js/jquery/jquery-2.1.0.min.js') }}></script>
+<script src={{ asset('assets/js/bootstrap/bootstrap.js') }}></script>
+<script src={{ asset('assets/js/plugins/bootstrap-multiselect/bootstrap-multiselect.js') }}></script>
+<script src={{ asset('assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}></script>
+<script src={{ asset('assets/js/queen-common.js') }}></script>
+<script src={{ asset('assets/js/plugins/stat/jquery-easypiechart/jquery.easypiechart.min.js') }}></script>
+<script src={{ asset('assets/js/queen-page.js') }}></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
 
-
-
-	<script src={{ asset('assets/js/main.js') }}></script>
-	<script src={{ asset('assets/js/models.js') }}></script>
-	<script src={{ asset('assets/js/collections.js') }}></script>
-	<script src={{ asset('assets/js/router.js') }}></script>
-	
-	<script src={{ asset('assets/js/bootstrap/bootstrap.js') }}></script></script>
-	<script src={{ asset('assets/js/plugins/bootstrap-multiselect/bootstrap-multiselect.js') }}></script></script>
-	<script src={{ asset('assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}></script></script>
-	<script src={{ asset('assets/js/queen-common.js') }}></script></script>
-	<script src={{ asset('assets/js/plugins/stat/jquery-easypiechart/jquery.easypiechart.min.js') }}></script></script>
-	<script src={{ asset('assets/js/queen-page.js') }}></script></script>
-	<script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script></script>
+	<script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script>
 
 
  
 	<script src={{ asset('assets/js/plugins/jquery.confirm.min.js') }}></script>
 
- <script src={{ asset('assets/js/plugins/jquery-maskedinput/jquery.masked-input.min.js') }}></script>
-	<script src={{ asset('assets/js/queen-charts.js') }}></script>
-	<script src={{ asset('assets/js/queen-maps.js') }}></script>
-	<script src={{ asset('assets/js/queen-elements.js') }}></script>
+ 
+	
    <script src={{ asset('assets/js/plugins/bootstrap-editable/jquery.mockjax.min.js') }}></script>
    <script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script>
    <script src={{ asset('assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.js') }}></script>
    <script src={{ asset('assets/js/plugins/bootstrap-editable/bootstrap-editable.min.js') }}></script>
-   <script src={{ asset('assets/js/plugins/typeahead/typeahead.js') }}></script>
-   <script src={{ asset('assets/js/plugins/typeahead/typeaheadjs.1.5.1.js') }}></script>
-   <script src={{ asset('assets/js/plugins/select2/select2.min.js') }}></script>
-   <script src={{ asset('assets/js/plugins/bootstrap-editable/address.custom.js') }}></script>
-   <script src={{ asset('assets/js/plugins/bootstrap-editable/demo-mock.js') }}></script>
+   
 
    	<script src={{ asset('assets/js/plugins/datatable/jquery.dataTables.min.js') }}></script>
-	<script src={{ asset('assets/js/plugins/datatable/exts/dataTables.colVis.bootstrap.js') }}></script>
-	<script src={{ asset('assets/js/plugins/datatable/exts/dataTables.colReorder.min.js') }}></script>
-	<script src={{ asset('assets/js/plugins/datatable/exts/dataTables.tableTools.min.js') }}></script>
-	<script src={{ asset('assets/js/plugins/datatable/dataTables.bootstrap.js') }}></script>
 	<script src={{ asset('assets/js/queen-table.js') }}></script>
+
+	
+
+	<script src={{ asset('assets/js/main.js') }}></script>
+	<script src={{ asset('assets/js/models.js') }}></script>
+	<script src={{ asset('assets/js/collections.js') }}></script>
+	<script src={{ asset('assets/js/router.js') }}></script>
+
+
+
+
+
+
+
+
+
 
 
 @stop
@@ -508,14 +507,18 @@ App.Collections.Todos= Backbone.Collection.extend({
            	   var editProject= new App.Views.EditProject({ model: project});
            	   $('#editProject').html(editProject.el);
            		
-           // Carico i todo by project id
-           $.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_todos_by_project_id')}}/"+project_id, function(data) {
-           	console.log(data);
-           App.todos= new App.Collections.Todos(data);
-           });
+           		
+           
 
 
             App.projects= new App.Collections.Projects(data);
+           });
+
+
+           // Carico i todo by project id
+           $.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_todos_by_project_id')}}/"+project_id, function(data) {
+           	//console.log(data);
+           App.todos= new App.Collections.Todos(data);
            });
 
            App.todos= new App.Collections.Todos;
@@ -688,6 +691,41 @@ App.Views.Todo= Backbone.View.extend({
    App.Views.Todos=Backbone.View.extend({
        
        tagName: 'div',
+
+       events:{
+           'click [type="checkbox"]': 'todoChecked',
+       },
+
+       todoChecked: function (e) {
+       	var progress=0;
+       	var allTodo=parseInt(this.collection.length);
+       	var checked=0;
+
+       	for(var i=0; i<this.collection.length; i++) {
+       	 // myModel = myCollection.models[i];
+       	 
+       	 if(this.collection.models[i].attributes.checked=='checked="checked"'){
+       	 	checked=checked + 1;
+       	 }
+       	}
+
+       	var progress = Math.round(checked/allTodo *100);
+
+       	var model= App.projects.models[0].attributes;
+       	
+       	 model.progress=progress;
+       	 App.projects.models[0].save();
+
+       	 $.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_projects')}}/"+project_id, function(data) {
+  
+           	   var project= new App.Models.Project(data);
+           	   var editProject= new App.Views.EditProject({ model: project});
+           	   $('#editProject').html(editProject.el);
+
+          });
+       editableEnabler();
+
+       },
 
        initialize: function(){
            this.collection.on('add', this.addOne, this); // sync when return data from server
