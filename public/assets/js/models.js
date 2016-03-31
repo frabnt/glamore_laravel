@@ -83,3 +83,14 @@ App.Models.Todo= Backbone.Model.extend({
 	},
 	
 });
+
+App.Models.Notification= Backbone.Model.extend({
+	//validate
+	validate: function(attrs){
+
+		if(! attrs.title){
+			return 'Please enter Notification title.';
+		}
+	},
+	
+});

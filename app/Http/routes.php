@@ -58,6 +58,7 @@ Route::group(['middleware' => 'cors'], function(){
     Route::resource('contacts', 'ContactController');
     Route::resource('projects', 'ProjectController');
     Route::resource('todos', 'TodoController');
+    Route::resource('notifications', 'NotificationController');
     //get educations by user id
     Route::get('education/user/{id}', 'educationController@eduByUserId');
     //get experiences by user id
@@ -71,6 +72,8 @@ Route::group(['middleware' => 'cors'], function(){
     Route::get('todo/user/{id}', 'TodoController@todoByUserId');
     //get todos by project id
     Route::get('todo/project/{id}', 'TodoController@todoByProjectId');
+    //get notification by user id
+    Route::get('notification/user/{id}', 'NotificationController@showNotificationByUserId');
    
 });
 

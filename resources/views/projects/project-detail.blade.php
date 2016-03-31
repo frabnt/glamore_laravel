@@ -432,6 +432,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
 
+<script src={{ asset('assets/js/main.js') }}></script>
+	<script src={{ asset('assets/js/models.js') }}></script>
+	<script src={{ asset('assets/js/collections.js') }}></script>
+	<script src={{ asset('assets/js/router.js') }}></script>
+
 	<script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script>
 
 
@@ -451,10 +456,7 @@
 
 	
 
-	<script src={{ asset('assets/js/main.js') }}></script>
-	<script src={{ asset('assets/js/models.js') }}></script>
-	<script src={{ asset('assets/js/collections.js') }}></script>
-	<script src={{ asset('assets/js/router.js') }}></script>
+	
 
 
 
@@ -716,13 +718,24 @@ App.Views.Todo= Backbone.View.extend({
        	 model.progress=progress;
        	 App.projects.models[0].save();
 
-       	 $.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_projects')}}/"+project_id, function(data) {
-  
-           	   var project= new App.Models.Project(data);
-           	   var editProject= new App.Views.EditProject({ model: project});
-           	   $('#editProject').html(editProject.el);
 
-          });
+       	 App.projects.models[0].fetch().then(function(){
+
+           $.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_projects')}}/"+project_id, function(data) {
+             
+                      	   var project= new App.Models.Project(data);
+                      	   var editProject= new App.Views.EditProject({ model: project});
+                      	   $('#editProject').html(editProject.el);
+
+                     });
+
+           });
+
+
+
+       	 
+
+       	 
        editableEnabler();
 
        },

@@ -98,7 +98,7 @@ public function show_my_project($id){
         //Get project
         $project= Project::find($id);
       
-        //remove ralation between team and user
+        //remove relation between team and user
         if($action=="rm"){
             $team= Team::find($project->team_id);
             
@@ -110,7 +110,12 @@ public function show_my_project($id){
             $team= Team::find($project->team_id);
             
             foreach ($arr as $value ) {
-            $team->users()->attach($value);
+
+            $projectLeader=User::find( $project->user_id);
+            $temp_user=User::find($value);
+           
+            $getTests = (new NotificationController)->sendInviteToUser($temp_user->id, $projectLeader, $temp_user, "Project");
+            //$team->users()->attach($value);
             }
 
         }

@@ -54,5 +54,9 @@ class User extends Authenticatable
                return $this->belongsToMany('App\Team', 'user_team');
            }
 
+       public function notifications()
+           {
+               return $this->belongsToMany('App\Notification', 'user_notification');
+           }
 
 }

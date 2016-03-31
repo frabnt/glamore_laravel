@@ -20,5 +20,9 @@ return [
  'collection_todos' => '/todos',
  'collection_todos_by_user_id' => '/todo/user',
  'collection_todos_by_project_id' => '/todo/project',
+
+ 'collection_notifications' => '/notifications',
+ 'collection_notifications_by_user_id' => '/notification/user',
+
  
 ];

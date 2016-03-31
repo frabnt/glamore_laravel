@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie ie9" lang="en" class="no-js"> <![endif]-->
 <!--[if !(IE)]><!-->
@@ -30,6 +32,9 @@
 </head>
 
 <body class="fixed-top-active dashboard">
+
+ 
+
 	<!-- WRAPPER -->
 	<div class="wrapper">
 		<!-- TOP NAV BAR -->
@@ -59,10 +64,11 @@
 						<li class="action-item general">
 							<div class="btn-group">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									<i class="icon ion-ios-bell-outline"></i><span class="count">8</span>
+									<i class="icon ion-ios-bell-outline"></i><span id="total_notification" class="count"></span>
 								</a>
-								<ul class="dropdown-menu" role="menu">
-									<li class="menu-item-header">You have 8 notifications</li>
+								<ul id="ul_notification" class="dropdown-menu" role="menu">
+									
+
 									<li>
 										<a href="#">
 											<i class="icon ion-chatbubble text-success"></i>
@@ -220,7 +226,7 @@
 		</div>
 		<!-- END COLUMN LEFT -->
 
-		
+				
 		<!-- COLUMN RIGHT -->
 		
 			
@@ -257,9 +263,256 @@
 	<script src={{ asset('assets/js/queen-charts.js') }}></script>
 	<script src={{ asset('assets/js/queen-maps.js') }}></script>
 	<script src={{ asset('assets/js/queen-elements.js') }}></script>
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
+
+	<script src={{ asset('assets/js/main.js') }}></script>
+	<script src={{ asset('assets/js/models.js') }}></script>
+	<script src={{ asset('assets/js/collections.js') }}></script>
+	<script src={{ asset('assets/js/router.js') }}></script>
 	@show
 	
-    @yield('script')
+    @section('script')
+
+@show
+
+
+<script> window.user_id = {!! auth()->user()->id !!}; </script>
+ <script >
+
+$(document).ready(function() {
+
+$.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_notifications_by_user_id')}}/"+user_id, function(data) {
+           	
+	var tot_notification=data.length;
+
+var notifications="";
+
+		$('#total_notification').text(tot_notification);
+
+           	data.forEach(function(notifica) {
+           	notifications+='<li><a href="#">'+notifica.icon+'<span class="text">'+notifica.title+'</span><span class="timestamp text-muted">1 minute ago</span></a></li>';
+    		//console.log(notifica);
+		});
+
+//console.log(tot_notification);
+
+$('#ul_notification').html(notifications);
+           
+           });
+
+
+    });
+
+
+
+
+    
+   //Collections   	**********************************************************************************************************************************
+
+//todos collection	
+// App.Collections.Notifications= Backbone.Collection.extend({
+// 	model:App.Models.Notification,
+// 	url:'{{Config::get('app.url')}}{{Config::get('backbone.collection_notifications')}}' //{{Auth::user()->id}}
+// });
+
+
+
+   // //Router 
+
+           // new App.Router;
+          
+           // Backbone.history.start();
+
+           // Carico i todo by project id
+           // $.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_notifications_by_user_id')}}/"+user_id, function(data) {
+           // 	console.log(data);
+           // App.notifications= new App.Collections.Notifications(data);
+           // });
+
+           // App.notifications= new App.Collections.Notifications;
+           // App.notifications.fetch().then(function(){
+
+           // new App.Views.App({collection:App.notifications});    
+
+           // });
+
+
+
+
+
+
+   //VIEWS  **********************************************************************************************************************************
+
+
+
+   // MAIN VIEW *******************************************************************************************************************************
+
+
+   // App.Views.App=Backbone.View.extend({
+
+   //     initialize: function(){	
+   //     //vent.on('project:edit', this.editProject, this);
+   //     //var addProjectsView= new App.Views.AddProject({ collection: App.projects});
+   //     //var allProjectsView = new App.Views.Projects({ collection: App.projects}).render();
+   //     //$('#allProjects').append(allProjectsView.el); // appendo la lista dei contatti nella tabella
+   //     //var addTodoView= new App.Views.AddTodo({ collection: App.todos});
+   //     var allNotificationsView = new App.Views.Notifications({ collection: App.notifications}).render();
+   //     $('#allNotifications').append(allNotificationsView.el); // appendo la lista dei contatti nella tabella
+
+
+   //     },
+
+
+       
+   //     });
+
+
+           
+//Single todo view
+
+// App.Views.Notification= Backbone.View.extend({
+//     tagName:'ul',
+
+//     template: template('allNotificationsTemplate'),
+
+//     initialize: function(){
+//         this.model.on('destroy', this.unrender, this);
+//         this.model.on('change', this.render, this); 
+//     },
+
+//     events:{
+//         'click a.ind_delete': 'deleteNotification',
+//         'click a.edit': 'editNotification',
+
+//     },
+
+
+//     editNotification: function(){
+//         vent.trigger('notification:edit', this.model)
+
+//     },
+    
+//     deleteNotification: function(){
+
+    
+//     var self=this;
+    
+
+//     $.confirm({
+//         text: "Are you sure you want to delete that Notification?",
+//         title: "Confirmation required",
+//         confirmButton: "Yes I am",
+//         cancelButton: "No",
+//         post: false,
+//         confirmButtonClass: "btn-danger",
+//         cancelButtonClass: "btn-default",
+//         dialogClass: "modal-dialog modal-lg",
+//         confirm: function() {
+//             //this.model.destroy();
+//             self.model.destroy();
+//         },
+//         cancel: function() {
+//             // nothing to do
+//         }
+//     });
+
+//     },
+
+//     render: function(){
+//         this.$el.html(this.template(this.model.toJSON()));
+//         return this;
+//     },
+
+//     unrender: function(){
+//         this.remove(); //this.$el.remove();
+//     }
+// });
+
+
+    // Add todo View
+
+   // App.Views.AddTodo= Backbone.View.extend({
+   //     el:'#addTodo',
+
+   //     initialize: function(){
+
+       	
+
+   //         this.title = $('#title');
+   //         //this.done = $('#done');
+   //         this.user_id="";
+   //         this.project_id="";
+   //         this.checked="";
+
+   //     },
+
+   //     events:{
+   //         'submit':'addTodo'
+   //     },
+
+   //     addTodo: function(e){
+   //         e.preventDefault();
+
+   //         //Create contact 
+   //         this.collection.create({
+
+   //         title: this.title.val(),
+   //         done: false,
+   //         checked:null,
+   //         //team_id: this.team_id.val(),
+   //         user_id: user_id,
+   //         project_id: project_id,
+
+               
+
+   //         }, {wait: true}); //wait the server for save id in attribute
+   //         this.clearForm();
+   //     },
+
+   //     clearForm: function(){
+
+           
+   //         this.title.val('');
+   //         //this.done.val(false);
+           
+
+   //     }
+   // });
+
+
+   //All Notification View
+
+   // App.Views.Notifications=Backbone.View.extend({
+       
+   //     tagName: 'div',
+
+   //     events:{
+           
+   //     },
+
+
+   //     initialize: function(){
+   //         this.collection.on('add', this.addOne, this); // sync when return data from server
+
+   //     },
+
+   //     render: function(){
+   //         //this.$el.empty();
+   //         this.collection.each(this.addOne, this);
+   //         return this;
+   //     },
+
+   //     addOne: function(notification){
+   //         var notificationView= new App.Views.Notification({ model:notification});
+   //         this.$el.append(notificationView.render().el);
+   //     }
+
+   // });
+
+</script>
 
 
 	
