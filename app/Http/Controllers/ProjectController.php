@@ -8,6 +8,8 @@ use App\Http\Requests;
 use View;
 use App\User;
 use App\Team;
+use Config;
+use App\UserTeamRole;
 class ProjectController extends Controller
 {
     /**
@@ -48,8 +50,9 @@ public function show_my_project($id){
              $project->save();
 
              $team= Team::find($team_id);
-             //insert user to team 
-             $team->users()->attach($project->user_id);
+             //insert user to team
+             $addusrtoteam = (new TeamController)->addUser($project->user_id, $team_id);
+             //$team->users()->attach($project->user_id);
 
              
         }
@@ -57,12 +60,12 @@ public function show_my_project($id){
         
         //Users in team
         $users_in_team= \DB::table('users')
-        ->join('user_team', 'users.id', '=', 'user_team.user_id')
-        ->join('teams', 'teams.id', '=', 'user_team.team_id')
+        ->join('user_team_role', 'users.id', '=', 'user_team_role.user_id')
+        ->join('teams', 'teams.id', '=', 'user_team_role.team_id')
         ->select('users.id', 'users.last_name', 'users.profile_image', 'users.name')
         ->where('teams.id', '=', $project->team_id)->get();
 
-        //array of all users id in team
+       // array of all users id in team
         $user_id_array=array();
             foreach ($users_in_team as $key => $value) {
                     
@@ -71,12 +74,15 @@ public function show_my_project($id){
 
             }
         //users to add in team
-        $user_to_add=User::select('name', 'last_name', 'profile_image', 'id')->whereNotIn('id', $user_id_array)->get();
+       $user_to_add=User::select('name', 'last_name', 'profile_image', 'id')->whereNotIn('id', $user_id_array)->get();
         //users to remove from team
-        $user_to_del=User::select('name', 'last_name', 'profile_image', 'id')->whereIn('id', $user_id_array)->get();
+       $user_to_del=User::select('name', 'last_name', 'profile_image', 'id')->whereIn('id', $user_id_array)->get();
+
+       
 
 
-        return  View('projects.project-detail', ['user_to_add' => $user_to_add, 'user_to_del' => $user_to_del, 'users_in_team' => $users_in_team,  'project'=>$project]); 
+
+        return View('projects.project-detail', ['user_to_add' => $user_to_add, 'user_to_del' => $user_to_del, 'users_in_team' => $users_in_team,  'project'=>$project]); 
     }
 
     public function addUserToTeam(Request $request, $id){
@@ -103,7 +109,8 @@ public function show_my_project($id){
             $team= Team::find($project->team_id);
             
             foreach ($arr as $value ) {
-            $team->users()->detach($value);
+            //$team->users()->detach($value);
+
             }
         }else{
             //add ralation between team and user
@@ -113,8 +120,9 @@ public function show_my_project($id){
 
             $projectLeader=User::find( $project->user_id);
             $temp_user=User::find($value);
+            $link=Config::get('app.url').'/project-detail/'.$project->id;
            
-            $getTests = (new NotificationController)->sendInviteToUser($temp_user->id, $projectLeader, $temp_user, "Project");
+            $getTests = (new NotificationController)->sendInviteToUser($temp_user->id, $projectLeader, $temp_user, "Project", $link, $project->title);
             //$team->users()->attach($value);
             }
 

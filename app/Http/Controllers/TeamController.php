@@ -5,9 +5,56 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Team;
 use App\Http\Requests;
+use App\UserTeamRole;
 
 class TeamController extends Controller
 {
+
+    public function addUser($user_id, $team_id)
+    {
+        $user_team_role_id= \DB::table('user_team_role')
+        //->select('user_team_role.id')
+        ->where('user_team_role.user_id', '=', $user_id)
+        ->where('user_team_role.team_id', '=', $team_id)->pluck('id');
+
+        //$UserTeamRole = UserTeamRole::find($user_team_role_id);
+        //If relation exist return false, else add user to team
+        if(count($user_team_role_id)==0){
+                //insert user to team
+                $user_team_role= new UserTeamRole;
+                $user_team_role->user_id=$user_id;
+                $user_team_role->team_id=$team_id;
+                $user_team_role->save();
+        }else{
+            return "Relation already exist";
+        }
+    }
+
+
+    public function removeUser($user_id, $team_id)
+    {
+        $user_team_role_id= \DB::table('user_team_role')
+        ->where('user_team_role.user_id', '=', $user_id)
+        ->where('user_team_role.team_id', '=', $team_id)->pluck('id');
+        if(count($user_team_role_id)==0){
+
+        }else{
+            $UserTeamRole = UserTeamRole::find($user_team_role_id[0])->delete();
+        }
+    }
+
+
+    public function getUsersInTeam($team_id)
+    {
+        $users_in_team= \DB::table('users')
+        ->join('user_team_role', 'users.id', '=', 'user_team_role.user_id')
+        ->join('teams', 'teams.id', '=', 'user_team_role.team_id')
+        ->select('users.id', 'users.last_name', 'users.profile_image', 'users.name')
+        ->where('teams.id', '=', $team_id)->get();
+        return $users_in_team;
+    }
+
+
     /**
      * Display a listing of the resource.
      *

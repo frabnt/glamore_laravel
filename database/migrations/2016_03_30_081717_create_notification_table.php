@@ -12,7 +12,7 @@ class CreateNotificationTable extends Migration
      */
     public function up()
     {
-        Schema::create('notification', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title')->nullable();
             $table->string('from')->nullable();
@@ -25,6 +25,7 @@ class CreateNotificationTable extends Migration
             $table->boolean('send_mail')->default(0);
             $table->text('body')->nullable();
             $table->string('icon')->nullable();
+            $table->boolean('deleted')->default(0);
             $table->timestamps();
         });
     }
@@ -36,6 +37,6 @@ class CreateNotificationTable extends Migration
      */
     public function down()
     {
-        Schema::drop('notification');
+        Schema::drop('notifications');
     }
 }

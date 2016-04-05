@@ -20,9 +20,9 @@ class NotificationController extends Controller
     public function showNotificationByUserId($id)
     {
         //Users in team
-               $notifications= \DB::table('notification')
-               ->join('user_notification', 'notification_id', '=', 'user_notification.notification_id')
-               ->select('notification.*')
+               $notifications= \DB::table('notifications')
+               ->join('user_notification', 'notifications.id', '=', 'user_notification.notification_id')
+               ->select('notifications.*')
                ->where('user_notification.user_id', '=', $id)->get();
 
                return $notifications;
@@ -70,7 +70,7 @@ class NotificationController extends Controller
         return $notification;  //importante altrimenti bacbone non riceve l'id in ritorno
     }
 
-    public function sendInviteToUser($user_id, $from, $to, $module )
+    public function sendInviteToUser($user_id, $from, $to, $module, $link, $body )
     {
         $notification = new Notification;
 
@@ -78,16 +78,35 @@ class NotificationController extends Controller
         $notification->from=$from->name." ".$from->last_name;
         $notification->to=$to->name." ".$to->last_name;
         $notification->type="invite";
-        //$notification->link=$request->link;
+        $notification->link=$link;
         //Send mail if is true
         //$notification->send_mail=$request->send_mail;
-        //$notification->body=$request->body;
+        $notification->body=$body;
         $notification->icon='<i class="icon ion-person-add text-success"></i>';
         
         $notification->save();
 
         $notification->users()->attach($user_id);
     }
+
+    // public function sendInviteToUser($user_id, $from, $to, $module )
+    // {
+    //     $notification = new Notification;
+
+    //     $notification->title = "New invite for ".$module; 
+    //     $notification->from=$from->name." ".$from->last_name;
+    //     $notification->to=$to->name." ".$to->last_name;
+    //     $notification->type="invite";
+    //     //$notification->link=$request->link;
+    //     //Send mail if is true
+    //     //$notification->send_mail=$request->send_mail;
+    //     //$notification->body=$request->body;
+    //     $notification->icon='<i class="icon ion-person-add text-success"></i>';
+        
+    //     $notification->save();
+
+    //     $notification->users()->attach($user_id);
+    // }
 
     /**
      * Display the specified resource.

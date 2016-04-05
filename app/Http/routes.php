@@ -17,6 +17,8 @@
 
 
 
+
+
 //email test
 Route::get('/emailtest', function () {
 
@@ -74,6 +76,13 @@ Route::group(['middleware' => 'cors'], function(){
     Route::get('todo/project/{id}', 'TodoController@todoByProjectId');
     //get notification by user id
     Route::get('notification/user/{id}', 'NotificationController@showNotificationByUserId');
+
+
+
+
+    Route::get('team/adduser/{user_id}/{team_id}', 'TeamController@addUser');
+    Route::get('team/removeuser/{user_id}/{team_id}', 'TeamController@removeUser');
+    Route::get('team/getusers/{team_id}', 'TeamController@getUsersInTeam');
    
 });
 

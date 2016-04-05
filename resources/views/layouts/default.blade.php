@@ -290,14 +290,18 @@ $.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_notifica
 
 var notifications="";
 
+
 		$('#total_notification').text(tot_notification);
 
            	data.forEach(function(notifica) {
-           	notifications+='<li><a href="#">'+notifica.icon+'<span class="text">'+notifica.title+'</span><span class="timestamp text-muted">1 minute ago</span></a></li>';
+
+           	var day = moment(notifica.created_at).fromNow();	
+
+           	notifications+='<li><a href="'+notifica.link+'">'+notifica.icon+'<span class="text">'+notifica.title+' '+notifica.body+'</span><span class="timestamp text-muted">'+day+'</span></a></li>';
     		//console.log(notifica);
 		});
 
-//console.log(tot_notification);
+console.log(data);
 
 $('#ul_notification').html(notifications);
            

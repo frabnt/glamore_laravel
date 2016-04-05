@@ -25,6 +25,8 @@ class UpdateUsersTable extends Migration
          $table->date('birthday_date')->nullable();
          $table->text('about_me')->nullable();
          $table->boolean('terms_agreement')->default(0);
+         $table->boolean('deleted')->default(0);
+         $table->boolean('active')->default(1);
          $table->boolean('newsletter')->default(0);
         });
     }

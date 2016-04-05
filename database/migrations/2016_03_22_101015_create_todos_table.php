@@ -20,6 +20,7 @@ class CreateTodosTable extends Migration
             $table->boolean('done')->default(0);
             $table->integer('user_id')->nullable();  
             $table->integer('project_id')->nullable();  
+            $table->boolean('deleted')->default(0);
             $table->timestamps();
         });
     }
