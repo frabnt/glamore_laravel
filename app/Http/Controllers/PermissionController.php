@@ -3,16 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Team;
+use App\Permission;
 use App\Http\Requests;
-use App\UserTeamRole;
 
-class TeamController extends Controller
+class PermissionController extends Controller
 {
-
-
-
-
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +15,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        return Team::all();
+        return Permission::all();
     }
 
     /**
@@ -41,18 +36,14 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        $team = new Team;
+        $permission = new Permission;
 
-        $team->name = $request->name; 
-        $team->project_id=$request->project_id;
-        //reration to users
-        $team->users()->attach($request->user_id);
-
-        $team->save();
-
-
-
-        return $team;  //importante altrimenti bacbone non riceve l'id in ritorno
+        $permission->name = $request->name; 
+        $permission->display_name = $request->display_name;
+        $permission->description  = $request->description  ; 
+        $permission->save();
+        
+        return $permission;
     }
 
     /**
@@ -63,7 +54,7 @@ class TeamController extends Controller
      */
     public function show($id)
     {
-         return Team::find($id);
+        return Permission::find($id);
     }
 
     /**
@@ -86,14 +77,12 @@ class TeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $team = Team::find($id); 
+        $permission = Permission::find($id);
 
-        $team->name = $request->name; 
-        $team->project_id=$request->project_id;
-        //reration to users
-        $team->users()->attach($request->user_id);
-
-        $team->save();
+        $permission->name = $request->name; 
+        $permission->display_name = $request->display_name;
+        $permission->description   = $request->description  ; 
+        $permission->save();
     }
 
     /**
@@ -104,6 +93,6 @@ class TeamController extends Controller
      */
     public function destroy($id)
     {
-        $team= Team::find($id)->delete();
+        $permission= Permission::find($id)->delete();
     }
 }

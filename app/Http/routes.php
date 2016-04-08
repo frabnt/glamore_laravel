@@ -61,6 +61,8 @@ Route::group(['middleware' => 'cors'], function(){
     Route::resource('projects', 'ProjectController');
     Route::resource('todos', 'TodoController');
     Route::resource('notifications', 'NotificationController');
+    Route::resource('roles', 'RoleController');
+    Route::resource('permission', 'PermissionController');
     //get educations by user id
     Route::get('education/user/{id}', 'educationController@eduByUserId');
     //get experiences by user id
@@ -80,8 +82,8 @@ Route::group(['middleware' => 'cors'], function(){
 
 
 
-    Route::get('team/adduser/{user_id}/{team_id}', 'TeamController@addUser');
-    Route::get('team/removeuser/{user_id}/{team_id}', 'TeamController@removeUser');
+    Route::get('team/adduser/{user_id}/{team_id}', 'TeamController@addUserToTeam');
+    Route::get('team/removeuser/{user_id}/{team_id}', 'TeamController@removeUserFromTeam');
     Route::get('team/getusers/{team_id}', 'TeamController@getUsersInTeam');
    
 });

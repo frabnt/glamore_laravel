@@ -3,16 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Team;
+use App\Role;
+
 use App\Http\Requests;
-use App\UserTeamRole;
 
-class TeamController extends Controller
+class RoleController extends Controller
 {
-
-
-
-
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +16,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        return Team::all();
+        return Role::all();
     }
 
     /**
@@ -41,18 +37,14 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        $team = new Team;
+        $role = new Role;
 
-        $team->name = $request->name; 
-        $team->project_id=$request->project_id;
-        //reration to users
-        $team->users()->attach($request->user_id);
+        $role->name = $request->name; 
+        $role->display_name = $request->display_name;
+        $role->description   = $request->description  ; 
+        $role->save();
 
-        $team->save();
-
-
-
-        return $team;  //importante altrimenti bacbone non riceve l'id in ritorno
+        return $role;
     }
 
     /**
@@ -63,7 +55,7 @@ class TeamController extends Controller
      */
     public function show($id)
     {
-         return Team::find($id);
+        return Role::find($id);
     }
 
     /**
@@ -86,14 +78,12 @@ class TeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $team = Team::find($id); 
+        $role = Role::find($id);
 
-        $team->name = $request->name; 
-        $team->project_id=$request->project_id;
-        //reration to users
-        $team->users()->attach($request->user_id);
-
-        $team->save();
+        $role->name = $request->name; 
+        $role->display_name = $request->display_name;
+        $role->description   = $request->description  ; 
+        $role->save();
     }
 
     /**
@@ -104,6 +94,6 @@ class TeamController extends Controller
      */
     public function destroy($id)
     {
-        $team= Team::find($id)->delete();
+        $role= Permission::find($id)->delete();
     }
 }

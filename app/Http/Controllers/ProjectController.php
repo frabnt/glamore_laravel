@@ -51,7 +51,7 @@ public function show_my_project($id){
 
              $team= Team::find($team_id);
              //insert user to team
-             $addusrtoteam = (new TeamController)->addUser($project->user_id, $team_id);
+             $addusrtoteam = (new UserController)->addUserToTeam($project->user_id, $team_id);
              //$team->users()->attach($project->user_id);
 
              
@@ -154,7 +154,15 @@ public function show_my_project($id){
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        //Create new tem for project 
+        $team= new Team;
+        $team->name=$request->title;
+        //$team->project_id=$id;
+        $team->save();
+        
+
+        //create new project
         $project = new Project;
 
         $project->title = $request->title; 
@@ -168,12 +176,15 @@ public function show_my_project($id){
         $project->client=$request->client;
         $project->status=$request->status;
         $project->class_status=$request->class_status;
-        $project->team_id=$request->team_id;
+        //$project->team_id=$request->team_id;
         $project->user_id=$request->user_id;
-        
-
-        
+        $project->team_id=$team->id;
         $project->save();
+
+        $team->project_id=$project->id;
+        $team->save();
+
+        $addusrtoteam = (new UserController)->addUserToTeam($project->user_id, $team->id);
 
 
 
