@@ -82,9 +82,12 @@ Route::group(['middleware' => 'cors'], function(){
 
 
 
-    Route::get('team/adduser/{user_id}/{team_id}', 'TeamController@addUserToTeam');
-    Route::get('team/removeuser/{user_id}/{team_id}', 'TeamController@removeUserFromTeam');
-    Route::get('team/getusers/{team_id}', 'TeamController@getUsersInTeam');
+    Route::get('user/adduser/{user_id}/{team_id}', 'UserController@addUserToTeam');
+    Route::get('user/removeuser/{user_id}/{team_id}', 'UserController@removeUserFromTeam');
+    Route::get('user/inteam/{team_id}', 'UserController@getUsersInTeam');
+    Route::get('user/notinteam/{team_id}', 'UserController@getUsersNotInTeam');
+
+    
    
 });
 

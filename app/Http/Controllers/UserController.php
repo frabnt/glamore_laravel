@@ -65,7 +65,22 @@ class UserController extends Controller
         return $users_in_team;
     }
 
-    
+    public function getUsersNotInTeam($team_id)
+    {
+        $user_in_team = $this->getUsersInTeam($team_id);
+
+        $user_id_array=array();
+            foreach ($user_in_team as $key => $value) {
+                    
+               $user_id_array[]=$value->id;
+            }
+
+        $user_to_add=User::select('name', 'last_name', 'profile_image', 'id')->whereNotIn('id', $user_id_array)->get();
+
+        return  $user_to_add; //$user_to_add;
+    }
+
+
 
     /**
      * Display a listing of the resource.
@@ -109,8 +124,6 @@ class UserController extends Controller
         $user->gplus_page = $request->gplus_page ; 
 
         $user->save();
-
-        
 
         return $user;  //importante altrimenti bacbone non riceve l'id in ritorno
     }
