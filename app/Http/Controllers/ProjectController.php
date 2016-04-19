@@ -172,11 +172,11 @@ public function show_my_project($id){
         $project->duration_day=$request->duration_day;
         $project->progress=$request->progress;
         $project->priority=$request->priority;
-        $project->class_priority=$request->class_priority;
+        // $project->class_priority=$request->class_priority;
         $project->client=$request->client;
         $project->status=$request->status;
-        $project->class_status=$request->class_status;
-        //$project->team_id=$request->team_id;
+        // $project->class_status=$request->class_status;
+        // //$project->team_id=$request->team_id;
         $project->user_id=$request->user_id;
         $project->team_id=$team->id;
         $project->save();

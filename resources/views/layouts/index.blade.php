@@ -401,3 +401,17 @@
 		@stop
 		<!-- END COLUMN RIGHT -->
 
+@section('footer_script')@parent
+	<script src={{ asset('assets/js/plugins/stat/flot/jquery.flot.min.js') }}></script>
+	<script src={{ asset('assets/js/plugins/stat/flot/jquery.flot.resize.min.js') }}></script>
+	<script src={{ asset('assets/js/plugins/stat/flot/jquery.flot.time.min.js') }}></script>
+	<script src={{ asset('assets/js/plugins/stat/flot/jquery.flot.orderBars.js') }}></script>
+	<script src={{ asset('assets/js/plugins/stat/flot/jquery.flot.tooltip.min.js') }}></script>
+	<script src={{ asset('assets/js/plugins/mapael/raphael/raphael-min.js') }}></script>
+	<script src={{ asset('assets/js/plugins/mapael/jquery.mapael.js') }}></script>
+	<script src={{ asset('assets/js/plugins/mapael/maps/world_countries.js') }}></script>
+	<script src={{ asset('assets/js/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js') }}></script>
+		<script src={{ asset('assets/js/plugins/jquery-maskedinput/jquery.masked-input.min.js') }}></script>
+	<script src={{ asset('assets/js/queen-charts.js') }}></script>
+	<script src={{ asset('assets/js/queen-maps.js') }}></script>
+@stop

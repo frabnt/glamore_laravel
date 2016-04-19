@@ -5,596 +5,401 @@
 @section('content')
 
 {{--content: url({{ asset('assets/img/camera.svg') }}); --}}
-<style type="text/css"> 
-.profile-header-background:hover{
-    opacity: 0.3; 
-}
 
-.avatar:hover{
-opacity: 0.1;
-}
-
-.hide{
-	display: none;
-}
-
-.show{
-	display: block;
-}
-
-.profile-header-background{
-height: 310px;
-background: url("{{ asset('/assets/upload/img/user')}}/{{ $user->background_image or 'city.jpg' }}");
-background-repeat:no-repeat;
-background-size: cover;
-}
-
-.avatar{
-	height: 150px;
-	width:150px;
-}
-
-#imgprofile.ion-ios-reverse-camera {
-  font-size: 90px;
-  color: white;
-  margin-bottom: -144px;
-   
-}
-
-#imgbackground.ion-ios-reverse-camera {
-  font-size: 190px;
-  margin-left: 50%;
-  color: white;
-}
-
-</style>
-
-
+<!-- <a href="#" editable-text="industry.country"  onaftersave="updateIndustry(industry)" ><% industry.country %></a>
+ -->
 <!-- COLUMN RIGHT -->
-<div id="col-right" class="col-right inplace-editing">
-	<div class="container-fluid primary-content ">
-	
-		<div class="user-profile ">
-			<div class="profile-header-background">
-				<div id="imgbackground" class="ion-ios-reverse-camera hide"></div>
-			</div>
-			<div class="row">
+		<div id="col-right" class="col-right ">
+			<div class="container-fluid primary-content">
+				<div ng-controller="userCtrl" ng-init='users.uploadProfileImages()' ng-show="users.user.name" class="user-profile">
+	<style>
+	.profile-header-background{
+	height: 310px;
+	background: url("{{ asset('/assets/upload/img/user')}}/<% users.user.background_image || 'city.jpg' %>");
+	background-repeat:no-repeat;
+	background-size: cover;
+	}
+	.profile-header-background:hover{
+		opacity: 0.3; 
+	}
 
-<div class="col-md-4">
-			
+	.avatar:hover{
+		opacity: 0.1;
+	}
 
-				<div id="editUser">
-				    
-				</div>
+	.hide{
+		display: none;
+	}
+
+	.show{
+		display: block;
+	}
 
 
-				<script id="editUserTemplate" type="text/template">
-				
-				
-				<div class="profile-info-left">
-					<div  class="text-center">
-						<div id="imgprofile" class="ion-ios-reverse-camera hide"></div>
-						<img  src="{{ asset('/assets/upload/img/user')}}/{{ $user->profile_image or 'avatar.png' }}" alt="Avatar" class="avatar img-circle" />
-						<h2><a  class="editable" models="users" value="<%= name %>" name="name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= name  %> </a>  <a  class="editable" models="users" value="<%= last_name %>" name="last_name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= last_name  %> </a></h2>
+
+	.avatar{
+		height: 150px;
+		width:150px;
+	}
+
+	#imgprofile.ion-ios-reverse-camera {
+		font-size: 90px;
+		color: white;
+		margin-bottom: -144px;
+		
+	}
+
+	#imgbackground.ion-ios-reverse-camera {
+		font-size: 190px;
+		margin-left: 50%;
+		color: white;
+	}
+	</style>
+
+					<div class="profile-header-background">
+						<div id="imgbackground" class="ion-ios-reverse-camera hide"></div>
 					</div>
-					<div class="action-buttons">
-						<div class="row">
-							<div class="col-xs-6">
-							<button id="enable" class="btn btn-success btn-block">Disable Edit</button>
-							</div>
-							{{-- <div class="col-xs-6"> <a  class="btn btn-primary btn-block"><i class="icon ion-android-mail"></i> Message</a> </div>  --}}
-						</div>
-					</div>
-					<div class="section">
-
-
+					<div class="row">
+						<div class="col-md-4">
 						
-						<input class='hide' id="profile_image" type="file" models="users"  name="profile_image" data-pk= "<%=id%>">
-						<input class='hide' id="background_image" type="file" models="users"  name="background_image" data-pk= "<%=id%>">
+						<div   class="profile-info-left">
+							<div  class="text-center">
+<!-- 							<div class="spinner"
+							     ng-show="user.isLoading" >
+								<span us-spinner="{radius:8, width:5, length: 3, lines:9}" ></span >
 
-						
-						
-
-
-						<h3>About Me</h3>
-						<p>	<a  class="editable" models="users" value="<%= about_me %>" name="about_me" data-type="textarea" data-url="" data-pk= "<%=id%>" ><%= about_me %> </a></p>
-
-					</div>
-					<div class="section">
-						<h3>Personal Details</h3>
-
-						<ul>
-							<li>Birthday  <a  class="editable combodate" models="users" value="<%= birthday_date %>" name="birthday_date" data-type="combodate" data-url="" data-pk= "<%=id%>" ><%= birthday_date %> </a></li>
-							<li>Marital status <a  id="marital_status" class="editable" models="users" value="<%= marital_status %>" name="marital_status" data-type="select" data-url="" data-pk= "<%=id%>" ><%= marital_status %> </a></li>
-						</ul>
-					</div>
-					<div class="section">
-						<h3>Social</h3>
-						<ul class="list-unstyled list-social">
-							 <li><a ><i class="icon ion-social-twitter"></i><td><a  class="editable" models="users" value="<%= twitter_page %>" name="twitter_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= twitter_page  %> </a></td></a></li>
-							<li><a ><i class="icon ion-social-facebook"></i><td><a  class="editable" models="users" value="<%= facebook_page %>" name="facebook_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= facebook_page %> </a></td></a></li>
-							<li><a ><i class="icon ion-social-dribbble"></i><td><a  class="editable" models="users" value="<%= dribbble_page %>" name="dribbble_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= dribbble_page  %> </a></td></a></li>
-							<li><a ><i class="icon ion-social-linkedin"></i><td><a  class="editable" models="users" value="<%= linkedin_page %>" name="linkedin_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= linkedin_page  %> </a></td></a></li>
-						  <li><a ><i class="icon ion-social-googleplus"></i><td><a  class="editable" models="users" value="<%= gplus_page %>" name="gplus_page" data-type="text" data-url="" data-pk= "<%=id%>" ><%= gplus_page %> </a></td></a></li>
-
-						</ul>
-					</div>
-				</div>
-
-
-				</script>
-
-<script id="allIndustriesTemplate" type="text/template">
-<legend><%= industry %></legend>  
-<table class="table table-bordered table-striped">
-    <tr><td>Country</td>
-    <td> <a class="editable edit_country" models="industries" name="country" data-type="select2" data-url="" data-pk= "<%=id%>" ><%= country %> </a> </td></tr>
-    <tr><td>Postal code</td>
-    <td><a  class="editable" models="industries" name="postal_code"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= postal_code %></a></td></tr>
-    <tr><td>Industry</td>
-    <td><a  class="editable" models="industries" name="industry" data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter Field of Study"><%= industry %></a></td></tr>
-<tr><a href="#industries/<%= id %>" class="ind_delete btn btn-primary btn-block" >Delete </a></tr>
-</table>
-</script>				
-
-<script id="allEducationsTemplate" type="text/template">
-<legend><%= school %></legend>  
-<table class="table table-bordered table-striped">
-    <tr><td>School</td>
-    <td> <a  class="editable" models="educations" name="school" data-type="text" data-url="" data-pk= "<%=id%>" ><%= school %> </a> </td></tr>
-    <tr><td>Dates Attended</td>
-    <td><a  class="editable combodate" value="<%= date_start %>" models="educations" name="date_start" data-type="combodate" data-pk="<%=id%>" data-title="Select Date Start"><%= date_start %></a> /
-	    <a  class="editable combodate" value="<%= date_end %>" models="educations" name="date_end" data-type="combodate" data-pk="<%=id%>" data-title="Select Date End"><%= date_end %></a></td></tr>	
-	<tr><td>Degree</td>
-    <td><a  class="editable" models="educations" name="degree"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= degree %></a></td></tr>
-    <tr><td>Field of Study</td>
-    <td><a  class="editable" models="educations" name="field_of_study" data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter Field of Study"><%= field_of_study %></a></td></tr>
-    <tr><td>Grade</td>
-    <td><a  class="editable" models="educations" name="grade"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= grade %></a></td></tr>
-    <tr><td>Activities and Societies</td>
-    <td><a  class="editable" models="educations" name="activities_and_societies"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= activities_and_societies %></a></td></tr>
-    <tr><td>Description</td>
-    <td><a  class="editable" models="educations" name="description" data-type="textarea" data-pk="<%=id%>"><%= description %></a></td></tr>
-<tr><a href="#educations/<%= id %>" class="edu_delete btn btn-primary btn-block" >Delete </a></tr>
-</table>
-</script>
-
-<script id="allExperiencesTemplate" type="text/template">
-<legend><%= company_name %></legend>  
-<table class="table table-bordered table-striped">
-	<tr><td>Company name</td>
-	<td> <a  class="editable" models="experiences" name="company_name" data-type="text" data-url="" data-pk= "<%=id%>" ><%= company_name %> </a> </td></tr>
-    <tr><td>Title</td>
-    <td> <a  class="editable" models="experiences" name="title" data-type="text" data-url="" data-pk= "<%=id%>" ><%= title %> </a> </td></tr>
-    <tr><td>Dates Attended</td>
-    <td><a  class="editable combodate" value="<%= date_start %>" models="experiences" name="date_start" data-type="combodate"   data-pk="<%=id%>" data-title="Select Date Start"><%= date_start %></a> /
-	    <a  class="editable combodate" value="<%= date_end %>"  models="experiences" name="date_end" data-type="combodate"  data-pk="<%=id%>" data-title="Select Date End"><%= date_end %></a></td></tr>	
-	<tr><td>Location</td>
-    <td><a  class="editable" models="experiences" name="location"  data-type="text" data-pk="<%=id%>" data-value="" data-title="Enter location"><%= location %></a></td></tr>
-    <tr><td>Currently work here</td>
-    <td><a  class="editable currently_work_here" models="experiences" name="currently_work_here" data-type="select2" data-pk="<%=id%>" data-value="<%= currently_work_here %>" data-title="Currently work here"></a></td></tr>
-    <tr><td>Description</td>
-    <td><a  class="editable" models="experiences" name="description" data-type="textarea" data-pk="<%=id%>"><%= description %></a></td></tr>
-<tr><a href="#experiences/<%= id %>" class="exp_delete btn btn-primary btn-block" >Delete </a></tr>
-</table>
-</script>
-
-</div>
-        
-	<div class="col-md-8">
-		<div class="profile-info-right">
-			<ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom">
-			<li class="active"><a href="#following" data-toggle="tab">EDUCATION</a></li>
-			<li><a href="#followers" data-toggle="tab">EXPERIENCE</a></li>
-			<li><a href="#activities" data-toggle="tab">INDUSTRY</a></li>
-				
-				
-			</ul>
-			<div class="tab-content">
-
-				<!-- activities -->
-				<div class="tab-pane fade " id="activities">
-					<a id="addIndustryButton" class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add Industry</a>
-
-				
-
-				<form id="addIndustry" class="form-horizontal hide" role="form">
-					<fieldset>
-						<legend>Add Industry</legend>
-						<div class="form-group">
-							<label for="country" class="col-sm-3 control-label">Country</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="country" id="country" placeholder="Title">
+								<p >Loading...</p >
+							</div > -->
+								<div id="imgprofile" class="ion-ios-reverse-camera hide"></div>
+								<img   ng-src="{{ asset('/assets/upload/img/user')}}/<% users.user.profile_image || 'avatar.png' %>" alt="Avatar" class="avatar img-circle" />
+								<h2><a href="#" editable-text="users.user.name"  onaftersave="users.updateUser(users.user)" ><% users.user.name|| "empty" %></a>  <a href="#" editable-text="users.user.last_name"  onaftersave="users.updateUser(users.user)" ><% users.user.last_name|| "empty" %></a></h2>
 							</div>
-						</div>
-						<div class="form-group">
-							<label for="postal_code" class="col-sm-3 control-label">Postal code</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="postal_code" id="postal_code" placeholder="Title">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="industry" class="col-sm-3 control-label">Industry</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="industry" id="industry" placeholder="industry">
-							</div>
-						</div>
-								<div class="form-group">
-									<div class="col-sm-offset-3 col-sm-9">
-										
-										<input id="submitIndustryButton" type="submit" class="btn btn-primary btn-block" value="Add Industry">
-   
-									</div>
-									<input type="hidden" id="ind_user_id" name="user_id" value={{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}>
+							<div class="action-buttons">
+								<div class="row">
+									<div class="col-xs-6">
+<!-- 									<button id="enable" class="btn btn-success btn-block">Disable Edit</button>
+ -->									</div>
+									{{-- <div class="col-xs-6"> <a  class="btn btn-primary btn-block"><i class="icon ion-android-mail"></i> Message</a> </div>  --}}
 								</div>
-							</fieldset>
-						</form>
+							</div>
+							<div class="section">
+								
+								<input class='hide' id="profile_image" type="file" >
+								<input class='hide' id="background_image" type="file"   name="background_image" > 
 
 
-						<div id="allIndustries">
-						    
+								<h3>About Me</h3>
+								<p>	<a href="#" editable-textarea="users.user.about_me"  onaftersave="users.updateUser(users.user)" ><% users.user.about_me || "empty" %></a></p>
+
+							</div>
+							<div class="section">
+								<h3>Personal Details</h3>
+
+								<ul>
+									<li>Birthday  <a href="#" editable-date="users.user.birthday_date" data-format="yy-mm-dd" data-viewformat="dd/mm/yyyy" onaftersave="users.updateUser(users.user)" ><% users.user.birthday_date  || "empty" | date:"dd/MM/yyyy" %></a></li>
+									<li>Marital status <a href="#" editable-select="users.user.marital_status" e-ng-options="s.value as s.text for s in users.marital_status"  onaftersave="users.updateUser(users.user)" ><% showMaritalStatus() %></a></li>
+									
+								</ul>
+							</div>
+							<div class="section">
+								<h3>Social</h3>
+								<ul class="list-unstyled list-social">
+									 <li><a ><i class="icon ion-social-twitter"></i><td><a href="#" editable-text="users.user.twitter_page"  onaftersave="users.updateUser(users.user)" ><% users.user.twitter_page|| "empty" %></a></td></a></li>
+									<li><a ><i class="icon ion-social-facebook"></i><td><a href="#" editable-text="users.user.facebook_page"  onaftersave="users.updateUser(users.user)" ><% users.user.facebook_page|| "empty" %></a></td></a></li>
+									<li><a ><i class="icon ion-social-dribbble"></i><td><a href="#" editable-text="users.user.dribbble_page"  onaftersave="users.updateUser(users.user)" ><% users.user.dribbble_page|| "empty" %></a></td></a></li>
+									<li><a ><i class="icon ion-social-linkedin"></i><td><a href="#" editable-text="users.user.linkedin_page"  onaftersave="users.updateUser(users.user)" ><% users.user.linkedin_page|| "empty" %></a></td></a></li>
+								  <li><a ><i class="icon ion-social-googleplus"></i><td><a href="#" editable-text="users.user.gplus_page"  onaftersave="users.updateUser(users.user)" ><% users.user.gplus_page|| "empty" %></a></td></a></li>
+
+								</ul>
+							</div>
 						</div>
-				</div>		
-				<!-- followers -->
-				<div class="tab-pane fade" id="followers">
-					<a id="addExperienceButton" class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add Experience</a>
+						
 
+
+
+						</div>
+						<div class="col-md-8">
+							<div class="profile-info-right">
+								<ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom">
+									<li class="active"><a href="#following" data-toggle="tab">EDUCATION</a></li>
+									<li><a href="#followers" data-toggle="tab">EXPERIENCE</a></li>
+									<li><a href="#activities" data-toggle="tab">INDUSTRY</a></li>
+								</ul>
+								<div  class="tab-content">
+									<div class="tab-pane fade " id="activities">
+									
+									
+
+									
+								<div ng-controller="industryCtrl">
+									<!-- industry -->
+										<a id="addIndustryButton"  ng-click="showForm()" class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add Industry</a>
+								
+									<form novalidate  ng-submit="createIndustry(industries.industry)"  id="addIndustry" class="form-horizontal hide" role="form">
+										<fieldset>
+											<legend>Add Industry</legend>
+											<div class="form-group">
+												<label for="country" class="col-sm-3 control-label">Country</label>
+												<div class="col-sm-9">
+													<input  type="text" ng-model="industries.industry.country" ng-init="industries.industry.country=''" class="form-control" name="country" id="country" placeholder="Title">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="postal_code" class="col-sm-3 control-label">Postal code</label>
+												<div class="col-sm-9">
+													<input type="number" ng-model="industries.industry.postal_code" class="form-control" name="postal_code" id="postal_code" placeholder="Title">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="industry" class="col-sm-3 control-label">Industry</label>
+												<div class="col-sm-9">
+													<input type="text" required ng-model="industries.industry.industry" class="form-control" name="industry" id="industry" placeholder="industry">
+												</div>
+											</div>
+													<div class="form-group">
+														<div class="col-sm-offset-3 col-sm-9">
+															
+															<input id="submitIndustryButton" ng-click="hideForm()" type="submit"  class="btn btn-primary btn-block" value="Save Industry">
+									
+														</div>
+														
+													</div>
+												</fieldset>
+											</form>
 				
+											<!-- <a href="#" editable-text="user.name">{{-- user.name || "empty" --}}</a> -->
+												
+											<div ng-repeat='industry in industries.industries'>
+											<legend><% industry.industry %></legend>  
+											<table class="table table-bordered table-striped">
+											    <tr> <td>Country</td>
+											    <td> <a href="#" editable-text="industry.country"  onaftersave="updateIndustry(industry)" ><% industry.country || "empty"%></a></td></tr>
+											    <tr><td>Postal code</td>
+											    <td><a href="#" editable-number="industry.postal_code"  onaftersave="updateIndustry(industry)"><% industry.postal_code || "empty"%></a></td></tr>
+											    <tr><td>Industry</td>
+											    <td><a href="#" editable-text="industry.industry" e-required onaftersave="updateIndustry(industry)"><% industry.industry || "empty"%></a></td></tr>
+											<tr><a ng-click="deleteIndustry(industry)" class="ind_delete btn btn-primary btn-block" >Delete </a></tr>
+											</table>
+											</div>
+											</div>
 
-				<form id="addExperience" class="form-horizontal hide" role="form">
-					<fieldset>
-						<legend>Add Experience</legend>
-						<div class="form-group">
-							<label for="company_name" class="col-sm-3 control-label">Company name</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="company_name" id="company_name" placeholder="Title">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="title" class="col-sm-3 control-label">Title</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="title" id="title" placeholder="Title">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="exp_date_start" class="col-sm-3 control-label">Date start</label>
-							<div class="col-sm-9">
-								<input type="date" name="exp_date_start" class="form-control" id="exp_date_start" placeholder="Date start">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="exp_date_end" class="col-sm-3 control-label">Date end</label>
-							<div class="col-sm-9">
-								<input type="date" name="exp_date_end" class="form-control" id="exp_date_end" placeholder="Date end">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="location" class="col-sm-3 control-label">Location</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="location" id="location" placeholder="Location">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="currently_work_here" class="col-sm-3 control-label">Currently work here</label>
-							<div class="col-sm-9">
-								<input type="checkbox" class="form-control" name="currently_work_here" id="currently_work_here" placeholder="Currently work here">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="description" class="col-sm-3 control-label">Description</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="description" id="exp_description" placeholder="Description">
-							</div>
-						</div>
-								<div class="form-group">
-									<div class="col-sm-offset-3 col-sm-9">
-										
-										<input id="submitExperienceButton" type="submit" class="btn btn-primary btn-block" value="Add Education">
-   
+											<!-- end industry -->
 									</div>
-									<input type="hidden" id="exp_user_id" name="user_id" value={{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}>
+
+									<div class="tab-pane fade in active" id="following">
+									<!-- education -->
+									<div ng-controller="educationCtrl">
+									 <a id="addEducationButton" ng-click="showForm()" class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add Education</a>
+
+									
+
+									<form novalidate  ng-submit="createEducation(educations.education)" id="addEducation" class="form-horizontal hide" role="form">
+										<fieldset>
+											<legend>Add Education</legend>
+											<div class="form-group">
+												<label for="school" class="col-sm-3 control-label">School</label>
+												<div class="col-sm-9">
+													<input type="text" ng-model="educations.education.school" required ng-init="educations.education.school=''" class="form-control" name="school" id="school" placeholder="School">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="edu_date_start" class="col-sm-3 control-label">Date start</label>
+												<div class="col-sm-9">
+													<input type="date" required ng-model="educations.education.date_start"  name="edu_date_start" class="form-control" id="edu_date_start" placeholder="Date start">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="edu_date_end" class="col-sm-3 control-label">Date end</label>
+												<div class="col-sm-9">
+													<input type="date" required ng-model="educations.education.date_end"  name="edu_date_end" class="form-control" id="edu_date_end" placeholder="Date end">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="degree" class="col-sm-3 control-label">Degree</label>
+												<div class="col-sm-9">
+													<input type="text"  ng-model="educations.education.degree" ng-init="educations.education.degree=''" class="form-control" name="degree" id="degree" placeholder="Degree">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="field_of_study" class="col-sm-3 control-label">Field of Study</label>
+												<div class="col-sm-9">
+													<input type="text"  ng-model="educations.education.field_of_study" ng-init="educations.education.field_of_study=''" class="form-control" name="field_of_study" id="field_of_study" placeholder="Field of Study">
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label for="grade" class="col-sm-3 control-label">Grade</label>
+												<div class="col-sm-9">
+													<input type="text" ng-model="educations.education.grade" ng-init="educations.education.grade=''" class="form-control" name="grade" id="grade" placeholder="Grade">
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label for="activities_and_societies" class="col-sm-3 control-label">Activities and Societies</label>
+												<div class="col-sm-9">
+													<input type="text"  ng-model="educations.education.activities_and_societies" ng-init="educations.education.activities_and_societies=''" class="form-control" name="activities_and_societies" id="activities_and_societies" placeholder="Activities and Societies">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="description" class="col-sm-3 control-label">Description</label>
+												<div class="col-sm-9">
+													<input type="textarea"  ng-model="educations.education.description" ng-init="educations.education.description=''" class="form-control" name="description" id="edu_description" placeholder="Description">
+												</div>
+											</div>
+													<div class="form-group">
+														<div class="col-sm-offset-3 col-sm-9">
+															
+															<input id="submitEducationButton" type="submit" class="btn btn-primary btn-block" value="Save Education">
+									
+														</div>
+														
+													</div>
+												</fieldset>
+											</form>
+
+											<div ng-repeat='education in educations.educations'>
+											<legend><% education.school %></legend>  
+											<table class="table table-bordered table-striped">
+											    <tr><td>School</td>
+											    <td> <a  href="#" editable-text="education.school" e-required onaftersave="updateEducation(education)" ><% education.school || "empty" %> </a> </td></tr>
+											    <tr><td>Dates Attended</td>
+											    <td><a  href="#" editable-date="education.date_start" e-required data-format="yy-mm-dd" data-viewformat="dd/mm/yyyy" onaftersave="updateEducation(education)" ><%  education.date_start || "empty" | date:"dd/MM/yyyy" %></a> /
+												    <a  href="#" editable-date="education.date_end"   e-required data-format="yy-mm-dd" data-viewformat="dd/mm/yyyy" onaftersave="updateEducation(education)" ><%  education.date_end || "empty" | date:"dd/MM/yyyy" %></a></td></tr>	
+												<tr><td>Degree</td> 
+											    <td><a  href="#" editable-text="education.degree"   onaftersave="updateEducation(education)" ><% education.degree || "empty"%></a></td></tr>
+											    <tr><td>Field of Study</td>
+											    <td><a  href="#" editable-text="education.field_of_study"  onaftersave="updateEducation(education)"><% education.field_of_study || "empty" %></a></td></tr>
+											    <tr><td>Grade</td>
+											    <td><a  href="#" editable-text="education.grade"  onaftersave="updateEducation(education)" ><% education.grade || "empty" %></a></td></tr>
+											    <tr><td>Activities and Societies</td>
+											    <td><a  href="#" editable-text="education.activities_and_societies"  onaftersave="updateEducation(education)"><% education.activities_and_societies || "empty" %></a></td></tr>
+											    <tr><td>Description</td>
+											    <td><a  href="#" editable-textarea="education.description"  onaftersave="updateEducation(education)"><% education.description || "empty" %></a></td></tr>
+											<tr><a  ng-click="deleteEducation(education)" class=" btn btn-primary btn-block" >Delete </a></tr>
+											</table>
+											<!-- end education -->
+										</div>
+									</div>
+									</div>
+									
+									
+									<div class="tab-pane fade" id="followers">
+
+									<div ng-controller="experienceCtrl">
+									<!-- experience -->
+									 <a id="addExperienceButton" ng-click="showForm()" class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add Experience</a>
+
+									
+
+									<form novalidate  ng-submit="createExperience(experiences.experience)"  id="addExperience" class="form-horizontal hide" role="form">
+										<fieldset>
+											<legend>Add Experience</legend>
+											<div class="form-group">
+												<label for="company_name" class="col-sm-3 control-label">Company name</label>
+												<div class="col-sm-9">
+													<input type="text" required ng-model="experiences.experience.company_name" ng-init="experiences.experience.company_name=''" class="form-control" name="company_name" id="company_name" placeholder="Title">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="title" class="col-sm-3 control-label">Title</label>
+												<div class="col-sm-9">
+													<input type="text" ng-model="experiences.experience.title" ng-init="experience.industry.title=''" class="form-control" name="title" id="title" placeholder="Title">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="exp_date_start"  class="col-sm-3 control-label">Date start</label>
+												<div class="col-sm-9">
+													<input type="date" required ng-model="experiences.experience.date_start"  name="exp_date_start" class="form-control" id="exp_date_start" placeholder="Date start">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="exp_date_end" class="col-sm-3 control-label">Date end</label>
+												<div class="col-sm-9">
+													<input type="date" required ng-model="experiences.experience.date_end" name="exp_date_end" class="form-control" id="exp_date_end" placeholder="Date end">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="location" class="col-sm-3 control-label">Location</label>
+												<div class="col-sm-9">
+													<input type="text" ng-model="experiences.experience.location" ng-init="experiences.experience.location=''" class="form-control" name="location" id="location" placeholder="Location">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="description" class="col-sm-3 control-label">Description</label>
+												<div class="col-sm-9">
+													<input type="text" ng-model="experiences.experience.description" ng-init="experiences.experience.description=''" class="form-control" name="description" id="exp_description" placeholder="Description">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="currently_work_here" class="col-sm-3 control-label">Currently work here</label>
+												<div class="col-sm-9">
+													<input type="checkbox" ng-model="experiences.experience.currently_work_here" ng-init="experiences.experience.currently_work_here=false" class="form-control" name="currently_work_here" id="currently_work_here" placeholder="Currently work here">
+												</div>
+											</div>
+				
+													<div class="form-group">
+														<div class="col-sm-offset-3 col-sm-9">
+															
+															<input id="submitExperienceButton" ng-click="hideForm()" type="submit" class="btn btn-primary btn-block" value="Save Education">
+									
+														</div>
+														
+														
+													</div>
+												</fieldset>
+											</form>
+
+											<div ng-repeat='experience in experiences.experiences'>
+											<legend><% company_name %></legend>  
+											<table class="table table-bordered table-striped">
+												<tr><td>Company name</td>
+												<td>  <a  href="#" editable-text="experience.company_name" e-required onaftersave="updateExperience(experience)"><% experience.company_name || "empty"%> </a> </td></tr>
+											    <tr><td>Title</td>
+											    <td> <a href="#" editable-text="experience.title"  onaftersave="updateExperience(experience)" ><% experience.title || "empty"%> </a> </td></tr>
+											    <tr><td>Dates Attended</td>
+											    <td><a  href="#" editable-text="experience.date_start" e-required data-format="yy-mm-dd" data-viewformat="dd/mm/yyyy" onaftersave="updateExperience(experience)" ><% experience.date_start || "empty" | date:"dd/MM/yyyy"%></a> /
+												    <a  href="#" editable-text="experience.date_end" e-required data-format="yy-mm-dd" data-viewformat="dd/mm/yyyy" onaftersave="updateExperience(experience)" ><% experience.date_end || "empty" | date:"dd/MM/yyyy"%></a></td></tr>	
+												<tr><td>Location</td>
+											    <td><a  href="#" editable-text="experience.location"  onaftersave="updateExperience(experience)" ><% experience.location || "empty"%></a></td></tr>
+											    <tr><td>Currently work here</td>
+											    <td><a  href="#" editable-checkbox="experience.currently_work_here" e-title="Currently work here?" onaftersave="updateExperience(experience)"><% experience.currently_work_here && "Work here" || "Don't work here" %></a></td></tr>
+											    <tr><td>Description</td>
+											    <td><a  href="#" editable-textarea="experience.description"  onaftersave="updateExperience(experience)"><% experience.description || "empty"%></a></td></tr>
+											<tr><a ng-click="deleteExperience(experience)" class="exp_delete btn btn-primary btn-block" >Delete </a></tr>
+											</table> 
+											</div>
+								</div>
+											<!--end experience -->
+									</div>
 									
 								</div>
-							</fieldset>
-						</form>
-
-
-						<div id="allExperiences">
-						    
+							</div>
 						</div>
+					</div>
 				</div>
-				<!-- end followers -->
-				<!-- following -->
-				<div class="tab-pane fade in active" id="following">
-				<a id="addEducationButton" class="btn btn-primary btn-block"><i class="icon ion-plus-circled"></i>Add Education</a>
-
-				
-
-				<form id="addEducation" class="form-horizontal hide" role="form">
-					<fieldset>
-						<legend>Add Education</legend>
-						<div class="form-group">
-							<label for="school" class="col-sm-3 control-label">School</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="school" id="school" placeholder="School">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="edu_date_start" class="col-sm-3 control-label">Date start</label>
-							<div class="col-sm-9">
-								<input type="date" name="edu_date_start" class="form-control" id="edu_date_start" placeholder="Date start">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="edu_date_end" class="col-sm-3 control-label">Date end</label>
-							<div class="col-sm-9">
-								<input type="date" name="edu_date_end" class="form-control" id="edu_date_end" placeholder="Date end">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="degree" class="col-sm-3 control-label">Degree</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="degree" id="degree" placeholder="Degree">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="field_of_study" class="col-sm-3 control-label">Field of Study</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="field_of_study" id="field_of_study" placeholder="Field of Study">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="grade" class="col-sm-3 control-label">Grade</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="grade" id="grade" placeholder="Grade">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="activities_and_societies" class="col-sm-3 control-label">Activities and Societies</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="activities_and_societies" id="activities_and_societies" placeholder="Activities and Societies">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="description" class="col-sm-3 control-label">Description</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="description" id="edu_description" placeholder="Description">
-							</div>
-						</div>
-								<div class="form-group">
-									<div class="col-sm-offset-3 col-sm-9">
-										
-										<input id="submitEducationButton" type="submit" class="btn btn-primary btn-block" value="Add Education">
-   
-									</div>
-									<input type="hidden" id="edu_user_id" name="user_id" value={{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}>
-									
-								</div>
-							</fieldset>
-						</form>
-
-
-						<div id="allEducations">
-						    
-						</div>
-				</div>
-				<!-- end following -->
 			</div>
-		</div>
-	</div>
-</div>
-
-				
 
 		</div>
-	</div>
-	
-</div>
 		<!-- END COLUMN RIGHT -->
-
-
-
-   
 
 				@stop
 				<!-- END COLUMN RIGHT -->
-				@section('footer_script')
-
-
-
 	
+	@section('footer_script')@parent
 	
-	
-	
-	
-	<script src={{ asset('assets/js/jquery/jquery-2.1.0.min.js') }}></script>
-	<script src={{ asset('assets/js/bootstrap/bootstrap.js') }}></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
-
-
-
-	<script src={{ asset('assets/js/main.js') }}></script>
-    <script src={{ asset('assets/js/models.js') }}></script>
-    <script src={{ asset('assets/js/collections.js') }}></script>
-    <script src={{ asset('assets/js/router.js') }}></script>
-    <script src={{ asset('assets/js/views.js') }}></script>
-
-
 	<script src={{ asset('assets/js/plugins/jquery.confirm.min.js') }}></script>
-
-
-	
-
-
 	<script src={{ asset('assets/js/queen-page.js') }}></script>
-    <script src={{ asset('assets/js/plugins/bootstrap-multiselect/bootstrap-multiselect.js') }}></script>
-	<script src={{ asset('assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}></script>
-	<script src={{ asset('assets/js/queen-common.js') }}></script>
-	<script src={{ asset('assets/js/plugins/stat/flot/jquery.flot.min.js') }}></script>
-	<script src={{ asset('assets/js/plugins/stat/flot/jquery.flot.resize.min.js') }}></script>
-	<script src={{ asset('assets/js/plugins/stat/flot/jquery.flot.time.min.js') }}></script>
-	<script src={{ asset('assets/js/plugins/stat/flot/jquery.flot.orderBars.js') }}></script>
-	<script src={{ asset('assets/js/plugins/stat/flot/jquery.flot.tooltip.min.js') }}></script>
-	<script src={{ asset('assets/js/plugins/mapael/raphael/raphael-min.js') }}></script>
-	<script src={{ asset('assets/js/plugins/mapael/jquery.mapael.js') }}></script>
-	<script src={{ asset('assets/js/plugins/mapael/maps/world_countries.js') }}></script>
-	<script src={{ asset('assets/js/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js') }}></script>
 	
-
-	<script src={{ asset('assets/js/plugins/jquery-maskedinput/jquery.masked-input.min.js') }}></script>
-	<script src={{ asset('assets/js/queen-charts.js') }}></script>
-	<script src={{ asset('assets/js/queen-maps.js') }}></script>
-	<script src={{ asset('assets/js/queen-elements.js') }}></script>
-   <script src={{ asset('assets/js/plugins/bootstrap-editable/jquery.mockjax.min.js') }}></script>
-   <script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script>
-   <script src={{ asset('assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.js') }}></script>
-   <script src={{ asset('assets/js/plugins/bootstrap-editable/bootstrap-editable.min.js') }}></script>
-   <script src={{ asset('assets/js/plugins/typeahead/typeahead.js') }}></script>
-   <script src={{ asset('assets/js/plugins/typeahead/typeaheadjs.1.5.1.js') }}></script>
-   <script src={{ asset('assets/js/plugins/select2/select2.min.js') }}></script>
-   <script src={{ asset('assets/js/plugins/bootstrap-editable/address.custom.js') }}></script>
-   <script src={{ asset('assets/js/plugins/bootstrap-editable/demo-mock.js') }}></script>
-   <!-- Backbone include -->
-    
 @stop
 
 
 @section('script')
  <script >
-    
-   
-
-
-
-
-
-//Collections   	**********************************************************************************************************************************
-
-//User collection	
-
-
-App.Collections.Users= Backbone.Collection.extend({
-	model:App.Models.User,
-	url:'{{Config::get('app.url')}}{{Config::get('backbone.collection_users')}}'
-});
-
-//Education collection	
-App.Collections.Educations= Backbone.Collection.extend({
-	model:App.Models.Education,
-	url:'{{Config::get('app.url')}}{{Config::get('backbone.collection_educations')}}' //{{Auth::user()->id}}
-});
-
-//Experience collection	
-App.Collections.Experiences= Backbone.Collection.extend({
-	model:App.Models.Experience,
-	url:'{{Config::get('app.url')}}{{Config::get('backbone.collection_experiences')}}' //{{Auth::user()->id}}
-});
-
-//Industry collection	
-App.Collections.Industries= Backbone.Collection.extend({
-	model:App.Models.Industry,
-	url:'{{Config::get('app.url')}}{{Config::get('backbone.collection_industries')}}' //{{Auth::user()->id}}
-});
-
-
-
-
-//Router 
-
-        new App.Router;
-       
-        Backbone.history.start();
-
-// istanzo la view user singola
-$.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_users')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}", function(data) {
-
-var user= new App.Models.User(data);
-//user.fetch();
-//console.log(user);
-var editUser= new App.Views.EditUser({ model: user});
-$('#editUser').html(editUser.el);
-App.users= new App.Collections.Users(data);
-
-});
-
-
-
-// Carico le education by user id
-$.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_educations_by_user_id')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}", function(data) {
-App.educations= new App.Collections.Educations(data);
-});
-
-// Carico le experience by user id
-$.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_experiences_by_user_id')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}", function(data) {
-App.experiences= new App.Collections.Experiences(data);
-});
-
-// Carico le industries by user id
-$.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_industries_by_user_id')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:'Not logged'}}", function(data) {
-App.industries= new App.Collections.Industries(data);
-//console.log(data);
-});
-
-        //Educations
-        App.educations= new App.Collections.Educations;
-        App.educations.fetch();
-        //Industries
-        App.industries= new App.Collections.Industries;
-        App.industries.fetch();
-        //Experinces
-        App.experiences= new App.Collections.Experiences;
-        App.experiences.fetch();
-        //Users
-        App.users= new App.Collections.Users;
-
-        App.users.fetch().then(function(){
-        
-        new App.Views.App({collection: App.users, collecitons: App.educations, collecitons: App.experiences, collecitons: App.industries });    
-
-        });
-
-
-
-
-
-
-//VIEWS  **********************************************************************************************************************************
-
-
-
-// MAIN VIEW *******************************************************************************************************************************
-
-
-App.Views.App=Backbone.View.extend({
-
-    initialize: function(){	
-    var addEducationView= new App.Views.AddEducation({ collection: App.educations});
-    var allEducationsView = new App.Views.Educations({ collection: App.educations}).render();
-    $('#allEducations').append(allEducationsView.el); // appendo la lista dei contatti nella tabella
-
-    var addExperienceView= new App.Views.AddExperience({ collection: App.experiences});
-    var allExperiencesView = new App.Views.Experiences({ collection: App.experiences}).render();
-    $('#allExperiences').append(allExperiencesView.el); // appendo la lista dei contatti nella tabella
-    
-
-    var addIndustryView= new App.Views.AddIndustry({ collection: App.industries});
-    var allIndustriesView = new App.Views.Industries({ collection: App.industries}).render();
-    $('#allIndustries').append(allIndustriesView.el); // appendo la lista dei contatti nella tabella
-    },
-    
-    });
-
-
-        
-
 
  $(document).ready(function() {
 
 //Change profile image
- setTimeout(function(){ 
+
 
 
  	//abilito e disabilito la visualizzazione dell'icona image change sul background profile
@@ -637,343 +442,6 @@ App.Views.App=Backbone.View.extend({
  		$("#profile_image").click();
  		
  	});	
-
- 	
-
-//save uploaded image
- 	var handleFileSelect = function(evt) {
-
-
- 	    var files = evt.target.files;
- 	    var file = files[0];
- 	    var fullPath=document.getElementById($(evt.target).attr('name')).value;
-
- 	    //console.log(fullPath);
- 	    var imageName= fullPath.slice(12);
-
-
-
-	//if( file.size > 5000000){
-	 	//alert("File maggiore di 5 mb");
-
-
- 	    if (files && file) {
-
- 	        var reader = new FileReader();
-
- 	        reader.onload = function(readerEvt) {
- 	           var binaryString = readerEvt.target.result;
- 	           var binary = btoa(binaryString);
- 	           //console.log(binary);
- 	           var id=$(evt.target).attr('data-pk');
- 	           var name=$(evt.target).attr('name');
- 	           var modelsName= $(evt.target).attr('models');
- 	           var model=App.users.get(id);
-
-
- 	           	model.set(name, imageName );
- 	            model.set('upload', binary);
- 	           
- 	            model.save();
- 	           
-
-
-
- 	            setTimeout(function(){ 
- 	            location.reload();
- 	        	}, 500);
- 	           //console.log(id+name+modelsName);
-
-
- 	           
-
- 	           //model.save('upload', binary);
- 	        };
-
- 	        reader.readAsBinaryString(file);
- 	    }
- 	//}
- 	};
-
- 	if (window.File && window.FileReader && window.FileList && window.Blob) {
- 	    document.getElementById('profile_image').addEventListener('change', handleFileSelect, false);
- 	    document.getElementById('background_image').addEventListener('change', handleFileSelect, false);
- 	} else {
- 	    alert('The File APIs are not fully supported in this browser.');
- 	}
- }, 500);
-
-
-
-//Add education / show hide form
-$('#addEducationButton').click(function() {
-$( "#addEducation" ).removeClass("hide");
-$( "#addEducation" ).addClass("show");
-
-});
-
-$('#submitEducationButton').click(function() {
-$( "#addEducation" ).removeClass("show");
-$( "#addEducation" ).addClass("hide");
-});
-
-//Add experiences / show hide form
-$('#addExperienceButton').click(function() {
-$( "#addExperience" ).removeClass("hide");
-$( "#addExperience" ).addClass("show");
-
-});
-
-$('#submitExperienceButton').click(function() {
-$( "#addExperience" ).removeClass("show");
-$( "#addExperience" ).addClass("hide");
-});
-
-//Add Industries / show hide form
-$('#addIndustryButton').click(function() {
-$( "#addIndustry" ).removeClass("hide");
-$( "#addIndustry" ).addClass("show");
-
-});
-
-$('#submitIndustryButton').click(function() {
-$( "#addIndustry" ).removeClass("show");
-$( "#addIndustry" ).addClass("hide");
-});
-
-// Imposto i campi editabili
-    window.editableEnabler = function(){
-
-
-
-        setTimeout(function(){ 
-
-
-        	// get file data
-
-
-			$.fn.editable.defaults.mode = 'inline';
-			
-
-        	//campo select (user)
-
-        			$('#marital_status').editable({
-        	        value: '',    
-        	        source: [
-        	              {value: '', text: 'Choose...'},
-        	              {value: 'Married', text: 'Married'},
-        	              {value: 'Single', text: 'Single'}
-        	           ],
-        	         success: function(response, newValue) {   
-
-        	                 
-        	                 var id=$(this).attr('data-pk');
-        	                 var name=$(this).attr('name');
-        	                 var modelsName= $(this).attr('models');
-        	                 var model= App.users.get(id).set(name, newValue);
- 						     console.log(id, name,modelsName, newValue);
-        	                 model.save(name, newValue);
-        	                 editableEnabler();
-        	            }
-        	    });
-        			       		
-
-        			$('.currently_work_here').editable({
-
-        			  source: [{id:0, text: "No"},{id:1, text: "Yes"}],
-        			  select2: {
-        			  width: 200,
-        			  placeholder: 'Select country',
-        			  allowClear: false,
-        			},
-
-
-        			  
-        			     success: function(response, newValue) {  
-        		              var id=$(this).attr('data-pk');
-        		              var name=$(this).attr('name');
-        		              var modelsName= $(this).attr('models');
-        		              var model= App.experiences.get(id).set(name, newValue);
-        					  console.log(id, name,modelsName, newValue);
-        		              model.save(name, newValue);
-        		              editableEnabler();
-        		         }
-        			});
-        		// date fields	    
-        		date = new Date();	   
-
-        		$('.combodate').editable({
-                     
-                     combodate: {
-                             minYear: date.getFullYear()-116,
-                             maxYear: date.getFullYear(),
-                             //minuteStep: 1,
-                             
-                             yearDescending: true,
-
-                             format: 'YYYY-MM-DD',      
-                             //in this format items in dropdowns are displayed
-                             template: 'YYYY / MMM /D',
-                             //initial value, can be `new Date()`    
-                                           
-                             
-                              
-                            
-                             
-                             
-                             errorClass: null,
-                             roundTime: false, // whether to round minutes and seconds if step > 1
-                             smartDays: true, // whether days in combo depend on selected month: 31, 30, 28
-                        },
-                                        success: function(response, newValue) {   
-
-                        var id=$(this).attr('data-pk');
-                        var name=$(this).attr('name');
-                        var modelsName= $(this).attr('models');
-                  
-                  var mese = parseInt(newValue._i[1])+1;
-
-                  var dataForBb=newValue._i[0]+'-'+mese+'-'+newValue._i[2];
-
-                  var dataForBbFormatted= moment(dataForBb).format('YYYY-MM-DD');
-
-                         switch (modelsName){
-                            case 'users':
-                                var model= App.users.get(id).set(name, dataForBbFormatted);
-                            break;
-
-                            case 'educations':
-                                var model= App.educations.get(id).set(name, dataForBbFormatted);
-                            break;
-
-                            case 'experiences':
-                                var model= App.experiences.get(id).set(name, dataForBbFormatted);
-                            break;
-
-                            case 'industries':
-                                var model= App.industries.get(id).set(name, dataForBbFormatted);
-                            break;
-                        }
-
-                        model.save(name, dataForBbFormatted);
-                        editableEnabler();
-                   },
-                   error: function(response, newValue) {
-                       if(response.status === 500) {
-                           return 'Service unavailable. Please try later.';
-                       } else {
-                           return response.responseText;
-                       }
-                   }
-                     
-                 });
-
-
-        			
-
-
-
-        			//campo country (industry)
-        			var countries = [];
-        			$.each({"BD": "Bangladesh", "BE": "Belgium", "BF": "Burkina Faso", "BG": "Bulgaria", "BA": "Bosnia and Herzegovina", "BB": "Barbados", "WF": "Wallis and Futuna", "BL": "Saint Bartelemey", "BM": "Bermuda", "BN": "Brunei Darussalam", "BO": "Bolivia", "BH": "Bahrain", "BI": "Burundi", "BJ": "Benin", "BT": "Bhutan", "JM": "Jamaica", "BV": "Bouvet Island", "BW": "Botswana", "WS": "Samoa", "BR": "Brazil", "BS": "Bahamas", "JE": "Jersey", "BY": "Belarus", "O1": "Other Country", "LV": "Latvia", "RW": "Rwanda", "RS": "Serbia", "TL": "Timor-Leste", "RE": "Reunion", "LU": "Luxembourg", "TJ": "Tajikistan", "RO": "Romania", "PG": "Papua New Guinea", "GW": "Guinea-Bissau", "GU": "Guam", "GT": "Guatemala", "GS": "South Georgia and the South Sandwich Islands", "GR": "Greece", "GQ": "Equatorial Guinea", "GP": "Guadeloupe", "JP": "Japan", "GY": "Guyana", "GG": "Guernsey", "GF": "French Guiana", "GE": "Georgia", "GD": "Grenada", "GB": "United Kingdom", "GA": "Gabon", "SV": "El Salvador", "GN": "Guinea", "GM": "Gambia", "GL": "Greenland", "GI": "Gibraltar", "GH": "Ghana", "OM": "Oman", "TN": "Tunisia", "JO": "Jordan", "HR": "Croatia", "HT": "Haiti", "HU": "Hungary", "HK": "Hong Kong", "HN": "Honduras", "HM": "Heard Island and McDonald Islands", "VE": "Venezuela", "PR": "Puerto Rico", "PS": "Palestinian Territory", "PW": "Palau", "PT": "Portugal", "SJ": "Svalbard and Jan Mayen", "PY": "Paraguay", "IQ": "Iraq", "PA": "Panama", "PF": "French Polynesia", "BZ": "Belize", "PE": "Peru", "PK": "Pakistan", "PH": "Philippines", "PN": "Pitcairn", "TM": "Turkmenistan", "PL": "Poland", "PM": "Saint Pierre and Miquelon", "ZM": "Zambia", "EH": "Western Sahara", "RU": "Russian Federation", "EE": "Estonia", "EG": "Egypt", "TK": "Tokelau", "ZA": "South Africa", "EC": "Ecuador", "IT": "Italy", "VN": "Vietnam", "SB": "Solomon Islands", "EU": "Europe", "ET": "Ethiopia", "SO": "Somalia", "ZW": "Zimbabwe", "SA": "Saudi Arabia", "ES": "Spain", "ER": "Eritrea", "ME": "Montenegro", "MD": "Moldova, Republic of", "MG": "Madagascar", "MF": "Saint Martin", "MA": "Morocco", "MC": "Monaco", "UZ": "Uzbekistan", "MM": "Myanmar", "ML": "Mali", "MO": "Macao", "MN": "Mongolia", "MH": "Marshall Islands", "MK": "Macedonia", "MU": "Mauritius", "MT": "Malta", "MW": "Malawi", "MV": "Maldives", "MQ": "Martinique", "MP": "Northern Mariana Islands", "MS": "Montserrat", "MR": "Mauritania", "IM": "Isle of Man", "UG": "Uganda", "TZ": "Tanzania, United Republic of", "MY": "Malaysia", "MX": "Mexico", "IL": "Israel", "FR": "France", "IO": "British Indian Ocean Territory", "FX": "France, Metropolitan", "SH": "Saint Helena", "FI": "Finland", "FJ": "Fiji", "FK": "Falkland Islands (Malvinas)", "FM": "Micronesia, Federated States of", "FO": "Faroe Islands", "NI": "Nicaragua", "NL": "Netherlands", "NO": "Norway", "NA": "Namibia", "VU": "Vanuatu", "NC": "New Caledonia", "NE": "Niger", "NF": "Norfolk Island", "NG": "Nigeria", "NZ": "New Zealand", "NP": "Nepal", "NR": "Nauru", "NU": "Niue", "CK": "Cook Islands", "CI": "Cote d'Ivoire", "CH": "Switzerland", "CO": "Colombia", "CN": "China", "CM": "Cameroon", "CL": "Chile", "CC": "Cocos (Keeling) Islands", "CA": "Canada", "CG": "Congo", "CF": "Central African Republic", "CD": "Congo, The Democratic Republic of the", "CZ": "Czech Republic", "CY": "Cyprus", "CX": "Christmas Island", "CR": "Costa Rica", "CV": "Cape Verde", "CU": "Cuba", "SZ": "Swaziland", "SY": "Syrian Arab Republic", "KG": "Kyrgyzstan", "KE": "Kenya", "SR": "Suriname", "KI": "Kiribati", "KH": "Cambodia", "KN": "Saint Kitts and Nevis", "KM": "Comoros", "ST": "Sao Tome and Principe", "SK": "Slovakia", "KR": "Korea, Republic of", "SI": "Slovenia", "KP": "Korea, Democratic People's Republic of", "KW": "Kuwait", "SN": "Senegal", "SM": "San Marino", "SL": "Sierra Leone", "SC": "Seychelles", "KZ": "Kazakhstan", "KY": "Cayman Islands", "SG": "Singapore", "SE": "Sweden", "SD": "Sudan", "DO": "Dominican Republic", "DM": "Dominica", "DJ": "Djibouti", "DK": "Denmark", "VG": "Virgin Islands, British", "DE": "Germany", "YE": "Yemen", "DZ": "Algeria", "US": "United States", "UY": "Uruguay", "YT": "Mayotte", "UM": "United States Minor Outlying Islands", "LB": "Lebanon", "LC": "Saint Lucia", "LA": "Lao People's Democratic Republic", "TV": "Tuvalu", "TW": "Taiwan", "TT": "Trinidad and Tobago", "TR": "Turkey", "LK": "Sri Lanka", "LI": "Liechtenstein", "A1": "Anonymous Proxy", "TO": "Tonga", "LT": "Lithuania", "A2": "Satellite Provider", "LR": "Liberia", "LS": "Lesotho", "TH": "Thailand", "TF": "French Southern Territories", "TG": "Togo", "TD": "Chad", "TC": "Turks and Caicos Islands", "LY": "Libyan Arab Jamahiriya", "VA": "Holy See (Vatican City State)", "VC": "Saint Vincent and the Grenadines", "AE": "United Arab Emirates", "AD": "Andorra", "AG": "Antigua and Barbuda", "AF": "Afghanistan", "AI": "Anguilla", "VI": "Virgin Islands, U.S.", "IS": "Iceland", "IR": "Iran, Islamic Republic of", "AM": "Armenia", "AL": "Albania", "AO": "Angola", "AN": "Netherlands Antilles", "AQ": "Antarctica", "AP": "Asia/Pacific Region", "AS": "American Samoa", "AR": "Argentina", "AU": "Australia", "AT": "Austria", "AW": "Aruba", "IN": "India", "AX": "Aland Islands", "AZ": "Azerbaijan", "IE": "Ireland", "ID": "Indonesia", "UA": "Ukraine", "QA": "Qatar", "MZ": "Mozambique"}, function(k, v) {
-        				countries.push({id: k, text: v});
-        			}); 
-        			$('.edit_country').editable({
-        					source: countries,
-        					select2: {
-        					width: 200,
-        					placeholder: 'Select country',
-        					allowClear: true
-        				},
-        				success: function(response, newValue) {   
-
-        	                 
-        	                 var id=$(this).attr('data-pk');
-        	                 var name=$(this).attr('name');
-        	                 var modelsName= $(this).attr('models');
-        	                 var model= App.industries.get(id).set(name, newValue);
- 							 console.log(id, name,modelsName, newValue);
-        	                 model.save(name, newValue);
-        	                 editableEnabler();
-        	            }
-
-        			});
-
-            
-        	// tutti gli altri campi		
-            $('.editable').editable({
-
-                success: function(response, newValue) {   
-                        var id=$(this).attr('data-pk');
-                        var name=$(this).attr('name');
-                        var modelsName= $(this).attr('models');
-                  //console.log(id, name,modelsName, newValue);
-
-                        switch (modelsName){
-                            case 'users':
-                                var model= App.users.get(id).set(name, newValue);
-                            break;
-
-                            case 'educations':
-                                var model= App.educations.get(id).set(name, newValue);
-                            break;
-
-                            case 'experiences':
-                                var model= App.experiences.get(id).set(name, newValue);
-                            break;
-
-                            case 'industries':
-                                var model= App.industries.get(id).set(name, newValue);
-                            break;
-                        }
-
-                        model.save(name, newValue);
-                        editableEnabler();
-                   },
-                   error: function(response, newValue) {
-                       if(response.status === 500) {
-                           return 'Service unavailable. Please try later.';
-                       } else {
-                           return response.responseText;
-                       }
-                   }
-            });
-
-        }, 500);
-    }   
-
-
-
-//toggle enable 
-
-function enableToggle(){
-    setTimeout(function(){
-
-    	    //Abilito e disabilito l'editable
-    	    $( "#enable" ).click(function() {
-    	
-    	        $('.editable').editable('toggleDisabled');
-    	        var text=$('#enable').text();
-    	        if(text=='Enable Edit'){
-    	            $('#enable').text('Disable Edit');
-    	        }else{
-    	            $('#enable').text('Enable Edit');
-    	        }
-    	 
-    	});
-
-
-    }, 1000);
-
-}
-
-
-editableEnabler();
-enableToggle();
-
-
-
-
 
 });
         </script>
