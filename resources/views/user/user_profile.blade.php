@@ -11,7 +11,7 @@
 <!-- COLUMN RIGHT -->
 		<div id="col-right" class="col-right ">
 			<div class="container-fluid primary-content">
-				<div ng-controller="userCtrl" ng-init='users.uploadProfileImages()' ng-show="users.user.name" class="user-profile">
+				<div ng-controller="userCtrl" ng-init='currentUser(); uploadProfileImages()' ng-show="users.user.name" class="user-profile">
 	<style>
 	.profile-header-background{
 	height: 310px;
@@ -387,7 +387,6 @@
 	
 	@section('footer_script')@parent
 	
-	<script src={{ asset('assets/js/plugins/jquery.confirm.min.js') }}></script>
 	<script src={{ asset('assets/js/queen-page.js') }}></script>
 	
 @stop

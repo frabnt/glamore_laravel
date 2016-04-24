@@ -67,7 +67,6 @@ Route::group(['middleware' => 'cors'], function(){
     Route::get('education/user/{id}', 'educationController@eduByUserId');
     //get experiences by user id
     Route::get('experience/user/{id}', 'experienceController@expByUserId');
-    //Industry
     //get industries by user id
     Route::get('industry/user/{id}', 'industryController@indByUserId');
     //get projects by user id
@@ -76,15 +75,17 @@ Route::group(['middleware' => 'cors'], function(){
     Route::get('todo/user/{id}', 'TodoController@todoByUserId');
     //get todos by project id
     Route::get('todo/project/{id}', 'TodoController@todoByProjectId');
+    //get todos by project id and by user id
+    Route::get('todo/project/{user_id}/{project_id}', 'TodoController@todoByProjectIdAndByUserId');
     //get notification by user id
     Route::get('notification/user/{id}', 'NotificationController@showNotificationByUserId');
-
-
-
-
+    //add user to team
     Route::get('user/adduser/{user_id}/{team_id}', 'UserController@addUserToTeam');
+    //remove user from team
     Route::get('user/removeuser/{user_id}/{team_id}', 'UserController@removeUserFromTeam');
+    //get user in team
     Route::get('user/inteam/{team_id}', 'UserController@getUsersInTeam');
+    //get user not in team
     Route::get('user/notinteam/{team_id}', 'UserController@getUsersNotInTeam');
 
     

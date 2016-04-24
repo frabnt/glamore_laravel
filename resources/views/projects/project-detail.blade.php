@@ -9,50 +9,29 @@
 
 <!-- COLUMN RIGHT -->
 
+<style>
+	.avatar{
+	    
+	    width: 40px;
+	    height: 40px;
+	}
+	.todolist{
+		margin-top: 22px;
+	}
+</style>
 
-		<div id="col-right" class="col-right ">
+		<div ng-controller="projectCtrl" ng-init='currentProject()' ng-show="projects.project.title" id="col-right" class="col-right ">
 			<div class="container-fluid primary-content">
 				<!-- PRIMARY CONTENT HEADING -->
 				<div class="primary-content-heading clearfix">
-					<h2><a  class="editable" models="projects" value="<%= tittle %>" name="title" data-type="text" data-url="" data-pk= "{{$project->id}}" >{{$project->title}} </a></h2>
+					<h2><a href="#" editable-text="projects.project.title"  onaftersave="projects.updateProject(projects.project)" ><% projects.project.title|| "empty" %></a></h2>
 					<ul class="breadcrumb pull-left">
 						<li><i class="icon ion-home"></i><a href="#">Home</a></li>
 						<li><a href="#">Pages</a></li>
 						<li class="active">Project Detail</li>
 					</ul>
-					<div class="sticky-content pull-right">
-						<button type="button" class="btn btn-default btn-sm btn-quick-task" data-toggle="modal" data-target="#quick-task-modal"><i class="icon ion-edit"></i> New Todo</button>
-					</div>
-					<!-- quick task modal -->
-					<div class="modal fade" id="quick-task-modal" tabindex="-1" role="dialog" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="myModalLabel">New Todo</h4>
-								</div>
-								<div class="modal-body">
-									<form id="addTodo" class="form-horizontal" role="form">
-										<div class="form-group">
-											<label for="task-title" class="control-label sr-only">Title</label>
-											<div class="col-sm-12">
-												<input type="text" class="form-control" id="title" placeholder="Title">
-											</div>
-										</div>
-<!-- 										<div class="form-group">
-											<label class="control-label sr-only">Description</label>
-											<div class="col-sm-12">
-												<textarea class="form-control" name="task-description" rows="5" cols="30" placeholder="Description"></textarea>
-											</div>
-										</div> -->
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-										<button id="submitTodoButton" type="submit" class="btn btn-primary">Save Todo</button>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- end quick task modal -->
+					
+
 					<!-- quick add user -->
 					<div class="modal fade" id="add_user_to_team" tabindex="-1" role="dialog" aria-hidden="true">
 						<div class="modal-dialog">
@@ -180,34 +159,31 @@
 				<!-- END PRIMARY CONTENT HEADING -->
 				<div class="row">
 					<div class="col-md-8">
-					<div id="editProject"></div>
-
-
-				<script id="editProjectTemplate" type="text/template">
+					
 						<div class="project-section general-info">
 							<h3>General Info</h3>
 							
-							<p> <a  class="editable" models="projects" name="description" data-type="textarea" data-pk="<%=id%>"><%= description %></a> </p>
+							<p> <a href="#" editable-textarea="projects.project.description"  onaftersave="projects.updateProject(projects.project)" ><% projects.project.description || "empty" %></a> </p>
 							<div class="row">
 								<div class="col-sm-9">
 									<dl class="dl-horizontal">
 										<dt>Date:</dt>
-										<dd> <a  class="editable combodate" models="projects" value="<%= date_start %>" name="date_start" data-type="combodate" data-url="" data-pk= "<%=id%>" ><%= date_start %> </a> - <a  class="editable combodate" models="projects" value="<%= date_end %>" name="date_end" data-type="combodate" data-url="" data-pk= "<%=id%>" ><%= date_end %> </a></dd>
+										<dd> <a href="#" editable-date="projects.project.date_start" data-format="yy-mm-dd" data-viewformat="dd/mm/yyyy" onaftersave="projects.updateProject(projects.project)" ><% projects.project.date_start  || "empty" | date:"dd/MM/yyyy" %></a></dd>
 										<dt>Duration:</dt>
-										<dd><a  class="editable" models="projects" value="<%= duration_day %>" name="duration_day" data-type="number" data-url="" data-pk= "<%=id%>" ><%= duration_day  %> </a> days <span class="text-muted"><small>(50 days remaining)</small></span></dd>
+										<dd><a href="#" editable-number="projects.project.duration_day"  onaftersave="updateProject(projects.project)"><% projects.project.duration_day || "empty"%></a> days <span class="text-muted"><small>(50 days remaining)</small></span></dd>
 										<dt>Client:</dt>
-										<dd><a  class="editable" models="projects" value="<%= client %>" name="client" data-type="text" data-url="" data-pk= "<%=id%>" ><%= client  %> </a></dd>
+										<dd><a href="#" editable-text="projects.project.client"  onaftersave="projects.updateProject(projects.project)" ><% projects.project.client || "empty" %></a></dd>
 										<dt>Priority:</dt>
-										<dd><a  id="priority" class="editable" models="projects" value="<%= priority %>" name="priority" data-type="select" data-url="" data-pk= "<%=id%>" ><%= priority %> </a></dd>
+										<dd><a href="#" class="label " ng-class="{'label-warning':projects.project.priority=='MEDIUM','label-success':projects.project.priority=='LOW','label-danger':projects.project.priority=='HIGH' }" editable-select="projects.project.priority" e-ng-options="s.value as s.text for s in projects.priority"  onaftersave="projects.updateProject(projects.project)" ><% showPriority() %></a></dd>
 										<dt>Status:</dt>
-										<dd><a  id="status" class="editable" models="projects" value="<%= status %>" name="status" data-type="select" data-url="" data-pk= "<%=id%>" ><%= status %> </a></dd>
+										<dd><a href="#" ng-class="{'label-warning': projects.project.status=='PENDING','label-success': projects.project.status=='ACTIVE','label-default': projects.project.status=='CLOSED' }" class="label " editable-select="projects.project.status" e-ng-options="s.value as s.text for s in projects.status"  onaftersave="projects.updateProject(projects.project)" ><% showStatus() %></a></dd>
 										<dt>Team:</dt>
 										<dd>
 											<ul class="list-inline team-list">
 											@if($users_in_team)
 											@foreach ($users_in_team as $u_in_team)
 												<li>
-													<img src="{{ asset('/assets/upload/img/user')}}/{{ $u_in_team->profile_image or 'avatar.png' }}" class="img-circle" alt="Avatar" />
+													<img src="{{ asset('/assets/upload/img/user')}}/{{ $u_in_team->profile_image or 'avatar.png' }}" class="img-circle avatar" alt="Avatar" />
 													<p><a href="#"><strong>{{ $u_in_team->name }} {{ $u_in_team->last_name }}</strong></a></p>
 													
 												</li>
@@ -226,13 +202,13 @@
 								</div>
 								<div class="col-sm-3">
 									<div class="status-chart project-progress bottom-30px">
-										<div class="pie-chart" data-percent="<%= progress %>"><span class="percent"><%= progress %>%</span></div>
+										<div class="pie-chart" data-percent="<% projects.project.progress %>"><span class="percent"><% projects.project.progress %>%</span></div>
 										<span class="chart-title">OVERALL PROGRESS</span>
 									</div>
 								</div>
 							</div>
 						</div>
-						</script>
+						
 <!-- 						<div class="project-section activity">
 							<h3>Activity</h3>
 							<ul class="list-unstyled project-activity-list">
@@ -356,7 +332,13 @@
 					</div>
 					<div class="col-md-4">
 						<!-- MY TODO LIST -->
-						<div class="widget">
+						<div ng-controller="todoCtrl" ng-init='loadMyTodosOfCurrentProject()' >
+						<div class="row">
+						<div class="sticky-content pull-right col-md-4">
+							<button type="button" class="btn btn-default btn-sm btn-quick-task" data-toggle="modal" data-target="#quick-task-modal"><i class="icon ion-edit"></i> New Todo</button>
+						</div>
+						</div>
+						<div class="widget todolist">
 							<div class="widget-header clearfix">
 								<h3><i class="icon ion-calendar"></i> <span>MY TODO LIST</span></h3>
 								<div class="btn-group widget-header-toolbar">
@@ -365,13 +347,55 @@
 								</div>
 							</div>
 							<div class="widget-content">
+							<ul class="list-unstyled simple-todo-list" >
 
-								
-								<div id="allTodos"></div>
-						
+							<li ng-repeat='todo in todos.todos'>
+								<label class="fancy-checkbox">
+									<input type="checkbox" checked ng-click="updateTodo(todo)"  ng-if="todo.done">
+									<input type="checkbox" ng-click="updateTodo(todo)" ng-if="!todo.done">
+									<span class="todo-text"><% todo.title%></span>
+								</label>
+							</li>
+
+							</ul>
+
 							</div>
 						</div>
 						<!-- END MY TODO LIST -->
+											<!-- quick task modal -->
+											<div class="modal fade" id="quick-task-modal" tabindex="-1" role="dialog" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+															<h4 class="modal-title" id="myModalLabel">New Todo</h4>
+														</div>
+														<div class="modal-body">
+															<form novalidate  ng-submit="createTodo(todos.todo)" id="addTodo" class="form-horizontal" role="form">
+																<div class="form-group">
+																	<label for="task-title" class="control-label sr-only">Title</label>
+																	<div class="col-sm-12">
+																		<input type="text" required ng-model="todos.todo.title" class="form-control" id="title" placeholder="Title">
+																	</div>
+																</div>
+																<div class="form-group">
+																	<label class="control-label sr-only">Description</label>
+																	<div class="col-sm-12">
+																		<textarea  ng-model="todos.todo.description" class="form-control" name="task-description" rows="5" cols="30" placeholder="Description"></textarea>
+																	</div>
+																</div>
+																<button type="button" id="close_todo_dialog" class="btn btn-default" data-dismiss="modal">Close</button>
+																<button id="submitTodoButton" type="submit" class="btn btn-primary">Save Todo</button>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- end quick task modal -->
+						</div>
+
+
+
 						<!-- RECENT FILES -->
 						<div class="widget">
 							<div class="widget-header clearfix">
@@ -401,16 +425,7 @@
 
 
 
-<script id="allTodosTemplate" type="text/template">
-<ul class="list-unstyled simple-todo-list">
-<li>
-	<label class="fancy-checkbox">
-		<input type="checkbox" <%=checked%> >
-		<span class="todo-text"><%=title%></span>
-	</label>
-</li>
-</ul>
-</script>				
+		
 		<!-- END COLUMN RIGHT -->
 
 
@@ -419,617 +434,17 @@
 
 				@stop
 				<!-- END COLUMN RIGHT -->
-				@section('footer_script')
+				@section('footer_script')@parent
 
-
-<script src={{ asset('assets/js/jquery/jquery-2.1.0.min.js') }}></script>
-<script src={{ asset('assets/js/bootstrap/bootstrap.js') }}></script>
-<script src={{ asset('assets/js/plugins/bootstrap-multiselect/bootstrap-multiselect.js') }}></script>
-<script src={{ asset('assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}></script>
-<script src={{ asset('assets/js/queen-common.js') }}></script>
 <script src={{ asset('assets/js/plugins/stat/jquery-easypiechart/jquery.easypiechart.min.js') }}></script>
-<script src={{ asset('assets/js/queen-page.js') }}></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
-
-<script src={{ asset('assets/js/main.js') }}></script>
-	<script src={{ asset('assets/js/models.js') }}></script>
-	<script src={{ asset('assets/js/collections.js') }}></script>
-	<script src={{ asset('assets/js/router.js') }}></script>
-
-	<script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script>
-
-
- 
-	<script src={{ asset('assets/js/plugins/jquery.confirm.min.js') }}></script>
-
- 
-	
-   <script src={{ asset('assets/js/plugins/bootstrap-editable/jquery.mockjax.min.js') }}></script>
-   <script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script>
-   <script src={{ asset('assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.js') }}></script>
-   <script src={{ asset('assets/js/plugins/bootstrap-editable/bootstrap-editable.min.js') }}></script>
-   
-
-   	<script src={{ asset('assets/js/plugins/datatable/jquery.dataTables.min.js') }}></script>
-	<script src={{ asset('assets/js/queen-table.js') }}></script>
-
-	
-
-	
-
-
-
-
-
-
-
-
-
-
 
 @stop
 
 
 @section('script')
 <script> window.user_id = {!! auth()->user()->id !!}; </script>
-<script>window.project_id={{$project->id}}; </script>
- <script >
-    
-   //Collections   	**********************************************************************************************************************************
-
-   //project collection	
-
-
-   App.Collections.Projects= Backbone.Collection.extend({
-   	model:App.Models.Project,
-   	url:'{{Config::get('app.url')}}{{Config::get('backbone.collection_projects')}}'
-   });
-
-
-//todos collection	
-App.Collections.Todos= Backbone.Collection.extend({
-	model:App.Models.Todo,
-	url:'{{Config::get('app.url')}}{{Config::get('backbone.collection_todos')}}' //{{Auth::user()->id}}
-});
-
-
-
-   // //Router 
-
-           new App.Router;
-          
-           Backbone.history.start();
-
-
-           // Carico il project by user id
-           $.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_projects')}}/"+project_id, function(data) {
+<script> window.project_id={{$project->id}}; </script>
+<script >
   
-           	   var project= new App.Models.Project(data);
-           	   var editProject= new App.Views.EditProject({ model: project});
-           	   $('#editProject').html(editProject.el);
-           		
-           		
-           
-
-
-            App.projects= new App.Collections.Projects(data);
-           });
-
-
-           // Carico i todo by project id
-           $.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_todos_by_project_id')}}/"+project_id, function(data) {
-           	//console.log(data);
-           App.todos= new App.Collections.Todos(data);
-           });
-
-           App.todos= new App.Collections.Todos;
-           App.todos.fetch();
-          
-           App.projects= new App.Collections.Projects;
-           App.projects.fetch().then(function(){
-
-           new App.Views.App({collection: App.projects, collection:App.todos});    
-
-           });
-
-
-
-
-
-
-   //VIEWS  **********************************************************************************************************************************
-
-
-
-   // MAIN VIEW *******************************************************************************************************************************
-
-
-   App.Views.App=Backbone.View.extend({
-
-       initialize: function(){	
-       vent.on('project:edit', this.editProject, this);
-       //var addProjectsView= new App.Views.AddProject({ collection: App.projects});
-       //var allProjectsView = new App.Views.Projects({ collection: App.projects}).render();
-       //$('#allProjects').append(allProjectsView.el); // appendo la lista dei contatti nella tabella
-       var addTodoView= new App.Views.AddTodo({ collection: App.todos});
-       var allTodosView = new App.Views.Todos({ collection: App.todos}).render();
-       $('#allTodos').append(allTodosView.el); // appendo la lista dei contatti nella tabella
-
-
-       },
-
-
-       
-       });
-
-
-           
-//Single todo view
-
-App.Views.Todo= Backbone.View.extend({
-    tagName:'div',
-
-    template: template('allTodosTemplate'),
-
-    initialize: function(){
-        this.model.on('destroy', this.unrender, this);
-        this.model.on('change', this.render, this); 
-    },
-
-    events:{
-        'click a.ind_delete': 'deleteTodo',
-        'click a.edit': 'editTodo',
-        'click [type="checkbox"]': 'todoChecked',
-    },
-
-    todoChecked: function (e) {
-        var checked=this.model.attributes.checked;
-        if(checked==null){
-        	this.model.attributes.checked='checked="checked"';
-        	this.model.save();
-        }else{
-        	this.model.attributes.checked=null;
-        	this.model.save();
-        }
-    },
-
-
-    editTodo: function(){
-        vent.trigger('todo:edit', this.model)
-
-    },
-    
-    deleteTodo: function(){
-
-    
-    var self=this;
-    
-
-    $.confirm({
-        text: "Are you sure you want to delete that Todo?",
-        title: "Confirmation required",
-        confirmButton: "Yes I am",
-        cancelButton: "No",
-        post: false,
-        confirmButtonClass: "btn-danger",
-        cancelButtonClass: "btn-default",
-        dialogClass: "modal-dialog modal-lg",
-        confirm: function() {
-            //this.model.destroy();
-            self.model.destroy();
-        },
-        cancel: function() {
-            // nothing to do
-        }
-    });
-
-    },
-
-    render: function(){
-        this.$el.html(this.template(this.model.toJSON()));
-        return this;
-    },
-
-    unrender: function(){
-        this.remove(); //this.$el.remove();
-    }
-});
-
-
-    // Add todo View
-
-   App.Views.AddTodo= Backbone.View.extend({
-       el:'#addTodo',
-
-       initialize: function(){
-
-       	
-
-           this.title = $('#title');
-           //this.done = $('#done');
-           this.user_id="";
-           this.project_id="";
-           this.checked="";
-
-       },
-
-       events:{
-           'submit':'addTodo'
-       },
-
-       addTodo: function(e){
-           e.preventDefault();
-
-           //Create contact 
-           this.collection.create({
-
-           title: this.title.val(),
-           done: false,
-           checked:null,
-           //team_id: this.team_id.val(),
-           user_id: user_id,
-           project_id: project_id,
-
-               
-
-           }, {wait: true}); //wait the server for save id in attribute
-           this.clearForm();
-       },
-
-       clearForm: function(){
-
-           
-           this.title.val('');
-           //this.done.val(false);
-           
-
-       }
-   });
-
-
-   //All Todo View
-
-   App.Views.Todos=Backbone.View.extend({
-       
-       tagName: 'div',
-
-       events:{
-           'click [type="checkbox"]': 'todoChecked',
-       },
-
-       todoChecked: function (e) {
-       	var progress=0;
-       	var allTodo=parseInt(this.collection.length);
-       	var checked=0;
-
-       	for(var i=0; i<this.collection.length; i++) {
-       	 // myModel = myCollection.models[i];
-       	 
-       	 if(this.collection.models[i].attributes.checked=='checked="checked"'){
-       	 	checked=checked + 1;
-       	 }
-       	}
-
-       	var progress = Math.round(checked/allTodo *100);
-
-       	var model= App.projects.models[0].attributes;
-       	
-       	 model.progress=progress;
-       	 App.projects.models[0].save();
-
-
-       	 App.projects.models[0].fetch().then(function(){
-
-           $.getJSON("{{Config::get('app.url')}}{{Config::get('backbone.collection_projects')}}/"+project_id, function(data) {
-             
-                      	   var project= new App.Models.Project(data);
-                      	   var editProject= new App.Views.EditProject({ model: project});
-                      	   $('#editProject').html(editProject.el);
-
-                     });
-
-           });
-
-
-
-       	 
-
-       	 
-       editableEnabler();
-
-       },
-
-       initialize: function(){
-           this.collection.on('add', this.addOne, this); // sync when return data from server
-
-       },
-
-       render: function(){
-           //this.$el.empty();
-           this.collection.each(this.addOne, this);
-           return this;
-       },
-
-       addOne: function(todo){
-           var todoView= new App.Views.Todo({ model:todo});
-           this.$el.append(todoView.render().el);
-       }
-
-   });
-
-
-//Edit user View
-
-App.Views.EditProject = Backbone.View.extend({
-    template: template('editProjectTemplate'),
-
-    initialize: function(){
-
-       
-        
-        this.render();
-    },
-
-    events:{
-       
-    },
-
-    render: function(){
-
-
-    	
-
-
-
-
-        var html =this.template(this.model.toJSON());
-
-        this.$el.html(html);
-        return this;
-    }
-
-});
-
- $(document).ready(function() {
-
- 
-// Imposto i campi editabili
-    window.editableEnabler = function(){
-    	//var newValue=$(this).val();
-    	
-
-        setTimeout(function(){ 
-
-        	 	     
-	
-      
-        	// get file data
-
-
-			$.fn.editable.defaults.mode = 'inline';
-
-
-			$('#priority').editable({
-        	        value: '',    
-        	        source: [
-        	              {value: 'LOW', text: 'LOW'},
-        	              {value: 'MEDIUM', text: 'MEDIUM'},
-        	              {value: 'HIGH', text: 'HIGH'}
-        	           ],
-        	         success: function(response, newValue) {  
-        	          	      
-        	                 var id=$(this).attr('data-pk');
-        	                 var name=$(this).attr('name');
-        	                 var modelsName= $(this).attr('models');
-        	                 var model= App.projects.models[0].attributes;
-        	                if(newValue=="LOW"){
-        	                 model.class_priority='label-success';
-        	                 model.priority= newValue;
-        	                 App.projects.models[0].save();
-        	                // App.projects.models[0].save("priority",newValue);
-        	                // App.projects.models[0].save("class_priority",'label-success');
-        	                // App.projects.models[0].save("title",'probva');
-        	                
-        	                }else if(newValue=='MEDIUM'){
-        	                model.class_priority='label-warning';
-        	                model.priority= newValue;
-        	                App.projects.models[0].save();
-        	                // App.projects.models[0].save("priority",newValue);
-        	                // App.projects.models[0].save("class_priority",'label-warning');
-        	               
-        	                }else{	
-        	                	model.class_priority='label-danger';
-        	                	model.priority= newValue;
-        	                	App.projects.models[0].save();
-        	                	// App.projects.models[0].save("priority",newValue);
-        	                	// App.projects.models[0].save("class_priority",'label-danger');
-
-        	               
-        	                }
-
-
-
- 						     //console.log(id, name,modelsName, newValue);
-        	                 
-        	                 editableEnabler();
-        	            }
-        	    });
-			
-						$('#status').editable({
-			        	        value: '',    
-			        	        source: [
-			        	              {value: 'ACTIVE', text: 'ACTIVE'},
-			        	              {value: 'PENDING', text: 'PENDING'},
-			        	              {value: 'CLOSED', text: 'CLOSED'}
-			        	           ],
-			        	         success: function(response, newValue) {   
-
-			        	                 
-			        	                 var id=$(this).attr('data-pk');
-			        	                 var name=$(this).attr('name');
-			        	                 var modelsName= $(this).attr('models');
-			        	                 var model= App.projects.get(id).set(name, newValue);
-
-
-
-			 						     console.log(id, name,modelsName, newValue);
-			        	                 model.save(name, newValue);
-			        	                 editableEnabler();
-			        	            }
-			        	    });
-
-        		// date fields	    
-        		date = new Date();	   
-
-        		$('.combodate').editable({
-                     
-                     combodate: {
-                             minYear: date.getFullYear()-116,
-                             maxYear: date.getFullYear(),
-                             //minuteStep: 1,
-                             
-                             yearDescending: true,
-
-                             format: 'YYYY-MM-DD',      
-                             //in this format items in dropdowns are displayed
-                             template: 'YYYY / MMM /D',
-                             //initial value, can be `new Date()`    
-                             errorClass: null,
-                             roundTime: false, // whether to round minutes and seconds if step > 1
-                             smartDays: true, // whether days in combo depend on selected month: 31, 30, 28
-                        },
-                                        success: function(response, newValue) {   
-
-                        var id=$(this).attr('data-pk');
-                        var name=$(this).attr('name');
-                        var modelsName= $(this).attr('models');
-                  
-                  var mese = parseInt(newValue._i[1])+1;
-
-                  var dataForBb=newValue._i[0]+'-'+mese+'-'+newValue._i[2];
-
-                  var dataForBbFormatted= moment(dataForBb).format('YYYY-MM-DD');
-
-                         switch (modelsName){
-                            case 'users':
-                                var model= App.users.get(id).set(name, dataForBbFormatted);
-                            break;
-
-                            case 'educations':
-                                var model= App.educations.get(id).set(name, dataForBbFormatted);
-                            break;
-
-                            case 'experiences':
-                                var model= App.experiences.get(id).set(name, dataForBbFormatted);
-                            break;
-
-                            case 'industries':
-                                var model= App.industries.get(id).set(name, dataForBbFormatted);
-                            break;
-
-                            case 'projects':
-                                var model= App.projects.get(id).set(name, dataForBbFormatted);
-                            break;
-                        }
-
-                        model.save(name, dataForBbFormatted);
-                        editableEnabler();
-                   },
-                   error: function(response, newValue) {
-                       if(response.status === 500) {
-                           return 'Service unavailable. Please try later.';
-                       } else {
-                           return response.responseText;
-                       }
-                   }
-                     
-                 });
-
-
-        	// tutti gli altri campi		
-            $('.editable').editable({
-
-                success: function(response, newValue) {   
-                        var id=$(this).attr('data-pk');
-                        var name=$(this).attr('name');
-                        var modelsName= $(this).attr('models');
-                  //console.log(id, name,modelsName, newValue);
-
-                        switch (modelsName){
-                            case 'users':
-                                var model= App.users.get(id).set(name, newValue);
-                            break;
-
-                            case 'educations':
-                                var model= App.educations.get(id).set(name, newValue);
-                            break;
-
-                            case 'experiences':
-                                var model= App.experiences.get(id).set(name, newValue);
-                            break;
-
-                            case 'industries':
-                                var model= App.industries.get(id).set(name, newValue);
-                            break;
-
-                            case 'projects':
-                                var model= App.projects.get(id).set(name, newValue);
-                            break;
-                        }
-
-                        model.save(name, newValue);
-                        editableEnabler();
-                   },
-                   error: function(response, newValue) {
-                       if(response.status === 500) {
-                           return 'Service unavailable. Please try later.';
-                       } else {
-                           return response.responseText;
-                       }
-                   }
-            });
-
-        }, 500);
-    }   
-
-
-
-//toggle enable 
-
-function enableToggle(){
-    setTimeout(function(){
-
-    	    //Abilito e disabilito l'editable
-    	    $( "#enable" ).click(function() {
-    	
-    	        $('.editable').editable('toggleDisabled');
-    	        var text=$('#enable').text();
-    	        if(text=='Enable Edit'){
-    	            $('#enable').text('Disable Edit');
-    	        }else{
-    	            $('#enable').text('Enable Edit');
-    	        }
-    	 
-    	});
-
-
-    }, 1000);
-
-}
-
-
-editableEnabler();
-enableToggle();
-
-
-
-
-
-});
-
-
-
- 
 </script>
 @stop        

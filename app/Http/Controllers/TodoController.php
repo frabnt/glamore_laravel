@@ -26,6 +26,13 @@ class TodoController extends Controller
             return Todo::where('project_id', '=', $id )->get();
     }
 
+    public function todoByProjectIdAndByUserId($user_id, $project_id){
+
+            return Todo::where('project_id', '=', $project_id )
+            ->where('user_id', '=', $user_id)->get();
+            //select * from todos where user_id =1 and project_id=1;
+    }
+
 
 
     public function index()
@@ -54,9 +61,8 @@ class TodoController extends Controller
         $todo = new Todo;
 
         $todo->title = $request->title; 
-        $todo->done = $request->done; 
+       // $todo->done = $request->done; 
         $todo->description = $request->description; 
-        $todo->checked = $request->checked; 
         $todo->project_id=$request->project_id;
         $todo->user_id=$request->user_id;
 
