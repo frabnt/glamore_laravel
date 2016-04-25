@@ -370,6 +370,177 @@
 					});
 				});
 
+				app.factory("Notification", function ($resource) {
+					return $resource("http://localhost:8000/notifications/:id/", {id: '@id'}, {
+						update: {
+							method: 'PUT'
+						}
+					});
+				});
+
+
+				app.service('NotificationService', function ( $timeout, ProjectService, Notification, $q, toaster, $resource) {
+
+
+
+					var self = {
+						'addNotification': function (notification) {
+							this.notifications.push(notification);
+						},
+						'isLoading': false,
+						'isSaving': false,
+						'notifications': [],
+						'notification': null,
+
+											'loadMyNotifications':function(user_id){
+
+												var notifications = $resource('http://localhost:8000/notification/user/:u_id/', { u_id: user_id});
+
+												if (!self.isLoading) {
+													self.isLoading = true;
+													self.notifications = notifications.query();
+													self.notifications.$promise.then(function (result) {
+														self.notifications=result;
+														self.isLoading = false;
+													},function(error) {
+														toaster.pop('error', 'Plaese check your connection '+ error.status);
+														console.log(error);
+													});
+												}
+
+											},
+
+											'loadNotification': function () {
+												if (!self.isLoading) {
+													self.isLoading = true;
+
+													self.notifications = Notification.query();
+													self.notifications.$promise.then(function (result) {
+
+
+															//check if date is an object 
+															// angular.forEach(result, function (value, key) {
+															// 	// console.log(value +" "+ key);
+															// 	// console.log(value.school);
+
+															// 	if(value.date_end !=""){
+															// 		value.date_end=new   Date(value.date_end);
+															// 	}
+
+															// 	if(value.date_start !=""){
+															// 		value.date_start=new   Date(value.date_start);
+															// 	}
+															// });
+
+
+
+													self.notifications=result;
+													self.isLoading = false;
+
+
+												});
+												}
+
+											},
+											'updateNotification': function (notification) {
+
+												self.isSaving = true;
+
+											Notification.update({ id:notification.id }, notification).$promise.then(function() {
+												self.isSaving = false;
+												toaster.pop('success', 'Notification ' + notification.title + ' Updated');
+											},function(error) {
+												toaster.pop('error', 'Plaese check your connection');
+											});
+										},
+										'deleteNotification': function (notification) {
+
+
+											$.confirm({
+												text: "Are you sure you want to delete that notification?",
+												title: "Confirmation required",
+												confirmButton: "Yes I am",
+												cancelButton: "No",
+												post: false,
+												confirmButtonClass: "btn-danger",
+												cancelButtonClass: "btn-default",
+												dialogClass: "modal-dialog modal-lg",
+												confirm: function() {
+													self.isDeleting = true;
+													Notification.remove({ id:notification.id }).$promise.then(function () {
+														toaster.pop('success', 'Notification Deleted');
+														var index = self.notifications.indexOf(notification);
+														self.notifications.splice(index, 1);
+														self.isDeleting = false;
+													});
+												},
+												cancel: function() {
+													        // nothing to do
+													    }
+													});
+
+
+										},
+
+										'createNotification': function (notification) {
+											$('#close_notification_dialog').click();
+															//console.log(notification);
+															var d = $q.defer();
+															self.isSaving = true;
+															notification.user_id=current_user_id;
+															//notification.date_start=   moment(notification.date_start).format('YYYY-MM-DD');
+															//notification.date_end= moment(notification.date_end).format('YYYY-MM-DD');
+
+
+															Notification.save(notification).$promise.then(function () {
+																toaster.pop('success', 'Created ' + notification.school);
+																self.notifications = [];
+																//self.loadNotification();
+																self.loadMyNotificationsOfCurrentProject(user_id, project_id);
+
+																self.notification= null;
+																d.resolve();
+
+																self.isSaving = false;
+															},function(error) {
+																toaster.pop('error', 'Plaese check your connection '+ error.status);
+																console.log(error);
+															});
+															return d.promise;
+														}
+
+
+													};
+													//self.loadNotification();
+													return self;
+
+												});
+
+
+app.controller('notificationCtrl', function($scope, NotificationService, $filter, $timeout, toaster) {
+	$scope.notifications = NotificationService;
+
+	$scope.updateNotification= function(notification){
+		NotificationService.updateNotification(notification);
+	},
+
+
+	$scope.createNotification= function(notification){
+										//console.log(notification);
+										NotificationService.createNotification(notification);
+										
+									},
+
+
+									$scope.deleteNotification= function(notification){
+										//console.log(notification);
+										NotificationService.deleteNotification(notification);
+										
+									}
+
+									
+								});
+
 
 				app.service('TodoService', function ( $timeout, ProjectService, Todo, $q, toaster, $resource) {
 
@@ -387,45 +558,51 @@
 						'getProgress':function(){
 							//if(self.isLoading == false){
 								var allTodo=self.todos.length;
-								var checked=0;
-								angular.forEach(self.todos, function (value, key) {
-									// console.log(value +" "+ key);
-									//console.log(value.company_name);
-									if(value.done==1){
-										checked+=1;
-									}
-								});
+								if(allTodo>0){
+									var checked=0;
+									angular.forEach(self.todos, function (value, key) {
+										// console.log(value +" "+ key);
+										//console.log(value.company_name);
+										if(value.done==1){
+											checked+=1;
+										}
+									});
+									
+									self.progress=parseInt((checked/allTodo) *100);
+									ProjectService.updateProgress(self.progress);
+								}else{
+									self.progress=0;
+									ProjectService.updateProgress(self.progress);
+								}
 								
-								self.progress=parseInt((checked/allTodo) *100);
-								ProjectService.updateProgress(self.progress);
 
-						},
-						'loadMyTodosOfCurrentProject':function(user_id, project_id){
-							
-							var todos = $resource('http://localhost:8000/todo/project/:u_id/:p_id/', { u_id: user_id,p_id:project_id});
+							},
+							'loadMyTodosOfCurrentProject':function(user_id, project_id){
+
+								var todos = $resource('http://localhost:8000/todo/project/:u_id/:p_id/', { u_id: user_id,p_id:project_id});
 
 
-							if (!self.isLoading) {
-								self.isLoading = true;
-								self.todos = todos.query();
-								self.todos.$promise.then(function (result) {
-									self.todos=result;
-									self.getProgress();
-									self.isLoading = false;
-								},function(error) {
-									toaster.pop('error', 'Plaese check your connection '+ error.status);
-									console.log(error);
-								});
-							}
+								if (!self.isLoading) {
+									self.isLoading = true;
+									self.todos = todos.query();
+									self.todos.$promise.then(function (result) {
+										self.todos=result;
+										self.getProgress();
+										self.isLoading = false;
+									},function(error) {
+										toaster.pop('error', 'Plaese check your connection '+ error.status);
+										console.log(error);
+									});
+								}
 
-						},
+							},
 
-						'loadTodo': function () {
-							if (!self.isLoading) {
-								self.isLoading = true;
+							'loadTodo': function () {
+								if (!self.isLoading) {
+									self.isLoading = true;
 
-								self.todos = Todo.query();
-								self.todos.$promise.then(function (result) {
+									self.todos = Todo.query();
+									self.todos.$promise.then(function (result) {
 
 
 											//check if date is an object 
@@ -444,18 +621,18 @@
 
 
 
-											self.todos=result;
-											self.getProgress();
-											self.isLoading = false;
+									self.todos=result;
+									self.getProgress();
+									self.isLoading = false;
 
 
-										});
-							}
+								});
+								}
 
-						},
-						'updateTodo': function (todo) {
+							},
+							'updateTodo': function (todo) {
 
-							self.isSaving = true;
+								self.isSaving = true;
 							//checkbox value
 							if(todo.done==1){
 								todo.done=0;
@@ -465,7 +642,7 @@
 							Todo.update({ id:todo.id }, todo).$promise.then(function() {
 								self.getProgress();
 								self.isSaving = false;
-								toaster.pop('success', 'Todo ' + todo.todo + ' Updated');
+								toaster.pop('success', 'Todo ' + todo.title + ' Updated');
 							},function(error) {
 								toaster.pop('error', 'Plaese check your connection');
 							});
@@ -500,7 +677,7 @@
 						},
 
 						'createTodo': function (todo) {
-											$('#close_todo_dialog').click();
+							$('#close_todo_dialog').click();
 											//console.log(todo);
 											var d = $q.defer();
 											self.isSaving = true;
@@ -515,16 +692,17 @@
 											Todo.save(todo).$promise.then(function () {
 												toaster.pop('success', 'Created ' + todo.school);
 												self.todos = [];
-												self.loadTodo();
+												//self.loadTodo();
+												self.loadMyTodosOfCurrentProject(user_id, project_id);
 
 												self.todo= null;
 												d.resolve();
 
 												self.isSaving = false;
 											},function(error) {
-																toaster.pop('error', 'Plaese check your connection '+ error.status);
-																console.log(error);
-															});
+												toaster.pop('error', 'Plaese check your connection '+ error.status);
+												console.log(error);
+											});
 											return d.promise;
 										}
 
@@ -536,22 +714,20 @@
 								});
 
 
-				app.controller('todoCtrl', function($scope, TodoService, $filter, $timeout, toaster) {
-					$scope.todos = TodoService;
+app.controller('todoCtrl', function($scope, TodoService, $filter, $timeout, toaster) {
+	$scope.todos = TodoService;
 
-					$scope.updateTodo= function(todo){
-						TodoService.updateTodo(todo);
-					},
-
-					
+	$scope.updateTodo= function(todo){
+		TodoService.updateTodo(todo);
+	},
 
 
-					$scope.loadMyTodosOfCurrentProject=function(){
-						TodoService.loadMyTodosOfCurrentProject(user_id, project_id);				
-					},
+	$scope.loadMyTodosOfCurrentProject=function(){
+		TodoService.loadMyTodosOfCurrentProject(user_id, project_id);				
+	},
 
 
-					$scope.createTodo= function(todo){
+	$scope.createTodo= function(todo){
 						//console.log(todo);
 						TodoService.createTodo(todo);
 						
@@ -570,39 +746,39 @@
 
 
 
-				app.service('ProjectService', function (  Project, $q, toaster, $resource) {
+app.service('ProjectService', function (  Project, $q, toaster, $resource) {
 
 
 
-					var self = {
-						'addProject': function (project) {
-							this.projects.push(project);
-						},
-						'isLoading': false,
-						'isSaving': false,
-						'projects': [],
-						'project': null,
-						'active':0,
-						'pending':0,
-						'closed':0,
+	var self = {
+		'addProject': function (project) {
+			this.projects.push(project);
+		},
+		'isLoading': false,
+		'isSaving': false,
+		'projects': [],
+		'project': null,
+		'active':0,
+		'pending':0,
+		'closed':0,
 
-						'status': [
-						{value: '', text: 'Choose...'},
-						{value: 'ACTIVE', text: 'ACTIVE'},
-						{value: 'PENDING', text: 'PENDING'},
-						{value: 'CLOSED', text: 'CLOSED'}
-						],
+		'status': [
+		{value: '', text: 'Choose...'},
+		{value: 'ACTIVE', text: 'ACTIVE'},
+		{value: 'PENDING', text: 'PENDING'},
+		{value: 'CLOSED', text: 'CLOSED'}
+		],
 
-						'priority': [
-						{value: '', text: 'Choose...'},
-						{value: 'HIGH', text: 'HIGH'},
-						{value: 'LOW', text: 'LOW'},
-						{value: 'MEDIUM', text: 'MEDIUM'}
-						],
+		'priority': [
+		{value: '', text: 'Choose...'},
+		{value: 'HIGH', text: 'HIGH'},
+		{value: 'LOW', text: 'LOW'},
+		{value: 'MEDIUM', text: 'MEDIUM'}
+		],
 
 
-						'loadCurrentProject':function(projectId){
-							var curProject = $resource('http://localhost:8000/projects/:id/', { id: projectId});
+		'loadCurrentProject':function(projectId){
+			var curProject = $resource('http://localhost:8000/projects/:id/', { id: projectId});
 							//console.log(curUser.get());
 							//this.user=curUser.get();
 
@@ -613,7 +789,19 @@
 								
 
 								self.project= data;
-								return data;
+
+
+								//animate chart on project detail
+								setTimeout(function(){ 
+									$('.chart').easyPieChart({
+										easing: 'easeOutBounce',
+										barColor:'#94c632',
+										lineWidth:7,
+										onStep: function(from, to, percent) {
+											$(this.el).find('.percent').text(Math.round(percent));
+										}
+									});
+								}, 500);
 							});
 							
 
@@ -658,14 +846,14 @@
 															self.setActivePendingClosed();
 															self.projects=result;
 															self.isLoading = false;
-															//set animated progressbar
+															//set animated progressbar on project list
 															setTimeout(function(){ 
-															       $('.progress-bar').each(function() {
-															           var per=$(this).attr('percent');
-															           $(this).animate({
-															           width: per+"%"
-															       }, 100 );
-															});
+																$('.progress-bar').each(function() {
+																	var per=$(this).attr('percent');
+																	$(this).animate({
+																		width: per+"%"
+																	}, 100 );
+																});
 															}, 500);
 
 														});
@@ -678,7 +866,7 @@
 							
 							Project.update({ id:project.id }, project).$promise.then(function() {
 								self.isSaving = false;
-								toaster.pop('success', 'Project ' + project.project + ' Updated');
+								toaster.pop('success', 'Project ' + project.title + ' Updated');
 							},function(error) {
 								console.log(error);
 								toaster.pop('error', 'Plaese check your connection');
@@ -689,7 +877,16 @@
 							self.isSaving = true;
 							self.project.progress=progress;
 							Project.update({ id:self.project.id }, self.project).$promise.then(function() {
-								self.isSaving = false;
+
+
+											//update chart
+											setTimeout(function(){ 
+												var chart = window.chart = $('.chart').data('easyPieChart');
+												chart.update(self.project.progress);
+															}, 500);
+											
+											
+											self.isSaving = false;
 								//toaster.pop('success', 'Project ' + project.project + ' Updated');
 							},function(error) {
 								console.log(error);
@@ -820,25 +1017,25 @@ app.controller('projectCtrl', function($scope, ProjectService, $filter, $timeout
 });
 
 
-								app.service('ExperienceService', function (  Experience, $q, toaster, $resource) {
+app.service('ExperienceService', function (  Experience, $q, toaster, $resource) {
 
 
 
-									var self = {
-										'addExperience': function (experience) {
-											this.experiences.push(experience);
-										},
-										'isLoading': false,
-										'isSaving': false,
-										'experiences': [],
-										'experience': null,
+	var self = {
+		'addExperience': function (experience) {
+			this.experiences.push(experience);
+		},
+		'isLoading': false,
+		'isSaving': false,
+		'experiences': [],
+		'experience': null,
 
-										'loadExperience': function () {
-											if (!self.isLoading) {
-												self.isLoading = true;
+		'loadExperience': function () {
+			if (!self.isLoading) {
+				self.isLoading = true;
 
-												self.experiences = Experience.query();
-												self.experiences.$promise.then(function (result) {
+				self.experiences = Experience.query();
+				self.experiences.$promise.then(function (result) {
 
 
 											//check if date is an object 
@@ -868,48 +1065,48 @@ app.controller('projectCtrl', function($scope, ProjectService, $filter, $timeout
 
 
 										});
-											}
+			}
 
-										},
-										'updateExperience': function (experience) {
+		},
+		'updateExperience': function (experience) {
 
-											self.isSaving = true;
-											Experience.update({ id:experience.id }, experience).$promise.then(function() {
-												self.isSaving = false;
-												toaster.pop('success', 'Experience ' + experience.experience + ' Updated');
-											},function(error) {
-												toaster.pop('error', 'Plaese check your connection');
-											});
-										},
-										'deleteExperience': function (experience) {
-											
+			self.isSaving = true;
+			Experience.update({ id:experience.id }, experience).$promise.then(function() {
+				self.isSaving = false;
+				toaster.pop('success', 'Experience ' + experience.company_name + ' Updated');
+			},function(error) {
+				toaster.pop('error', 'Plaese check your connection');
+			});
+		},
+		'deleteExperience': function (experience) {
 
-											$.confirm({
-												text: "Are you sure you want to delete that experience?",
-												title: "Confirmation required",
-												confirmButton: "Yes I am",
-												cancelButton: "No",
-												post: false,
-												confirmButtonClass: "btn-danger",
-												cancelButtonClass: "btn-default",
-												dialogClass: "modal-dialog modal-lg",
-												confirm: function() {
-													self.isDeleting = true;
-													Experience.remove({ id:experience.id }).$promise.then(function () {
-														toaster.pop('success', 'Experience Deleted');
-														var index = self.experiences.indexOf(experience);
-														self.experiences.splice(index, 1);
-														self.isDeleting = false;
-													});
-												},
-												cancel: function() {
+
+			$.confirm({
+				text: "Are you sure you want to delete that experience?",
+				title: "Confirmation required",
+				confirmButton: "Yes I am",
+				cancelButton: "No",
+				post: false,
+				confirmButtonClass: "btn-danger",
+				cancelButtonClass: "btn-default",
+				dialogClass: "modal-dialog modal-lg",
+				confirm: function() {
+					self.isDeleting = true;
+					Experience.remove({ id:experience.id }).$promise.then(function () {
+						toaster.pop('success', 'Experience Deleted');
+						var index = self.experiences.indexOf(experience);
+						self.experiences.splice(index, 1);
+						self.isDeleting = false;
+					});
+				},
+				cancel: function() {
 									        // nothing to do
 									    }
 									});
 
 
-										},
-										'createExperience': function (experience) {
+		},
+		'createExperience': function (experience) {
 											//console.log(experience);
 											var d = $q.defer();
 											self.isSaving = true;
@@ -921,7 +1118,7 @@ app.controller('projectCtrl', function($scope, ProjectService, $filter, $timeout
 											
 
 											Experience.save(experience).$promise.then(function () {
-												toaster.pop('success', 'Created ' + experience.school);
+												toaster.pop('success', 'Created ' + experience.company_name);
 												self.experiences = [];
 												self.loadExperience();
 
@@ -1029,7 +1226,7 @@ app.service('EducationService', function (  Education, $q, toaster, $resource) {
 			self.isSaving = true;
 			Education.update({ id:education.id }, education).$promise.then(function() {
 				self.isSaving = false;
-				toaster.pop('success', 'Education ' + education.education + ' Updated');
+				toaster.pop('success', 'Education ' + education.school + ' Updated');
 			},function(error) {
 				toaster.pop('error', 'Plaese check your connection');
 			});
@@ -1260,8 +1457,6 @@ app.controller('industryCtrl', function($scope, IndustryService, $filter, $timeo
 app.controller('userCtrl', function($scope, UserService, $filter, $timeout, toaster) {
 	$scope.users = UserService;
 
-
-
 	$timeout(function() {
 		$scope.showMaritalStatus = function() {
 			var selected = $filter('filter')($scope.users.marital_status, {value: $scope.users.user.marital_status});
@@ -1280,18 +1475,32 @@ app.controller('userCtrl', function($scope, UserService, $filter, $timeout, toas
 
 	$scope.uploadProfileImages= function(){
 		UserService.uploadProfileImages();
-	}
+	},
 
 	$scope.loadUsers= function(user){
 		UserService.loadUsers();
-	}
+	},
 
 	$scope.loadUsersAffiliatesPage= function(user){
 		UserService.loadUsersAffiliatesPage();
 		$.getScript('{{ asset("assets/js/queen-table.js") }}', function(){});
+	},
+
+	$scope.loadUsersInTeam=function(){
+		UserService.loadUsersInTeam();
+	},
+
+	$scope.loadUsersNotInTeam=function(){
+		UserService.loadUsersNotInTeam();
+	},
+
+	$scope.addUserInTeam= function(user){
+		UserService.addUserToTeam(user);
+	},
+	$scope.removeUserInTeam= function(user){
+	UserService.removeUserToTeam(user);
 	}
 
-	
 
 
 });
@@ -1315,13 +1524,58 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 		'users': [],
 		'user': null,
 		'search': null,
-
-
+		'usersInTeam':[],
+		'usersNotInTeam':[],
 		'marital_status': [
 		{value: '', text: 'Choose...'},
 		{value: 'Married', text: 'Married'},
 		{value: 'Single', text: 'Single'}
 		],
+
+		'loadUsersInTeam':function(){
+			var usersInTeam = $resource('http://localhost:8000/user/inteam/:id/', { id: team_id});
+			//console.log(usersInTeam.get());
+			//this.user=usersInTeam.get();
+
+			self.usersInTeam=usersInTeam.query();
+			self.usersInTeam.$promise.then(function (result) {
+				self.usersInTeam=result;
+				self.isLoading = false;
+			});
+
+		},
+
+		'loadUsersNotInTeam':function(){
+			var usersNotInTeam = $resource('http://localhost:8000/user/notinteam/:id/', { id: team_id});
+			self.usersNotInTeam=usersNotInTeam.query();
+			self.usersNotInTeam.$promise.then(function (result) {
+				self.usersNotInTeam=result;
+				self.isLoading = false;
+			});
+		},
+
+		'addUserToTeam':function(user){
+			var addUser = $resource('http://localhost:8000/user/adduser/:u_id/:t_id/', { u_id: user.id, t_id:team_id});
+			addUser.get(function (data){
+			self.loadUsersInTeam();
+			var index = self.usersNotInTeam.indexOf(user);
+			self.usersNotInTeam.splice(index, 1);
+			toaster.pop('success', 'User ' + user.name + ' Added');
+				//self.user= data;
+			});
+		},
+
+		'removeUserToTeam':function(user){
+		var rmUser = $resource('http://localhost:8000/user/removeuser/:u_id/:t_id/', { u_id: user.id, t_id:team_id});
+		
+		rmUser.get(function (data){
+		//self.loadUsersInTeam();
+		var index = self.usersInTeam.indexOf(user);
+		self.usersInTeam.splice(index, 1);
+		toaster.pop('success', 'User ' + user.name + ' Removed');
+			//self.user= data;
+		});
+		},
 
 
 				// 'doSearch': function (search) {
@@ -1367,7 +1621,7 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 						});
 					}
 
-					},
+				},
 
 				'loadUsersAffiliatesPage': function () {
 					if (!self.isLoading) {
@@ -1382,12 +1636,12 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 						});
 					}
 
-					},
+				},
 
 
 
 
-					'uploadProfileImages': function(){
+				'uploadProfileImages': function(){
 		//$scope.user=UserService.uploadProfileImages();
 		//save uploaded image
 		var handleFileSelect = function(evt) {

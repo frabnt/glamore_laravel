@@ -23,10 +23,15 @@ class UserController extends Controller
 
     public function addUserToTeam($user_id, $team_id)
     {
+
         $user_team_role_id= \DB::table('user_team_role')
         //->select('user_team_role.id')
         ->where('user_team_role.user_id', '=', $user_id)
         ->where('user_team_role.team_id', '=', $team_id)->pluck('id');
+
+        //$link=Config::get('app.url').'/project-detail/'.$project->id;
+
+        //$getTests = (new NotificationController)->sendInviteToUser($temp_user->id, $projectLeader, $temp_user, "Project", $link, $project->title);
 
         //$UserTeamRole = UserTeamRole::find($user_team_role_id);
         //If relation exist return false, else add user to team
