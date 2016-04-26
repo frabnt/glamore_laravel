@@ -883,7 +883,7 @@ app.service('ProjectService', function (  Project, $q, toaster, $resource) {
 											setTimeout(function(){ 
 												var chart = window.chart = $('.chart').data('easyPieChart');
 												chart.update(self.project.progress);
-															}, 500);
+															}, 1000);
 											
 											
 											self.isSaving = false;
@@ -1526,6 +1526,7 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 		'search': null,
 		'usersInTeam':[],
 		'usersNotInTeam':[],
+		'usersPartecipant':[],
 		'marital_status': [
 		{value: '', text: 'Choose...'},
 		{value: 'Married', text: 'Married'},
@@ -1540,6 +1541,7 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 			self.usersInTeam=usersInTeam.query();
 			self.usersInTeam.$promise.then(function (result) {
 				self.usersInTeam=result;
+				self.usersPartecipant=result;
 				self.isLoading = false;
 			});
 
@@ -1557,7 +1559,8 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 		'addUserToTeam':function(user){
 			var addUser = $resource('http://localhost:8000/user/adduser/:u_id/:t_id/', { u_id: user.id, t_id:team_id});
 			addUser.get(function (data){
-			self.loadUsersInTeam();
+			//self.loadUsersInTeam();
+			self.usersPartecipant.push(user);
 			var index = self.usersNotInTeam.indexOf(user);
 			self.usersNotInTeam.splice(index, 1);
 			toaster.pop('success', 'User ' + user.name + ' Added');
@@ -1567,11 +1570,14 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 
 		'removeUserToTeam':function(user){
 		var rmUser = $resource('http://localhost:8000/user/removeuser/:u_id/:t_id/', { u_id: user.id, t_id:team_id});
-		
 		rmUser.get(function (data){
 		//self.loadUsersInTeam();
 		var index = self.usersInTeam.indexOf(user);
+		//delete users on list
+		self.usersInTeam.splice(index);
 		self.usersInTeam.splice(index, 1);
+		// add user in notInTeam list
+		self.usersNotInTeam.push(user);
 		toaster.pop('success', 'User ' + user.name + ' Removed');
 			//self.user= data;
 		});

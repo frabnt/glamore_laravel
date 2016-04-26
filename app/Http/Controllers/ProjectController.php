@@ -242,10 +242,6 @@ public function show_my_project($id){
         $project->status=$request->status;
         $project->team_id=$request->team_id;
         $project->user_id=$request->user_id;
-        $project->class_status=$request->class_status;
-        $project->class_priority=$request->class_priority;
-
-        
 
         
         $project->save();

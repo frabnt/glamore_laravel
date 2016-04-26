@@ -61,7 +61,7 @@
 								<dd>
 									<ul class="list-inline team-list">
 										
-										<li ng-repeat='user in users.usersInTeam'>
+										<li ng-repeat='user in users.usersPartecipant'>
 											<img ng-src="{{ asset('/assets/upload/img/user')}}/<% user.profile_image || 'avatar.png' %>" class="img-circle avatar" alt="Avatar" />
 											<p><a href="#"><strong><% user.name %> <% user.last_name %></strong></a></p>
 										</li>
@@ -128,7 +128,6 @@
 													</div>
 													<!-- END SCROLLING DATA TABLE -->
 													<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-													<button type="submit" class="btn btn-primary">Send</button>
 												</form>
 											</div>
 										</div>
@@ -187,7 +186,6 @@
 													</div>
 													<!-- END SCROLLING DATA TABLE -->
 													<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-													<button type="submit" class="btn btn-primary">Save</button>
 												</form>
 											</div>
 										</div>

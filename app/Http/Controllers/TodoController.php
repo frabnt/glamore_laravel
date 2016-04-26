@@ -109,7 +109,6 @@ class TodoController extends Controller
         $todo->title = $request->title; 
         $todo->done = $request->done; 
         $todo->description = $request->description; 
-        $todo->checked = $request->checked; 
         $todo->project_id=$request->project_id;
         $todo->user_id=$request->user_id;
 
