@@ -143,7 +143,7 @@
 												<h4 class="modal-title" id="myModalLabel">Disable User</h4>
 											</div>
 											<div class="modal-body">
-												<form action="{{URL::to('project-detail')}}/{{$project->id}}" method="post" class="form-horizontal" role="form">
+												<form action="#" method="post" class="form-horizontal" role="form">
 													<input type="hidden" name="_token" value="{{ csrf_token() }}">
 													<input type="hidden" name="user_action" value="rm">
 

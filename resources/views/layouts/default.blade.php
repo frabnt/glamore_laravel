@@ -1537,7 +1537,6 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 			var usersInTeam = $resource('http://localhost:8000/user/inteam/:id/', { id: team_id});
 			//console.log(usersInTeam.get());
 			//this.user=usersInTeam.get();
-
 			self.usersInTeam=usersInTeam.query();
 			self.usersInTeam.$promise.then(function (result) {
 				self.usersInTeam=result;
@@ -1572,10 +1571,11 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 		var rmUser = $resource('http://localhost:8000/user/removeuser/:u_id/:t_id/', { u_id: user.id, t_id:team_id});
 		rmUser.get(function (data){
 		//self.loadUsersInTeam();
-		var index = self.usersInTeam.indexOf(user);
+		//var index = self.usersInTeam.indexOf(user);
+		var index2 = self.usersPartecipant.indexOf(user);
 		//delete users on list
-		self.usersInTeam.splice(index);
-		self.usersInTeam.splice(index, 1);
+		self.usersPartecipant.splice(index2, 1);
+		//self.usersInTeam.splice(index, 1);
 		// add user in notInTeam list
 		self.usersNotInTeam.push(user);
 		toaster.pop('success', 'User ' + user.name + ' Removed');
