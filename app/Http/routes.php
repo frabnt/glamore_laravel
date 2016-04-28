@@ -110,6 +110,10 @@ Route::group(['middleware' => 'cors'], function(){
         return view('affiliates.search_for_affiliate');
     });
 
+    Route::get('/under-costruction', function () {
+        return view('layouts.under_costruction');
+    });
+
     // Route::get('/my-project', function () {
     //     return view('projects.my-project');
     // });

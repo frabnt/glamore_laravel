@@ -196,19 +196,19 @@
 									<a href="#" class="submenu-toggle"><i class="icon ion-ios-speedometer-outline"></i><span class="text">Dashboards</span></a>
 									<ul class="list-unstyled sub-menu collapse in">
 										<li class="active"><a href="{{URL::to('home')}}"><span class="text">Dashboard</span></a></li>
-										<li><a href="#"><span class="text">Next meetings</span></a></li>
-										<li><a href="#"><span class="text">Task to do</span></a></li>
-										<li><a href="#"><span class="text">Card of the last project</span></a></li>
-										<li><a href="#"><span class="text">Chart of earnings</span></a></li>
+										<li><a href="{{ url('/under-costruction')}}"><span class="text">Next meetings</span></a></li>
+										<li><a href="{{ url('/under-costruction')}}"><span class="text">Task to do</span></a></li>
+										<li><a href="{{ url('/under-costruction')}}"><span class="text">Card of the last project</span></a></li>
+										<li><a href="{{ url('/under-costruction')}}"><span class="text">Chart of earnings</span></a></li>
 									</ul>
 								</li>
 								<li class="has-submenu">
 									<a href="#" class="submenu-toggle"><i class="icon ion-ios-paper-outline"></i><span class="text">Projects</span></a>
 									<ul class="list-unstyled sub-menu collapse">
 										<li><a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}"><span class="text">Post a project</span></a></li>
-										<li><a href="#"><span class="text">Activities (task/meeting/call)</span></a></li>
-										<li><a href="#"><span class="text">Documents and note</span></a></li>
-										<li><a href="#"><span class="text">Videoconference</span></a></li>
+										<li><a href="{{ url('/under-costruction')}}"><span class="text">Activities (task/meeting/call)</span></a></li>
+										<li><a href="{{ url('/under-costruction')}}"><span class="text">Documents and note</span></a></li>
+										<li><a href="{{ url('/under-costruction')}}"><span class="text">Videoconference</span></a></li>
 									</ul>
 								</li>
 
@@ -217,20 +217,20 @@
 								<li class="has-submenu">
 									<a href="#" class="submenu-toggle"><i class="icon ion-person"></i><span class="text">Affiliates</span></a>
 									<ul class="list-unstyled sub-menu collapse">
-										<li><a href="#"><span class="text">BIO Affiliate</span></a></li>
+										<li><a href="{{ url('/under-costruction')}}"><span class="text">BIO Affiliate</span></a></li>
 										<li><a href="{{ url('/search-for-affiliate') }}"><span class="text">Search for Affiliate</span></a></li>
-										<li><a href="#"><span class="text">Activities diary</span></a></li>
-										<li><a href="#"><span class="text">Search and join projects</span></a></li>
+										<li><a href="{{ url('/under-costruction')}}"><span class="text">Activities diary</span></a></li>
+										<li><a href="{{ url('/under-costruction')}}"><span class="text">Search and join projects</span></a></li>
 									</ul>
 								</li>
 
 								<li class="has-submenu">
 									<a href="#" class="submenu-toggle"><i class="icon ion-stats-bars"></i><span class="text">Reports</span></a>
 									<ul class="list-unstyled sub-menu collapse">
-										<li><a href="#"><span class="text">payments received</span></a></li>
-										<li><a href="#"><span class="text">summary of earnings</span></a></li>
-										<li><a href="#"><span class="text">details of tax</span></a></li>
-										<li><a href="#"><span class="text">invoice and remittance</span></a></li>
+										<li><a href="{{ url('/under-costruction')}}"><span class="text">payments received</span></a></li>
+										<li><a href="{{ url('/under-costruction')}}"><span class="text">summary of earnings</span></a></li>
+										<li><a href="{{ url('/under-costruction')}}"><span class="text">details of tax</span></a></li>
+										<li><a href="{{ url('/under-costruction')}}"><span class="text">invoice and remittance</span></a></li>
 									</ul>
 								</li>
 							</ul>
@@ -284,7 +284,35 @@
 			<script src={{ asset("assets/angular_lib/angularjs-toaster/toaster.min.js" ) }}></script>
 			<script src={{ asset('assets/js/queen-common.js') }}></script>
 			<script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script>
-			
+			<script>
+				// $( document ).ready(function() {
+				//   // $('#next_meeting').addClass("active");
+
+				//   setTimeout(function(){ 
+				//   		console.log(window.location.href);
+				//   		var href=window.location.href;
+				//   		var $test =$('a[href="'+href+'"')
+
+				//   		$test.addClass("active");
+				//   		console.log($test.parent().parent().first().html());
+				//   		console.log($test.parent().parent().first().html());
+				//   		console.log($test.parent().parent().parent().html());
+
+
+
+
+
+				//    }, 3000);
+				  
+				//   // click(function(){
+				//   //  	alert('ok');
+				//   //  });
+
+				//    // $('a[href="http://localhost:8000/under-costruction"]').click(function(){
+				//    // 	alert('ok');
+				//    // });
+				// });
+			</script>
 			<script>
 				window.current_user_id = {!! auth()->user()->id !!};
 
