@@ -1347,7 +1347,7 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 						self.users.$promise.then(function (result) {
 							self.users=result;
 							self.isLoading = false;
-							$.getScript('{{ asset("assets/js/queen-table.js") }}', function(){});
+							$.getScript(base_url+'/assets/js/queen-table.js', function(){});
 
 						});
 					}
