@@ -282,10 +282,13 @@
 			<script src={{ asset("assets/angular_lib/angular-ladda/dist/angular-ladda.min.js" ) }}></script>
 			<script src={{ asset("assets/angular_lib/angular-strap/dist/angular-strap.min.js" ) }}></script>
 			<script src={{ asset("assets/angular_lib/angular-strap/dist/angular-strap.tpl.min.js" ) }}></script>
-			<script src={{ asset("assets/angular_lib/angularjs-toaster/toaster.min.js" ) }}></script>
+			<script src={{ asset("assets/angular_lib/AngularJS-Toaster/toaster.min.js" ) }}></script>
 			<script src={{ asset('assets/js/queen-common.js') }}></script>
 			<script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script>
-			<script>window.current_user_id = {!! auth()->user()->id !!};</script>
+			<script>
+			window.current_user_id = {!! auth()->user()->id !!};
+			window.base_url={!! json_encode(url('/')) !!};
+			</script>
 			<script src={{ asset('assets/js/angularApp.js') }}></script>
 @show
 

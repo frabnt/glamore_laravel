@@ -354,8 +354,8 @@
 
 										<li ng-repeat='todo in todos.todos'>
 											<label class="fancy-checkbox">
-												<input type="checkbox" checked ng-click="updateTodo(todo)" ng-if="todo.done">
-												<input type="checkbox" ng-click="updateTodo(todo)" ng-if="!todo.done">
+												<input type="checkbox" checked ng-click="updateTodo(todo)" ng-if="todo.done==1">
+												<input type="checkbox" ng-click="updateTodo(todo)" ng-if="todo.done==0">
 												<span class="todo-text"><% todo.title%></span>
 											</label>
 										</li>

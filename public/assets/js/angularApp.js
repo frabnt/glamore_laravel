@@ -34,21 +34,21 @@ var app = angular.module('App', [
 			});
 
 				app.factory("Industry", function ($resource) {
-					return $resource("http://localhost:8000/industries/:id/", {id: '@id'}, {
+					return $resource(base_url +"/industries/:id/", {id: '@id'}, {
 						update: {
 							method: 'PUT'
 						}
 					});
 				});
 				app.factory("User", function ($resource) {
-					return $resource("http://localhost:8000/users/:id/", {id: '@id'}, {
+					return $resource(base_url +"/users/:id/", {id: '@id'}, {
 						update: {
 							method: 'PUT'
 						}
 					});
 				});
 				app.factory("Experience", function ($resource) {
-					return $resource("http://localhost:8000/experiences/:id/", {id: '@id'}, {
+					return $resource(base_url +"/experiences/:id/", {id: '@id'}, {
 						update: {
 							method: 'PUT'
 						}
@@ -56,7 +56,7 @@ var app = angular.module('App', [
 				});
 
 				app.factory("Project", function ($resource) {
-					return $resource("http://localhost:8000/projects/:id/", {id: '@id'}, {
+					return $resource(base_url +"/projects/:id/", {id: '@id'}, {
 						update: {
 							method: 'PUT'
 						}
@@ -65,7 +65,7 @@ var app = angular.module('App', [
 
 
 				app.factory("Education", function ($resource) {
-					return $resource("http://localhost:8000/educations/:id/", {id: '@id'}, {
+					return $resource(base_url +"/educations/:id/", {id: '@id'}, {
 						update: {
 							method: 'PUT'
 						}
@@ -73,7 +73,7 @@ var app = angular.module('App', [
 				});
 
 				app.factory("Todo", function ($resource) {
-					return $resource("http://localhost:8000/todos/:id/", {id: '@id'}, {
+					return $resource(base_url +"/todos/:id/", {id: '@id'}, {
 						update: {
 							method: 'PUT'
 						}
@@ -81,7 +81,7 @@ var app = angular.module('App', [
 				});
 
 				app.factory("Notification", function ($resource) {
-					return $resource("http://localhost:8000/notifications/:id/", {id: '@id'}, {
+					return $resource(base_url +"/notifications/:id/", {id: '@id'}, {
 						update: {
 							method: 'PUT'
 						}
@@ -104,7 +104,7 @@ var app = angular.module('App', [
 
 											'loadMyNotifications':function(user_id){
 
-												var notifications = $resource('http://localhost:8000/notification/user/:u_id/', { u_id: user_id});
+												var notifications = $resource(base_url + '/notification/user/:u_id/', { u_id: user_id});
 
 												if (!self.isLoading) {
 													self.isLoading = true;
@@ -289,7 +289,7 @@ app.controller('notificationCtrl', function($scope, NotificationService, $filter
 							},
 							'loadMyTodosOfCurrentProject':function(user_id, project_id){
 
-								var todos = $resource('http://localhost:8000/todo/project/:u_id/:p_id/', { u_id: user_id,p_id:project_id});
+								var todos = $resource(base_url + '/todo/project/:u_id/:p_id/', { u_id: user_id,p_id:project_id});
 
 
 								if (!self.isLoading) {
@@ -488,7 +488,7 @@ app.service('ProjectService', function (  Project, $q, toaster, $resource) {
 
 
 		'loadCurrentProject':function(projectId){
-			var curProject = $resource('http://localhost:8000/projects/:id/', { id: projectId});
+			var curProject = $resource(base_url + '/projects/:id/', { id: projectId});
 							//console.log(curUser.get());
 							//this.user=curUser.get();
 
@@ -1244,7 +1244,7 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 		],
 
 		'loadUsersInTeam':function(){
-			var usersInTeam = $resource('http://localhost:8000/user/inteam/:id/', { id: team_id});
+			var usersInTeam = $resource(base_url + '/user/inteam/:id/', { id: team_id});
 			//console.log(usersInTeam.get());
 			//this.user=usersInTeam.get();
 			self.usersInTeam=usersInTeam.query();
@@ -1257,7 +1257,7 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 		},
 
 		'loadUsersNotInTeam':function(){
-			var usersNotInTeam = $resource('http://localhost:8000/user/notinteam/:id/', { id: team_id});
+			var usersNotInTeam = $resource(base_url + '/user/notinteam/:id/', { id: team_id});
 			self.usersNotInTeam=usersNotInTeam.query();
 			self.usersNotInTeam.$promise.then(function (result) {
 				self.usersNotInTeam=result;
@@ -1266,7 +1266,7 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 		},
 
 		'addUserToTeam':function(user){
-			var addUser = $resource('http://localhost:8000/user/adduser/:u_id/:t_id/', { u_id: user.id, t_id:team_id});
+			var addUser = $resource(base_url + '/user/adduser/:u_id/:t_id/', { u_id: user.id, t_id:team_id});
 			addUser.get(function (data){
 			//self.loadUsersInTeam();
 			self.usersPartecipant.push(user);
@@ -1278,7 +1278,7 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 		},
 
 		'removeUserToTeam':function(user){
-		var rmUser = $resource('http://localhost:8000/user/removeuser/:u_id/:t_id/', { u_id: user.id, t_id:team_id});
+		var rmUser = $resource(base_url + '/user/removeuser/:u_id/:t_id/', { u_id: user.id, t_id:team_id});
 		rmUser.get(function (data){
 		//self.loadUsersInTeam();
 		//var index = self.usersInTeam.indexOf(user);
@@ -1309,7 +1309,7 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 				// 	self.loadContacts();
 				// },
 				'loadCurrentUser':function(userId){
-					var curUser = $resource('http://localhost:8000/users/:id/', { id: userId});
+					var curUser = $resource(base_url + '/users/:id/', { id: userId});
 					//console.log(curUser.get());
 					//this.user=curUser.get();
 
@@ -1347,7 +1347,7 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 						self.users.$promise.then(function (result) {
 							self.users=result;
 							self.isLoading = false;
-							$.getScript('{{ asset("assets/js/queen-table.js") }}', function(){});
+							$.getScript(base_url+'/assets/js/queen-table.js', function(){});
 
 						});
 					}

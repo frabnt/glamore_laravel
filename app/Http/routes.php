@@ -70,7 +70,7 @@ Route::group(['middleware' => 'cors'], function(){
     //get industries by user id
     Route::get('industry/user/{id}', 'industryController@indByUserId');
     //get projects by user id
-    Route::get('project/user/{id}', 'projectController@prjByUserId');
+    Route::get('project/user/{id}', 'ProjectController@prjByUserId');
     //get todos by user id
     Route::get('todo/user/{id}', 'TodoController@todoByUserId');
     //get todos by project id
@@ -121,15 +121,15 @@ Route::group(['middleware' => 'cors'], function(){
     // });
 
 
-    Route::get('/my-project/{id}','projectController@show_my_project');
+    Route::get('/my-project/{id}','ProjectController@show_my_project');
 
     // Route::get('/project-detail/{id}', function () {
     //     //return view('projects.project-detail');
         
     // });
 
-    Route::get('project-detail/{id}', 'projectController@project_detail');
-    Route::post('project-detail/{id}', 'projectController@addUserToTeam');
+    Route::get('project-detail/{id}', 'ProjectController@project_detail');
+    Route::post('project-detail/{id}', 'ProjectController@addUserToTeam');
     
     Route::get('/settings', function () {
         return view('settings');
