@@ -87,6 +87,8 @@ Route::group(['middleware' => 'cors'], function(){
     Route::get('user/inteam/{team_id}', 'UserController@getUsersInTeam');
     //get user not in team
     Route::get('user/notinteam/{team_id}', 'UserController@getUsersNotInTeam');
+    //send invite to user
+    Route::get('user/notification/invite/{user_id_to}/{user_id_from}/{module}/{link}/{body}', 'NotificationController@sendInviteToUser');
 
     
    

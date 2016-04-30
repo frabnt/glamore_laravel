@@ -20,7 +20,7 @@
 	}
 </style>
 
-<div ng-controller="projectCtrl" ng-init='currentProject()' ng-show="projects.project.title" id="col-right" class="col-right ">
+<div ng-controller="projectCtrl" ng-init='currentProject()' ng-show="projects.project.title !=''" id="col-right" class="col-right ">
 	<div class="container-fluid primary-content">
 		<!-- PRIMARY CONTENT HEADING -->
 		<div class="primary-content-heading clearfix">
@@ -39,7 +39,7 @@
 		<div class="row">
 			<div class="col-md-8">
 
-				<div class="project-section general-info">
+				<div  class="project-section general-info">
 					<h3>General Info</h3>
 
 					<p> <a href="#" editable-textarea="projects.project.description"  onaftersave="projects.updateProject(projects.project)" ><% projects.project.description || "empty" %></a> </p>

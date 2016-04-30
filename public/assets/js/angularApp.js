@@ -400,7 +400,7 @@ app.controller('notificationCtrl', function($scope, NotificationService, $filter
 
 
 											Todo.save(todo).$promise.then(function () {
-												toaster.pop('success', 'Created ' + todo.school);
+												toaster.pop('success', 'Created ' + todo.title);
 												self.todos = [];
 												//self.loadTodo();
 												self.loadMyTodosOfCurrentProject(user_id, project_id);

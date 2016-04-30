@@ -70,13 +70,16 @@ class NotificationController extends Controller
         return $notification;  //importante altrimenti bacbone non riceve l'id in ritorno
     }
 
-    public function sendInviteToUser($user_id, $from, $to, $module, $link, $body )
+    public function sendInviteToUser($user_id_to, $user_id_from , $module, $link, $body )
     {
+        $user_from = User::find($user_id_from);
+        $user_to = User::find($user_id_to); 
+
         $notification = new Notification;
 
         $notification->title = "New invite for ".$module; 
-        $notification->from=$from->name." ".$from->last_name;
-        $notification->to=$to->name." ".$to->last_name;
+        $notification->from=$user_from->name." ".$user_from->last_name;
+        $notification->to=$user_to->name." ".$user_to->last_name;
         $notification->type="invite";
         $notification->link=$link;
         //Send mail if is true
@@ -86,7 +89,8 @@ class NotificationController extends Controller
         
         $notification->save();
 
-        $notification->users()->attach($user_id);
+        $notification->users()->attach($user_id_to);
+        return $notification;
     }
 
     // public function sendInviteToUser($user_id, $from, $to, $module )
