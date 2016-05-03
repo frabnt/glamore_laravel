@@ -88,6 +88,7 @@ class NotificationController extends Controller
         return $notification;  //importante altrimenti bacbone non riceve l'id in ritorno
     }
 
+
     public function sendInviteToUser($user_id_to, $user_id_from , $module, $project_id )
     {
         $user_from = User::find($user_id_from);
@@ -101,7 +102,7 @@ class NotificationController extends Controller
         $notification->type="invite";
         $notification->link='/project-detail/'.$project->id;
         $notification->module=$module;
-      //  $notification->project_id=$project_id;
+      
 
         //Send mail if is true
         //$notification->send_mail=$request->send_mail;
@@ -110,11 +111,13 @@ class NotificationController extends Controller
         
         $notification->save();
 
+
         $relation = new UserNotification;
         $relation->project_id=$project_id;
         $relation->user_id=$user_id_to;
         $relation->notification_id=$notification->id;
         $relation->save();
+
         return $notification;
     }
 
