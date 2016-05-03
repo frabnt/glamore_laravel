@@ -12,4 +12,9 @@ class Notification extends Model
        {
            return $this->belongsToMany('App\User', 'user_notification');
        }
+
+    public function projects()
+       {
+           return $this->belongsToMany('App\Project', 'user_notification');
+       }   
 }

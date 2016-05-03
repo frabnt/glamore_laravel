@@ -20,7 +20,7 @@
 	}
 </style>
 
-<div ng-controller="projectCtrl" ng-init='currentProject()' ng-show="projects.project.title" id="col-right" class="col-right ">
+<div ng-controller="projectCtrl" ng-init='currentProject()' ng-show="projects.project.title !=''" id="col-right" class="col-right ">
 	<div class="container-fluid primary-content">
 		<!-- PRIMARY CONTENT HEADING -->
 		<div class="primary-content-heading clearfix">
@@ -39,7 +39,7 @@
 		<div class="row">
 			<div class="col-md-8">
 
-				<div class="project-section general-info">
+				<div  class="project-section general-info">
 					<h3>General Info</h3>
 
 					<p> <a href="#" editable-textarea="projects.project.description"  onaftersave="projects.updateProject(projects.project)" ><% projects.project.description || "empty" %></a> </p>
@@ -61,9 +61,14 @@
 								<dd>
 									<ul class="list-inline team-list">
 										
-										<li ng-repeat='user in users.usersPartecipant'>
+										<li ng-repeat='user in users.usersInTeam'>
 											<img ng-src="{{ asset('/assets/upload/img/user')}}/<% user.profile_image || 'avatar.png' %>" class="img-circle avatar" alt="Avatar" />
 											<p><a href="#"><strong><% user.name %> <% user.last_name %></strong></a></p>
+											<p ng-if="user.id==projects.project.user_id" class="text-muted">Project Owner</p>
+											<p ng-if="user.notification_rejected==1" class="text-muted">Invitation rejected</p>
+											<p ng-if="user.notification_accepted==1 && !(user.id==projects.project.user_id)" class="text-muted">Partecipant</p>
+											<p ng-if="user.notification_rejected==0 && user.id != projects.project.user_id && user.notification_accepted==0 && user.notification_title != ''" class="text-muted">Invitation sent</p>
+
 										</li>
 		
 
@@ -113,11 +118,26 @@
 																		<tr ng-repeat='user in users.usersNotInTeam'>
 																			<td><% user.name %> </td>
 																			<td><% user.last_name %></td>
-																			<td>
+																			<td ng-if="user.id==projects.project.user_id">
+																				<p  class="text-muted">Project Owner</p>
+
+																			</td>																				
+																			<td ng-if="user.notification_accepted==1 && !(user.id==projects.project.user_id) && !user.notification_rejected==1">
+																				<p  class="text-muted">Partecipant</p>
+
+																			</td>
+																			<td ng-if="!(user.id==projects.project.user_id) && (user.notification_rejected==null && user.notification_accepted==null && user.notification_title == null  && user.notification_read==null)">
 																				<label class="fancy-checkbox">
-																					<input type="checkbox" ng-click="addUserInTeam(user)">
+																					<input type="checkbox" ng-click="sendInvite(user, projects.project.id)">
 																					<span class="todo-text"></span>
 																				</label>
+																			</td>
+																			<td ng-if="user.notification_rejected==1">
+																				<p  class="text-muted">Invitation rejected</p>
+											
+																			</td>
+																			<td ng-if="user.notification_rejected==0 && user.id != projects.project.user_id && user.notification_accepted==0 && user.notification_title != ''">
+																				<p  class="text-muted">Invitation sent</p>
 																			</td>
 																		</tr>
 																	
@@ -169,9 +189,9 @@
 																	<tbody>
 																		
 																		<tr ng-repeat='user in users.usersInTeam'>
-																			<td><% user.name %> </td>
-																			<td><% user.last_name %></td>
-																			<td>
+																			<td ng-if="!user.id==projects.project.user_id" class="text-muted"><% user.name %> </td>
+																			<td ng-if="!user.id==projects.project.user_id"><% user.last_name %></td>
+																			<td ng-if="!user.id==projects.project.user_id">
 																				<label class="fancy-checkbox">
 																					<input type="checkbox" ng-click="removeUserInTeam(user)">
 																					<span class="todo-text"></span>

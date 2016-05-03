@@ -1,131 +1,138 @@
 var app = angular.module('App', [
-					'xeditable',
-					'ngResource',
-					'infinite-scroll',
-					'angularSpinner',
-					'jcs-autoValidate',
-					'angular-ladda',
-					'mgcrea.ngStrap',
-					'toaster',
-					'ngAnimate',
-					'ui.select'
-					]);
+	'xeditable',
+	'ngResource',
+	'infinite-scroll',
+	'angularSpinner',
+	'jcs-autoValidate',
+	'angular-ladda',
+	'mgcrea.ngStrap',
+	'toaster',
+	'ngAnimate',
+	'ui.select'
+	]);
 
-				app.run(function(editableOptions) {
+app.run(function(editableOptions) {
 		  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 		});
 
-				app.config(function ($httpProvider, laddaProvider, $datepickerProvider, $interpolateProvider) {
+app.config(function ($httpProvider, laddaProvider, $datepickerProvider, $interpolateProvider) {
 			//$httpProvider.defaults.headers.common['Authorization'] = 'Token 20002cd74d5ce124ae219e739e18956614aab490';
 			//$resourceProvider.defaults.stripTrailingSlashes = false;
 			// $http.defaults.transformRequest.push(function (data) {
 			//             data.csrfToken = $browser.cookies().csrfToken;
 			//             return angular.toJson(data);
 			//         });
-				laddaProvider.setOption({
-					style: 'expand-right'
+laddaProvider.setOption({
+	style: 'expand-right'
+});
+angular.extend($datepickerProvider.defaults, {
+	dateFormat: 'd/M/yyyy',
+	autoclose: true
+});
+$interpolateProvider.startSymbol('<%');
+$interpolateProvider.endSymbol('%>');
+});
+
+app.factory("Industry", function ($resource) {
+	return $resource(base_url +"/industries/:id/", {id: '@id'}, {
+		update: {
+			method: 'PUT'
+		}
+	});
+});
+app.factory("User", function ($resource) {
+	return $resource(base_url +"/users/:id/", {id: '@id'}, {
+		update: {
+			method: 'PUT'
+		}
+	});
+});
+app.factory("Experience", function ($resource) {
+	return $resource(base_url +"/experiences/:id/", {id: '@id'}, {
+		update: {
+			method: 'PUT'
+		}
+	});
+});
+
+app.factory("Project", function ($resource) {
+	return $resource(base_url +"/projects/:id/", {id: '@id'}, {
+		update: {
+			method: 'PUT'
+		}
+	});
+});
+
+
+app.factory("Education", function ($resource) {
+	return $resource(base_url +"/educations/:id/", {id: '@id'}, {
+		update: {
+			method: 'PUT'
+		}
+	});
+});
+
+app.factory("Todo", function ($resource) {
+	return $resource(base_url +"/todos/:id/", {id: '@id'}, {
+		update: {
+			method: 'PUT'
+		}
+	});
+});
+
+app.factory("Notification", function ($resource) {
+	return $resource(base_url +"/notifications/:id/", {id: '@id'}, {
+		update: {
+			method: 'PUT'
+		}
+	});
+});
+
+
+app.service('NotificationService', function ( $timeout, ProjectService, UserService  Notification, $q, toaster, $resource) {
+
+
+
+	var self = {
+		'addNotification': function (notification) {
+			this.notifications.push(notification);
+		},
+		'isLoading': false,
+		'isSaving': false,
+		'notifications': [],
+		'notification': null,
+
+		'loadMyNotifications':function(){
+
+			var notifications = $resource(base_url + '/notification/user/:u_id/', { u_id: current_user_id});
+
+			if (!self.isLoading) {
+				self.isLoading = true;
+				self.notifications = notifications.query();
+				self.notifications.$promise.then(function (result) {
+
+					angular.forEach(result, function (value, key) {
+			
+							value.created_at=moment(value.created_at,  "YYYYMMDD").fromNow();
+						
+					});	
+
+					self.notifications=result;
+					self.isLoading = false;
+				},function(error) {
+					toaster.pop('error', 'Plaese check your connection '+ error.status);
+					console.log(error);
 				});
-				angular.extend($datepickerProvider.defaults, {
-					dateFormat: 'd/M/yyyy',
-					autoclose: true
-				});
-				$interpolateProvider.startSymbol('<%');
-				$interpolateProvider.endSymbol('%>');
-			});
+			}
 
-				app.factory("Industry", function ($resource) {
-					return $resource(base_url +"/industries/:id/", {id: '@id'}, {
-						update: {
-							method: 'PUT'
-						}
-					});
-				});
-				app.factory("User", function ($resource) {
-					return $resource(base_url +"/users/:id/", {id: '@id'}, {
-						update: {
-							method: 'PUT'
-						}
-					});
-				});
-				app.factory("Experience", function ($resource) {
-					return $resource(base_url +"/experiences/:id/", {id: '@id'}, {
-						update: {
-							method: 'PUT'
-						}
-					});
-				});
+		},
 
-				app.factory("Project", function ($resource) {
-					return $resource(base_url +"/projects/:id/", {id: '@id'}, {
-						update: {
-							method: 'PUT'
-						}
-					});
-				});
+		'loadNotification': function () {
+			if (!self.isLoading) {
+				self.isLoading = true;
 
-
-				app.factory("Education", function ($resource) {
-					return $resource(base_url +"/educations/:id/", {id: '@id'}, {
-						update: {
-							method: 'PUT'
-						}
-					});
-				});
-
-				app.factory("Todo", function ($resource) {
-					return $resource(base_url +"/todos/:id/", {id: '@id'}, {
-						update: {
-							method: 'PUT'
-						}
-					});
-				});
-
-				app.factory("Notification", function ($resource) {
-					return $resource(base_url +"/notifications/:id/", {id: '@id'}, {
-						update: {
-							method: 'PUT'
-						}
-					});
-				});
-
-
-				app.service('NotificationService', function ( $timeout, ProjectService, Notification, $q, toaster, $resource) {
-
-
-
-					var self = {
-						'addNotification': function (notification) {
-							this.notifications.push(notification);
-						},
-						'isLoading': false,
-						'isSaving': false,
-						'notifications': [],
-						'notification': null,
-
-											'loadMyNotifications':function(user_id){
-
-												var notifications = $resource(base_url + '/notification/user/:u_id/', { u_id: user_id});
-
-												if (!self.isLoading) {
-													self.isLoading = true;
-													self.notifications = notifications.query();
-													self.notifications.$promise.then(function (result) {
-														self.notifications=result;
-														self.isLoading = false;
-													},function(error) {
-														toaster.pop('error', 'Plaese check your connection '+ error.status);
-														console.log(error);
-													});
-												}
-
-											},
-
-											'loadNotification': function () {
-												if (!self.isLoading) {
-													self.isLoading = true;
-
-													self.notifications = Notification.query();
-													self.notifications.$promise.then(function (result) {
+				self.notifications = Notification.query();
+				self.notifications.$promise.then(function (result) {
 
 
 															//check if date is an object 
@@ -144,56 +151,101 @@ var app = angular.module('App', [
 
 
 
-													self.notifications=result;
-													self.isLoading = false;
+				self.notifications=result;
+				self.isLoading = false;
 
 
-												});
-												}
+			});
+			}
 
-											},
-											'updateNotification': function (notification) {
+		},
+		'sendInviteToUser':function(user_id_to, user_id_from , module, project_id){
+			var sendInviteUrl = $resource(base_url + '/user/notification/invite/:user_id_to/:user_id_from/:module/:project_id/', { user_id_to:user_id_to,user_id_from:user_id_from,module:module,project_id:project_id});
+			sendInviteUrl.get(function (data){
+				toaster.pop('success', 'Invite sent');
 
-												self.isSaving = true;
-
-											Notification.update({ id:notification.id }, notification).$promise.then(function() {
-												self.isSaving = false;
-												toaster.pop('success', 'Notification ' + notification.title + ' Updated');
-											},function(error) {
-												toaster.pop('error', 'Plaese check your connection');
-											});
-										},
-										'deleteNotification': function (notification) {
+			});
+		},
 
 
-											$.confirm({
-												text: "Are you sure you want to delete that notification?",
-												title: "Confirmation required",
-												confirmButton: "Yes I am",
-												cancelButton: "No",
-												post: false,
-												confirmButtonClass: "btn-danger",
-												cancelButtonClass: "btn-default",
-												dialogClass: "modal-dialog modal-lg",
-												confirm: function() {
-													self.isDeleting = true;
-													Notification.remove({ id:notification.id }).$promise.then(function () {
-														toaster.pop('success', 'Notification Deleted');
-														var index = self.notifications.indexOf(notification);
-														self.notifications.splice(index, 1);
-														self.isDeleting = false;
+		'updateNotification': function (notification) {
+
+			self.isSaving = true;
+
+			Notification.update({ id:notification.id }, notification).$promise.then(function() {
+				self.isSaving = false;
+				
+			},function(error) {
+				toaster.pop('error', 'Plaese check your connection');
+			});
+		},
+		readNotification:function(notification){
+
+			console.log(notification);
+			// set as read
+			notification.read=1;
+			self.updateNotification(notification);
+
+			$.confirm({
+				text: notification.description,
+				title: notification.title,
+				confirmButton: "Accept",
+				cancelButton: "Reject",
+				post: false,
+				confirmButtonClass: "btn-danger",
+				cancelButtonClass: "btn-default",
+				dialogClass: "modal-dialog modal-lg",
+				confirm: function() {
+
+			// set as accepted
+			notification.accepted=1;
+			self.updateNotification(notification);
+			toaster.pop('success', 'Now you are a participant of the project ');
+
+			//UserService.addUserToTeam();
+				},
+				cancel: function() {
+			// set as rejected
+			notification.rejected=1;
+			self.updateNotification(notification);
+			toaster.pop('success', 'You refused to join the project');
+
+													        // nothing to do
+													    }
 													});
-												},
-												cancel: function() {
+
+		},
+		'deleteNotification': function (notification) {
+
+
+			$.confirm({
+				text: "Are you sure you want to delete that notification?",
+				title: "Confirmation required",
+				confirmButton: "Yes I am",
+				cancelButton: "No",
+				post: false,
+				confirmButtonClass: "btn-danger",
+				cancelButtonClass: "btn-default",
+				dialogClass: "modal-dialog modal-lg",
+				confirm: function() {
+					self.isDeleting = true;
+					Notification.remove({ id:notification.id }).$promise.then(function () {
+						toaster.pop('success', 'Notification Deleted');
+						var index = self.notifications.indexOf(notification);
+						self.notifications.splice(index, 1);
+						self.isDeleting = false;
+					});
+				},
+				cancel: function() {
 													        // nothing to do
 													    }
 													});
 
 
-										},
+		},
 
-										'createNotification': function (notification) {
-											$('#close_notification_dialog').click();
+		'createNotification': function (notification) {
+			$('#close_notification_dialog').click();
 															//console.log(notification);
 															var d = $q.defer();
 															self.isSaving = true;
@@ -230,19 +282,23 @@ var app = angular.module('App', [
 app.controller('notificationCtrl', function($scope, NotificationService, $filter, $timeout, toaster) {
 	$scope.notifications = NotificationService;
 
+
+	
+
+	$scope.readNotification= function(notification){
+		NotificationService.readNotification(notification);
+	},
+
 	$scope.updateNotification= function(notification){
 		NotificationService.updateNotification(notification);
 	},
 
 
-	$scope.createNotification= function(notification){
-										//console.log(notification);
-										NotificationService.createNotification(notification);
-										
-									},
+	$scope.loadMyNotifications=function(){
+		NotificationService.loadMyNotifications();
+	},
 
-
-									$scope.deleteNotification= function(notification){
+	$scope.deleteNotification= function(notification){
 										//console.log(notification);
 										NotificationService.deleteNotification(notification);
 										
@@ -252,20 +308,20 @@ app.controller('notificationCtrl', function($scope, NotificationService, $filter
 								});
 
 
-				app.service('TodoService', function ( $timeout, ProjectService, Todo, $q, toaster, $resource) {
+app.service('TodoService', function ( $timeout, ProjectService, Todo, $q, toaster, $resource) {
 
 
 
-					var self = {
-						'addTodo': function (todo) {
-							this.todos.push(todo);
-						},
-						'isLoading': false,
-						'isSaving': false,
-						'todos': [],
-						'todo': null,
-						'progress':0,
-						'getProgress':function(){
+	var self = {
+		'addTodo': function (todo) {
+			this.todos.push(todo);
+		},
+		'isLoading': false,
+		'isSaving': false,
+		'todos': [],
+		'todo': null,
+		'progress':0,
+		'getProgress':function(){
 							//if(self.isLoading == false){
 								var allTodo=self.todos.length;
 								if(allTodo>0){
@@ -400,7 +456,7 @@ app.controller('notificationCtrl', function($scope, NotificationService, $filter
 
 
 											Todo.save(todo).$promise.then(function () {
-												toaster.pop('success', 'Created ' + todo.school);
+												toaster.pop('success', 'Created ' + todo.title);
 												self.todos = [];
 												//self.loadTodo();
 												self.loadMyTodosOfCurrentProject(user_id, project_id);
@@ -593,7 +649,7 @@ app.service('ProjectService', function (  Project, $q, toaster, $resource) {
 											setTimeout(function(){ 
 												var chart = window.chart = $('.chart').data('easyPieChart');
 												chart.update(self.project.progress);
-															}, 1000);
+											}, 1000);
 											
 											
 											self.isSaving = false;
@@ -1164,7 +1220,7 @@ app.controller('industryCtrl', function($scope, IndustryService, $filter, $timeo
 
 
 
-app.controller('userCtrl', function($scope, UserService, $filter, $timeout, toaster) {
+app.controller('userCtrl', function($scope, NotificationService,  UserService, $filter, $timeout, toaster) {
 	$scope.users = UserService;
 
 	$timeout(function() {
@@ -1193,14 +1249,23 @@ app.controller('userCtrl', function($scope, UserService, $filter, $timeout, toas
 
 	$scope.loadUsersAffiliatesPage= function(user){
 		UserService.loadUsersAffiliatesPage();
-		$.getScript('{{ asset("assets/js/queen-table.js") }}', function(){});
+		$.getScript(base_url+'/assets/js/queen-table.js', function(){});
 	},
 
 	$scope.loadUsersInTeam=function(){
 		UserService.loadUsersInTeam();
+		//UserService.loadUsersInTeamWithNotificationInfo();
 	},
 
 	$scope.loadUsersNotInTeam=function(){
+		UserService.loadUsersNotInTeam();
+		
+	},
+
+
+	
+	$scope.sendInvite=function(user,project_id){
+		NotificationService.sendInviteToUser(user.id, current_user_id , 'Project', project_id);
 		UserService.loadUsersNotInTeam();
 	},
 
@@ -1208,7 +1273,7 @@ app.controller('userCtrl', function($scope, UserService, $filter, $timeout, toas
 		UserService.addUserToTeam(user);
 	},
 	$scope.removeUserInTeam= function(user){
-	UserService.removeUserToTeam(user);
+		UserService.removeUserToTeam(user);
 	}
 
 
@@ -1236,7 +1301,6 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 		'search': null,
 		'usersInTeam':[],
 		'usersNotInTeam':[],
-		'usersPartecipant':[],
 		'marital_status': [
 		{value: '', text: 'Choose...'},
 		{value: 'Married', text: 'Married'},
@@ -1250,44 +1314,36 @@ app.service('UserService', function ( User, $q, toaster, $resource) {
 			self.usersInTeam=usersInTeam.query();
 			self.usersInTeam.$promise.then(function (result) {
 				self.usersInTeam=result;
-				self.usersPartecipant=result;
 				self.isLoading = false;
 			});
-
 		},
+		
+
 
 		'loadUsersNotInTeam':function(){
-			var usersNotInTeam = $resource(base_url + '/user/notinteam/:id/', { id: team_id});
-			self.usersNotInTeam=usersNotInTeam.query();
+			var loadAllUsersWithNotificationInfo = $resource(base_url + '/user/notification/project/:id/', { id: project_id});
+			//console.log(usersInTeam.get());
+			//this.user=usersInTeam.get();
+			self.usersNotInTeam=loadAllUsersWithNotificationInfo.query();
 			self.usersNotInTeam.$promise.then(function (result) {
-				self.usersNotInTeam=result;
 				self.isLoading = false;
 			});
 		},
 
 		'addUserToTeam':function(user){
+
+
 			var addUser = $resource(base_url + '/user/adduser/:u_id/:t_id/', { u_id: user.id, t_id:team_id});
 			addUser.get(function (data){
-			//self.loadUsersInTeam();
-			self.usersPartecipant.push(user);
-			var index = self.usersNotInTeam.indexOf(user);
-			self.usersNotInTeam.splice(index, 1);
 			toaster.pop('success', 'User ' + user.name + ' Added');
 				//self.user= data;
 			});
 		},
 
 		'removeUserToTeam':function(user){
-		var rmUser = $resource(base_url + '/user/removeuser/:u_id/:t_id/', { u_id: user.id, t_id:team_id});
-		rmUser.get(function (data){
-		//self.loadUsersInTeam();
-		//var index = self.usersInTeam.indexOf(user);
-		var index2 = self.usersPartecipant.indexOf(user);
-		//delete users on list
-		self.usersPartecipant.splice(index2, 1);
-		//self.usersInTeam.splice(index, 1);
-		// add user in notInTeam list
-		self.usersNotInTeam.push(user);
+			var rmUser = $resource(base_url + '/user/removeuser/:u_id/:t_id/', { u_id: user.id, t_id:team_id});
+			rmUser.get(function (data){
+		
 		toaster.pop('success', 'User ' + user.name + ' Removed');
 			//self.user= data;
 		});

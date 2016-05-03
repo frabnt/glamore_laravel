@@ -23,4 +23,9 @@ class Project extends Model
        {
            return $this->hasMany('App\Todo');
        }
+
+    public function notifications()
+    {
+        return $this->belongsToMany('App\Notification', 'user_notification');
+    }   
 }

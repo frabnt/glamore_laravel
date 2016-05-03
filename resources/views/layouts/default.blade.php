@@ -71,7 +71,7 @@
 						</div>
 					</form>
 					<div class="top-bar-right pull-right">
-						<div class="action-group hidden-xs hidden-sm">
+						<div ng-controller="notificationCtrl" ng-init='loadMyNotifications()' class="action-group hidden-xs hidden-sm">
 							<ul>
 
 								<!-- notification: general -->
@@ -82,11 +82,11 @@
 										</a>
 										<ul class="dropdown-menu" role="menu">
 											<li class="menu-item-header">You have 8 notifications</li>
-											<li>
-												<a href="#">
-													<i class="icon ion-chatbubble text-success"></i>
-													<span class="text">New comment on the blog post</span>
-													<span class="timestamp text-muted">1 minute ago</span>
+											<li ng-repeat='notification in notifications.notifications'>
+												<a ng-click="readNotification(notification)" href="#">
+													<i ng-if="notification.type=='invite'" class="icon ion-person-add text-success"></i>
+													<span class="text"><%notification.title%></span>
+													<span class="timestamp text-muted"><% notification.created_at %></span>
 												</a>
 											</li>
 											<li>

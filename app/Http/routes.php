@@ -85,11 +85,22 @@ Route::group(['middleware' => 'cors'], function(){
     Route::get('user/removeuser/{user_id}/{team_id}', 'UserController@removeUserFromTeam');
     //get user in team
     Route::get('user/inteam/{team_id}', 'UserController@getUsersInTeam');
+    //get user in team with 
+    Route::get('user/notification/project/{project_id}', 'UserController@getAllUsersWithNotificationInfoByProjectId');
+    //get user in team with 
+    //Route::get('user/notinteam/withnotification/{team_id}', 'UserController@getUsersNotInTeamWithNotificationInfo');
     //get user not in team
     Route::get('user/notinteam/{team_id}', 'UserController@getUsersNotInTeam');
+    //send invite to user
+    Route::get('user/notification/invite/{user_id_to}/{user_id_from}/{module}/{project_id}', 'NotificationController@sendInviteToUser');
+    //send invite to user
+    Route::get('/notification/user/{user_id}', 'NotificationController@showNotificationByUserId');
+    Route::get('/notification/project/{project_id}', 'NotificationController@showNotificationByProjectId');
 
-    
-   
+
+    //Route::get('test/{project_id}', 'UserController@test');
+
+
 });
 
     

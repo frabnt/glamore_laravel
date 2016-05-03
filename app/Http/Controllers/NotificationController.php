@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
 use App\Team;
+use App\Project;
 use App\Notification;
+use App\UserNotification;
 
 class NotificationController extends Controller
 {
@@ -27,6 +29,20 @@ class NotificationController extends Controller
 
                return $notifications;
     }
+
+    public function showNotificationByProjectId($id)
+    {
+               $notifications= \DB::table('notifications')
+               ->join('user_notification', 'notifications.id', '=', 'user_notification.notification_id')
+               ->join('users', 'users.id', '=', 'user_notification.user_id')
+               ->select('users.id', 'users.last_name', 'users.profile_image', 'users.name', 'notifications.title as notification_title',  'notifications.accepted as notification_accepted',
+        'notifications.rejected as notification_rejected', 'notifications.read as notification_read')
+               ->where('user_notification.project_id', '=', $id)->get();
+
+               return $notifications;
+    }
+
+
 
     public function index()
     {
@@ -64,30 +80,45 @@ class NotificationController extends Controller
         $notification->send_mail=$request->send_mail;
         $notification->body=$request->body;
         $notification->icon=$request->icon;
+        $notification->module=$request->module;
+        $notification->project_id=$request->project_id;
         
         $notification->save();
 
         return $notification;  //importante altrimenti bacbone non riceve l'id in ritorno
     }
 
-    public function sendInviteToUser($user_id, $from, $to, $module, $link, $body )
+    public function sendInviteToUser($user_id_to, $user_id_from , $module, $project_id )
     {
+        $user_from = User::find($user_id_from);
+        $user_to = User::find($user_id_to); 
+        $project=Project::find($project_id);
         $notification = new Notification;
 
-        $notification->title = "New invite for ".$module; 
-        $notification->from=$from->name." ".$from->last_name;
-        $notification->to=$to->name." ".$to->last_name;
+        $notification->title = "New invite for ".$module." ".$project->title; 
+        $notification->from=$user_from->name." ".$user_from->last_name;
+        $notification->to=$user_to->name." ".$user_to->last_name;
         $notification->type="invite";
-        $notification->link=$link;
+        $notification->link='/project-detail/'.$project->id;
+        $notification->module=$module;
+      //  $notification->project_id=$project_id;
+
         //Send mail if is true
         //$notification->send_mail=$request->send_mail;
-        $notification->body=$body;
-        $notification->icon='<i class="icon ion-person-add text-success"></i>';
+        $notification->body=$project->description;
+        //$notification->icon='<i class="icon ion-person-add text-success"></i>';
         
         $notification->save();
 
-        $notification->users()->attach($user_id);
+        $relation = new UserNotification;
+        $relation->project_id=$project_id;
+        $relation->user_id=$user_id_to;
+        $relation->notification_id=$notification->id;
+        $relation->save();
+        return $notification;
     }
+
+
 
     // public function sendInviteToUser($user_id, $from, $to, $module )
     // {
@@ -151,7 +182,7 @@ class NotificationController extends Controller
         $notification->body=$request->body;
         $notification->icon=$request->icon;
 
-        $project->save();
+        $notification->save();
     }
 
     /**
