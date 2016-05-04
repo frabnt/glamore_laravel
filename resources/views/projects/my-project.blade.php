@@ -17,7 +17,7 @@
 </style>
 
 <!-- COLUMN RIGHT -->
-		<div id="col-right" class="col-right" ng-controller="projectCtrl">
+		<div id="col-right" class="col-right" ng-controller="projectCtrl" ng-init="loadMyProject(); loadJoinedProject()">
 			<div class="container-fluid primary-content">
 				<!-- PRIMARY CONTENT HEADING -->
 				<div  class="primary-content-heading clearfix">
@@ -89,22 +89,57 @@
 							</tr>
 						</thead>
                         <tbody ng-controller="userCtrl" ng-init='currentUser()'>
-                        <tr ng-repeat='project in projects.projects'>
+                        <tr ng-repeat='project in projects.myProjects'>
                             <td><a href="{{URL::to('project-detail/')}}/<% project.id %>"><% project.title %></a></td>
                             <td><% project.date_start | date:"dd/MM/yyyy" %></td>
                             <td><% project.duration_day %> days</td>
                             <td><div class="progress">
                                 <div class="progress-bar" percent="<% project.progress %>" style="width: 0%"><% project.progress %>%</div>
-                            </td></div>
+                            </td>
                             <td><span ng-class="{'label-warning': project.priority=='MEDIUM','label-success': project.priority=='LOW','label-danger': project.priority=='HIGH' }" class="label "><% project.priority %></span></td>
-                            <td><img src="{{ asset('/assets/upload/img/user')}}/<% users.user.profile_image || 'avatar.png' %>" alt="Avatar" class="avatar"> <a href="#"><%users.user.name%> </a></td>
+                            <td><img src="{{ asset('/assets/upload/img/user')}}/<% users.user.profile_image || 'avatar.png' %>" alt="Avatar" class="avatar"> <a href="#"><%users.user.name %> </a></td>
                             <td><span ng-class="{'label-warning': project.status=='PENDING','label-success': project.status=='ACTIVE','label-default': project.status=='CLOSED' }" class="label "><% project.status %></span></td>
                             <td><a ng-click="deleteProject(project)" class="prj_delete btn btn-primary btn-block" >Delete </a></td>
                         </tr>
                         </tbody>
 					</table>
 				</div>
+                            <div class="project-list-subheading">
+                <p class="lead">Joined Projects</p>
+                                <div class="table-responsive">
+                                    <table id="allProjects" class="table colored-header datatable project-list">
+                                        <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Date Start</th>
+                                                <th>Days to Deadline</th>
+                                                <th>Progress</th>
+                                                <th>Priority</th>
+                                                <th>Leader</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-controller="userCtrl">
+                                        <tr ng-repeat='project in projects.joinedProjects'>
+                                            <td><a href="{{URL::to('project-detail/')}}/<% project.id %>"><% project.title %></a></td>
+                                            <td><% project.date_start | date:"dd/MM/yyyy" %></td>
+                                            <td><% project.duration_day %> days</td>
+                                            <td><div class="progress">
+                                                <div class="progress-bar" percent="<% project.progress %>" style="width: 0%"><% project.progress %>%</div>
+                                            </td>
+                                            <td><span ng-class="{'label-warning': project.priority=='MEDIUM','label-success': project.priority=='LOW','label-danger': project.priority=='HIGH' }" class="label "><% project.priority %></span></td>
+                                            <td><img src="{{ asset('/assets/upload/img/user')}}/<% project.user_profile_image || 'avatar.png' %>" alt="Avatar" class="avatar"> <a href="#"><%project.user_name%> </a></td>
+                                            <td><span ng-class="{'label-warning': project.status=='PENDING','label-success': project.status=='ACTIVE','label-default': project.status=='CLOSED' }" class="label "><% project.status %></span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+            </div>
 			</div>
+
+
+
+
 		</div>
 
 

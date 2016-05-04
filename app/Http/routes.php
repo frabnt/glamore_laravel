@@ -71,6 +71,15 @@ Route::group(['middleware' => 'cors'], function(){
     Route::get('industry/user/{id}', 'industryController@indByUserId');
     //get projects by user id
     Route::get('project/user/{id}', 'ProjectController@prjByUserId');
+
+    //get projects by user id with user info
+    Route::get('project/userinfo/{id}', 'ProjectController@prjByUserIdWithUserInfo');
+    //get projects with user info
+    Route::get('project/userinfo', 'ProjectController@prjWithUserInfo');
+     //get projects with user info
+    Route::get('project/joined/userinfo/{current_user_id}/', 'ProjectController@joinedProjectWithUserInfo');
+
+    
     //get todos by user id
     Route::get('todo/user/{id}', 'TodoController@todoByUserId');
     //get todos by project id
@@ -97,6 +106,8 @@ Route::group(['middleware' => 'cors'], function(){
     //send invite to user
     Route::get('/notification/user/{user_id}', 'NotificationController@showNotificationByUserId');
     Route::get('/notification/project/{project_id}', 'NotificationController@showNotificationByProjectId');
+
+    
 
 });
 

@@ -25,7 +25,8 @@ class NotificationController extends Controller
                $notifications= \DB::table('notifications')
                ->join('user_notification', 'notifications.id', '=', 'user_notification.notification_id')
                ->select('notifications.*')
-               ->where('user_notification.user_id', '=', $id)->get();
+               ->where('user_notification.user_id', '=', $id)
+               ->orderBy('created_at', 'desc')->take(10)->get();
 
                return $notifications;
     }
@@ -81,7 +82,6 @@ class NotificationController extends Controller
         $notification->body=$request->body;
         $notification->icon=$request->icon;
         $notification->module=$request->module;
-        $notification->project_id=$request->project_id;
         
         $notification->save();
 
@@ -102,6 +102,12 @@ class NotificationController extends Controller
         $notification->type="invite";
         $notification->link='/project-detail/'.$project->id;
         $notification->module=$module;
+
+        $notification->user_id_from=$user_id_from;
+        $notification->user_id_to=$user_id_to;
+        $notification->team_id=$project->team_id;
+
+
       
 
         //Send mail if is true

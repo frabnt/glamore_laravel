@@ -76,9 +76,10 @@
 
 								<!-- notification: general -->
 								<li class="action-item general">
+								<% notification.notification_not_read %>
 									<div class="btn-group">
 										<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-											<i class="icon ion-ios-bell-outline"></i><span class="count">8</span>
+											<i class="icon ion-ios-bell-outline"></i><span ng-class="{'count': notifications.notification_not_read > 0  }" > <span ng-show="notifications.notification_not_read > 0 "><% notifications.notification_not_read %></span></span>
 										</a>
 										<ul class="dropdown-menu" role="menu">
 											<li class="menu-item-header">You have 8 notifications</li>
@@ -89,55 +90,7 @@
 													<span class="timestamp text-muted"><% notification.created_at %></span>
 												</a>
 											</li>
-											<li>
-												<a href="#">
-													<i class="icon ion-person-add text-success"></i>
-													<span class="text">New registered user</span>
-													<span class="timestamp text-muted">12 minutes ago</span>
-												</a>
-											</li>
-											<li>
-												<a href="#">
-													<i class="icon ion-chatbubble text-success"></i>
-													<span class="text">New comment on the blog post</span>
-													<span class="timestamp text-muted">18 minutes ago</span>
-												</a>
-											</li>
-											<li>
-												<a href="#">
-													<i class="icon ion-ios-cart text-danger"></i>
-													<span class="text">4 new sales order</span>
-													<span class="timestamp text-muted">4 hours ago</span>
-												</a>
-											</li>
-											<li>
-												<a href="#">
-													<i class="icon ion-edit yellow-font"></i>
-													<span class="text">3 product reviews awaiting moderation</span>
-													<span class="timestamp text-muted">1 day ago</span>
-												</a>
-											</li>
-											<li>
-												<a href="#">
-													<i class="icon ion-chatbubble text-success"></i>
-													<span class="text">New comment on the blog post</span>
-													<span class="timestamp text-muted">3 days ago</span>
-												</a>
-											</li>
-											<li>
-												<a href="#">
-													<i class="icon ion-chatbubble text-success"></i>
-													<span class="text">New comment on the blog post</span>
-													<span class="timestamp text-muted">Oct 15</span>
-												</a>
-											</li>
-											<li>
-												<a href="#">
-													<i class="icon ion-alert-circled text-danger"></i>
-													<span class="text text-danger">Low disk space!</span>
-													<span class="timestamp text-muted">Oct 11</span>
-												</a>
-											</li>
+											
 											<li class="menu-item-footer">
 												<a href="#">View All Notifications</a>
 											</li>

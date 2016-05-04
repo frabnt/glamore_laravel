@@ -14,6 +14,9 @@ class UpdateNotificationTable extends Migration
     {
         Schema::table('notifications', function (Blueprint $table) {
             $table->text('module')->nullable();
+            $table->text('user_id_from')->nullable();
+            $table->text('user_id_to')->nullable();
+            $table->text('team_id')->nullable();
       });
     }
 
@@ -26,6 +29,9 @@ class UpdateNotificationTable extends Migration
     {
         Schema::table('notifications', function (Blueprint $table) {
             $table->dropColumn(['module']);
+            $table->dropColumn(['user_id_from']);
+            $table->dropColumn(['user_id_to']);
+            $table->dropColumn(['team_id']);
       });
     }
 }

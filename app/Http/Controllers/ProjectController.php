@@ -19,8 +19,8 @@ class ProjectController extends Controller
      */
 
 public function show_my_project($id){
-    $user = User::find($id);   
-    return view('projects.my-project', compact('user'));
+    //$user = User::find($id);   
+    return view('projects.my-project');//, compact('user'));
 }
 
 
@@ -219,6 +219,49 @@ public function show_my_project($id){
 
             return Project::where('user_id', '=', $id )->get();
     }
+
+    public function prjByUserIdWithUserInfo($id){
+
+            $projects= \DB::table('projects')
+                          ->join('users', 'users.id', '=', 'projects.user_id')
+                          ->select('projects.*', 'users.id as user_id' , 'users.profile_image as user_profile_image', 'users.name as user_name', 'users.last_name as user_last_name')
+                          ->where('projects.user_id', '=', $id)
+                          ->where('projects.deleted', '=', 0)
+                          ->get();
+
+            return $projects;
+    }
+
+    public function prjWithUserInfo(){
+
+            $projects= \DB::table('projects')
+                          ->join('users', 'users.id', '=', 'projects.user_id')
+                          ->select('projects.*', 'users.id as user_id' , 'users.profile_image as user_profile_image', 'users.name as user_name', 'users.last_name as user_last_name')
+                          ->where('projects.deleted', '=', 0)
+                          ->get();
+
+            return $projects;
+    }
+
+        public function joinedProjectWithUserInfo($current_user_id){
+
+
+
+
+
+        $projects = \DB::select( \DB::raw("select projects.*, users.id as user_id , users.profile_image as user_profile_image, users.name as user_name, users.last_name as user_last_name
+from users
+join user_team_role on  user_team_role.user_id = users.id
+join projects on user_team_role.team_id = projects.team_id
+join teams on teams.id = user_team_role.team_id
+where projects.user_id !=".$current_user_id." and users.id !=".$current_user_id." and teams.id in (
+SELECT team_id FROM glamore_dev.user_team_role where user_id =".$current_user_id." 
+)") );
+            return $projects;
+            
+    }
+
+
 
 
     /**
