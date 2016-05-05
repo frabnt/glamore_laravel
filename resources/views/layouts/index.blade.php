@@ -2,7 +2,20 @@
 
 @section('content')
 
+		<style>
 
+            .bold {
+                font-weight: bold;
+            }
+
+            .italic-underline-bold {
+                font-style: italic;
+                border-bottom: 1px grey dotted;
+                font-weight: bold;
+
+            }
+
+        </style>
 		
 		<!-- COLUMN RIGHT -->
 		<div id="col-right" class="col-right ">
@@ -209,7 +222,7 @@
 						<!-- COMPLETENESS METER -->
 						<div class="widget">
 							<div class="widget-header clearfix">
-								<h3><i class="icon ion-person"></i> <span>COMPLETE YOUR PROFILE</span></h3>
+								<h3><i class="icon ion-person"></i> <span>YOUR PROFILE SUMMARY</span></h3>
 								<div class="btn-group widget-header-toolbar">
 									<a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
 									<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
@@ -218,19 +231,30 @@
 							<div class="widget-content">
 								<div class="completeness-meter">
 									<div class="progress progress-xs">
-										<div class="progress-bar progress-bar-info completeness-progress" data-transitiongoal="60"></div>
+										<div class="progress-bar progress-bar-info completeness-progress" data-transitiongoal="0"></div>
 									</div>
-									<p class="complete-info">Your profile is <strong class="completeness-percentage">60%</strong> complete, please provide information below:</p>
-									<p><a href="#" id="complete-phone-number" data-type="text" data-pk="1" data-title="Phone number">Add your phone number</a></p>
-									<p>
-										<a href="#" id="complete-sex" data-type="select" data-pk="1" data-value="" data-prepend="Select sex" data-title="Select sex"></a>
-									</p>
-									<p><a href="#" id="complete-birthdate" data-type="combodate" data-value="1984-05-23" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select date of birth">Select date of birth</a></p>
-									<p><a href="#" id="complete-nickname" data-type="text" data-pk="1" data-title="Nickname" data-placeholder="your nickname">Add your nickname</a></p>
+									<div ng-controller="userProfileSummaryCtrl" ng-init="currentUser" after-render="updateFieldsStyle" ng-show="users.user.name">
+										<p class="complete-info">Your profile is <strong id = "pbar-percentage" class="completeness-percentage">0%</strong> complete, please provide information below:</p>
+										<p>First Name: <span class="bold" id="name"><% users.user.name || "empty"  %></span></p>
+										<p>Last Name: <span class="bold" id="last_name"><% users.user.last_name  || "empty"%></span></p>
+										<p>Birthdate: <span class="bold" id="birthday_date"><% users.user.birthday_date || "empty" | date:"dd/MM/yyyy" %></span></p>
+										<p>Sex: <span class="bold" id="sex"><% users.user.sex  || "empty" %></span></p>
+										<p>Phone: <span class="bold" id="phone_number"><% users.user.phone_number  || "empty" %></span></p>
+										<p>Education: <span class="bold" id="education">( <% educations.educations.length || "empty" %> )</span></p>		
+										<p>Experience: <span class="bold" id="experience">( <% experiences.experiences.length || "empty" %> )</span></p>
+										<p>Industry: <span class="bold" id="industry">( <% industries.industries.length || "empty" %> )</span></p>
+										<!--<p class="complete-info">Your profile is <strong class="completeness-percentage">60%</strong> complete, please provide information below:</p>
+										<p><a href="#" id="complete-phone-number" data-type="text" data-pk="1" data-title="Phone number">Add your phone number</a></p>
+										<p>
+											<a href="#" id="complete-sex" data-type="select" data-pk="1" data-value="" data-prepend="Select sex" data-title="Select sex"></a>
+										</p>
+										<p><a href="#" id="complete-birthdate" data-type="combodate" data-value="1984-05-23" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select date of birth">Select date of birth</a></p>
+										<p><a href="#" id="complete-nickname" data-type="text" data-pk="1" data-title="Nickname" data-placeholder="your nickname">Add your nickname</a></p> -->
+									</div>
 								</div>
 							</div>
 							<div class="widget-footer">
-								<a href="#">View my profile</a>
+								<a href="{{URL::to('user')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:0}}">Complete your profile</a>
 							</div>
 						</div>
 						<!-- END COMPLETENESS METER -->
@@ -414,4 +438,6 @@
 		<script src={{ asset('assets/js/plugins/jquery-maskedinput/jquery.masked-input.min.js') }}></script>
 	<script src={{ asset('assets/js/queen-charts.js') }}></script>
 	<script src={{ asset('assets/js/queen-maps.js') }}></script>
+	
+	<script src={{ asset('assets/js/queen-elements.js') }}></script>
 @stop
