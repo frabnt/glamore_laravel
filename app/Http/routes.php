@@ -106,6 +106,7 @@ Route::group(['middleware' => 'cors'], function(){
     //send invite to user
     Route::get('/notification/user/{user_id}', 'NotificationController@showNotificationByUserId');
     Route::get('/notification/project/{project_id}', 'NotificationController@showNotificationByProjectId');
+    Route::get('/notification/project/delete/{user_id}/{project_id}', 'NotificationController@deleteNotificationsByUsrIdAndByProjectId');
 
     
 

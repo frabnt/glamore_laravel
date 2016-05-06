@@ -186,6 +186,15 @@
 
 				});
 			},
+			'rmNotificationByUserIdAndProjectId':function(user_id , project_id){
+
+				var rmNotification = $resource(base_url + '/notification/project/delete/:user_id/:project_id/', { user_id:user_id,project_id:project_id});
+				rmNotification.get(function (data){
+					//toaster.pop('success', 'Invite sent');
+
+				});
+			},
+
 
 
 			'updateNotification': function (notification) {
@@ -209,7 +218,13 @@
 				}
 
 				
-				
+				$.alert({
+    title: 'Alert!',
+    content: 'Simple alert!',
+    confirm: function(){
+        $.alert('Confirmed!'); // shorthand.
+    }
+});
 
 				$.confirm({
 					text: notification.description,
@@ -242,31 +257,14 @@
 														});
 
 			},
-			'deleteNotification': function (notification) {
+			'deleteNotification': function (notification_id) {
 
 
-				$.confirm({
-					text: "Are you sure you want to delete that notification?",
-					title: "Confirmation required",
-					confirmButton: "Yes I am",
-					cancelButton: "No",
-					post: false,
-					confirmButtonClass: "btn-danger",
-					cancelButtonClass: "btn-default",
-					dialogClass: "modal-dialog modal-lg",
-					confirm: function() {
-						self.isDeleting = true;
-						Notification.remove({ id:notification.id }).$promise.then(function () {
-							toaster.pop('success', 'Notification Deleted');
-							var index = self.notifications.indexOf(notification);
-							self.notifications.splice(index, 1);
-							self.isDeleting = false;
-						});
-					},
-					cancel: function() {
-														        // nothing to do
-														    }
-														});
+				self.isDeleting = true;
+				Notification.remove({ id:notification_id }).$promise.then(function () {
+					toaster.pop('success', 'Notification Deleted');
+					self.isDeleting = false;
+				});
 
 
 			},
@@ -328,7 +326,7 @@
 
 		$scope.deleteNotification= function(notification){
 											//console.log(notification);
-											NotificationService.deleteNotification(notification);
+											NotificationService.deleteNotification(notification.id);
 											
 										}
 
@@ -1403,6 +1401,7 @@
 			UserService.addUserToTeam(user);
 		},
 		$scope.removeUserInTeam= function(user){
+			NotificationService.rmNotificationByUserIdAndProjectId(user.user_id , project_id);
 			UserService.removeUserToTeam(user);
 		}
 
@@ -1444,8 +1443,6 @@
 				self.usersInTeam=usersInTeam.query();
 				self.usersInTeam.$promise.then(function (result) {
 					self.usersInTeam=result;
-					console.log(team_id);
-					console.log(result);
 					self.isLoading = false;
 				});
 			},
@@ -1478,8 +1475,10 @@
 				var rmUser = $resource(base_url + '/user/removeuser/:u_id/:t_id/', { u_id: user.user_id, t_id:team_id});
 				rmUser.get(function (data){
 
-				var index = self.usersNotInTeam.indexOf(user);
-				self.usersNotInTeam.splice(index, 1);	
+				self.loadUsersNotInTeam();
+				self.loadUsersInTeam();
+
+
 
 			toaster.pop('success', 'User ' + user.name + ' Removed');
 				//self.user= data;

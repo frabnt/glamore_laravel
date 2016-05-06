@@ -43,6 +43,25 @@ class NotificationController extends Controller
                return $notifications;
     }
 
+    public function deleteNotificationsByUsrIdAndByProjectId($user_id, $project_id)
+    {   
+
+        //delete record and relation
+        $relation_id =  \DB::table('user_notification')->select('id')->where('user_id', '=', $user_id)->where('project_id', '=', $project_id)->get();
+               
+            foreach ($relation_id as $key => $value) {
+                    
+               
+        $relation = UserNotification::find($value->id);
+        $notification= Notification::find($relation->notification_id)->delete();
+        $relation = UserNotification::find($value->id)->delete(); 
+
+        }
+
+
+        
+        
+    }
 
 
     public function index()
@@ -193,7 +212,7 @@ class NotificationController extends Controller
 
         $notification->save();
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -201,7 +220,10 @@ class NotificationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {   
+        //delete record and relation
+        $relation_id =  \DB::table('user_notification')->select('id')->where('notification_id', '=', $id)->get();
+        $relation = UserNotification::find($relation_id)->delete();
         $notification= Notification::find($id)->delete();
     }
 }

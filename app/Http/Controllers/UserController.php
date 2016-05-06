@@ -64,12 +64,12 @@ class UserController extends Controller
 public function getAllUsersWithNotificationInfoByProjectId ($project_id)
 {
 
-$notification = \DB::select( \DB::raw("(select users.id, users.last_name, users.profile_image, users.name, notifications.title as notification_title,  notifications.accepted as notification_accepted,notifications.rejected as notification_rejected, notifications.read as notification_read
+$notification = \DB::select( \DB::raw("(select users.id, users.last_name, users.profile_image, users.name, notifications.title as notification_title,  notifications.accepted as notification_accepted,notifications.rejected as notification_rejected, notifications.read as notification_read, notifications.id as notification_id
 from user_notification 
 join users on users.id=user_notification.user_id
 join notifications on notifications.id = user_notification.notification_id
 where user_notification.project_id =".$project_id.") union (
-select users.id, users.last_name, users.profile_image, users.name, null, null,null,null
+select users.id, users.last_name, users.profile_image, users.name, null, null,null,null, null
 from users 
 where id not in (select user_id
 from user_notification
