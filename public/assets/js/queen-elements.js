@@ -954,7 +954,7 @@ $(document).ready(function(){
 			});
 		}
 
-		$.fn.editable.defaults.mode = 'inline';
+		/*$.fn.editable.defaults.mode = 'inline';
 
 		$('#complete-phone-number').on('shown', function(e, editable) {
 			editable.input.$input.mask('(999) 999-9999');
@@ -993,7 +993,7 @@ $(document).ready(function(){
 			]
 		});
 		$('#complete-birthdate').editable();
-		$('#complete-nickname').editable();
+		$('#complete-nickname').editable();*/
 	}
 
 	function updateProgressBar(pbar, valueAdded) {

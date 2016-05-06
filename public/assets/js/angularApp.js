@@ -1647,5 +1647,71 @@
 				return self;
 
 			});
+			
+app.controller('userProfileSummaryCtrl', function($scope, UserService, EducationService, ExperienceService, IndustryService) {
+	$scope.users = UserService,
+	$scope.currentUser = function() {
+		UserService.loadCurrentUser(current_user_id);
+	},
+
+	$scope.educations = EducationService,
+	$scope.experiences = ExperienceService,
+	$scope.industries = IndustryService,
+	
+	$scope.updateFieldsStyle = function() {
+		//setTimeout(function(){
+			var dbElements = ['name', 'last_name', 'birthday_date', 'about_me', 'sex', 'marital_status', 'phone_number'];
+			var percentage = 0;
+			angular.forEach($scope.users.user, function (value, key) {
+				if(dbElements.indexOf(key) >= 0) {
+					if(!value) {
+						updateFieldStyle(key);
+					}
+					else
+						percentage += 10;
+				}
+			});
+			
+			if($scope.experiences.experiences.length > 0)
+				percentage += 10;
+			else {
+				updateFieldStyle("experience");
+			}
+			
+			if($scope.industries.industries.length > 0)
+				percentage += 10;
+			else {
+				updateFieldStyle("industry");
+			}
+			
+			if($scope.educations.educations.length > 0)
+				percentage += 10;
+			else {
+				updateFieldStyle("education");
+			}
+			
+			$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+percentage).progressbar();
+			
+			function updateFieldStyle(itemID) {
+				$( "#" + itemID ).toggleClass( "bold" );
+				$( "#" + itemID).toggleClass( "italic-underline-bold" );
+			};
+		//});	
+		
+	}
+
+});
+
+app.directive('afterRender', ['$timeout', function ($timeout) {
+	var def = {
+		restrict: 'A',
+		terminal: false,
+		transclude: false,
+		link: function (scope, element, attrs) {
+			$timeout(scope.$eval(attrs.afterRender), 0);  //Calling a scoped method
+		}
+	};
+	return def;
+}]);
 
 
