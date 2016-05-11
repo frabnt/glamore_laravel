@@ -1455,6 +1455,8 @@
 				self.usersInTeam=usersInTeam.query();
 				self.usersInTeam.$promise.then(function (result) {
 					self.usersInTeam=result;
+					console.log(team_id);
+					console.log(result);
 					self.isLoading = false;
 				});
 			},
@@ -1467,6 +1469,7 @@
 				//this.user=usersInTeam.get();
 				self.usersNotInTeam=loadAllUsersWithNotificationInfo.query();
 				self.usersNotInTeam.$promise.then(function (result) {
+					self.usersNotInTeam=result;//console.log(result);
 					self.isLoading = false;
 				});
 			},
@@ -1481,9 +1484,14 @@
 			},
 
 			'removeUserToTeam':function(user){
-				var rmUser = $resource(base_url + '/user/removeuser/:u_id/:t_id/', { u_id: user.id, t_id:team_id});
+
+
+				var rmUser = $resource(base_url + '/user/removeuser/:u_id/:t_id/', { u_id: user.user_id, t_id:team_id});
 				rmUser.get(function (data){
-			
+
+				var index = self.usersNotInTeam.indexOf(user);
+				self.usersNotInTeam.splice(index, 1);	
+
 			toaster.pop('success', 'User ' + user.name + ' Removed');
 				//self.user= data;
 			});

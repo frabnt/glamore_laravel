@@ -86,7 +86,7 @@ where project_id=".$project_id.")
         $users_in_team= \DB::table('users')
         ->join('user_team_role', 'users.id', '=', 'user_team_role.user_id')
         ->join('teams', 'teams.id', '=', 'user_team_role.team_id')
-        ->select('users.id', 'users.last_name', 'users.profile_image', 'users.name')
+        ->select('users.id as user_id', 'users.last_name', 'users.profile_image', 'users.name')
         ->where('teams.id', '=', $team_id)->get();
         return $users_in_team;
     }

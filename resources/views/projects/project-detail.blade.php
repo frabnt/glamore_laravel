@@ -64,10 +64,9 @@
 										<li ng-repeat='user in users.usersInTeam'>
 											<img ng-src="{{ asset('/assets/upload/img/user')}}/<% user.profile_image || 'avatar.png' %>" class="img-circle avatar" alt="Avatar" />
 											<p><a href="#"><strong><% user.name %> <% user.last_name %></strong></a></p>
-											<p ng-if="user.id==projects.project.user_id" class="text-muted">Project Owner</p>
-											<p ng-if="user.notification_rejected==1" class="text-muted">Invitation rejected</p>
-											<p ng-if="user.notification_accepted==1 && !(user.id==projects.project.user_id)" class="text-muted">Partecipant</p>
-											<p ng-if="user.notification_rejected==0 && user.id != projects.project.user_id && user.notification_accepted==0 && user.notification_title != ''" class="text-muted">Invitation sent</p>
+											<p ng-if="user.user_id==projects.project.user_id" class="text-muted">Project Owner</p>
+											<p ng-if="!(user.user_id==projects.project.user_id)" class="text-muted">Partecipant</p>
+											
 
 										</li>
 		
@@ -122,7 +121,7 @@
 																				<p  class="text-muted">Project Owner</p>
 
 																			</td>																				
-																			<td ng-if="user.notification_accepted==1 && !(user.id==projects.project.user_id) && !user.notification_rejected==1">
+																			<td ng-if="user.notification_accepted==1 && !(user.id==projects.project.user_id)">
 																				<p  class="text-muted">Partecipant</p>
 
 																			</td>
@@ -132,7 +131,7 @@
 																					<span class="todo-text"></span>
 																				</label>
 																			</td>
-																			<td ng-if="user.notification_rejected==1">
+																			<td ng-if="user.notification_rejected==1 && user.notification_accepted==0">
 																				<p  class="text-muted">Invitation rejected</p>
 											
 																			</td>
@@ -189,9 +188,9 @@
 																	<tbody>
 																		
 																		<tr ng-repeat='user in users.usersInTeam'>
-																			<td ng-if="!user.id==projects.project.user_id" class="text-muted"><% user.name %> </td>
-																			<td ng-if="!user.id==projects.project.user_id"><% user.last_name %></td>
-																			<td ng-if="!user.id==projects.project.user_id">
+																			<td ng-if="user.user_id!=projects.project.user_id" class="text-muted"><% user.name %> </td>
+																			<td ng-if="user.user_id!=projects.project.user_id"><% user.last_name %></td>
+																			<td ng-if="user.user_id!=projects.project.user_id">
 																				<label class="fancy-checkbox">
 																					<input type="checkbox" ng-click="removeUserInTeam(user)">
 																					<span class="todo-text"></span>
