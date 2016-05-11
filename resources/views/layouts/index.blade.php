@@ -73,10 +73,12 @@
 					</div>
 					<!-- end quick task modal -->
 				</div>
+				
 				<!-- END PRIMARY CONTENT HEADING -->
-				<div class="widget widget-no-header widget-transparent bottom-30px">
+				
+				<!-- <div class="widget widget-no-header widget-transparent bottom-30px"> -->
 					<!-- QUICK SUMMARY INFO -->
-					<div class="widget-content">
+					<!-- <div class="widget-content">
 						<h3 class="sr-only">QUICK SUMMARY INFO</h3>
 						<div class="row">
 							<div class="col-sm-3 text-center">
@@ -104,13 +106,13 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- END QUICK SUMMARY INFO -->
-				</div>
-				<div class="row">
-					<div class="col-md-8">
+				<!-- </div> -->
+				<!-- <div class="row">
+					<div class="col-md-8"> -->
 						<!-- CHART WITH JUSTIFIED TAB -->
-						<div class="widget">
+						<!-- <div class="widget">
 							<div class="widget-header clearfix no-padding">
 								<h3 class="sr-only"><span>SALES AND VISITS STAT</span></h3>
 								<ul id="dashboard-stat-tab" class="nav nav-pills nav-justified">
@@ -126,12 +128,12 @@
 									<div class="flot-chart" id="dashboard-visits-chart"></div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 						<!-- END CHART WITH JUSTIFIED TAB -->
-					</div>
-					<div class="col-md-4">
+					<!-- </div> -->
+					<!-- <div class="col-md-4"> -->
 						<!-- ORDER STATUS -->
-						<div class="widget">
+						<!-- <div class="widget">
 							<div class="widget-header clearfix">
 								<h3><i class="icon ion-bag"></i> <span>ORDER STATUS</span></h3>
 								<div class="btn-group widget-header-toolbar">
@@ -187,10 +189,72 @@
 									</tbody>
 								</table>
 							</div>
-						</div>
+						</div> -->
 						<!-- END ORDER STATUS -->
-					</div>
+					<!-- </div> -->
 				</div>
+				<div ng-controller="projectCtrl" ng-cloak ng-init="projects.hasProjects();" ng-show="projects.noProjects" >
+					<div class="modal fade" id="new-project-modal" tabindex="-1" role="dialog" aria-hidden="true">
+						<!-- new project modal -->
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="myModalLabel">Create Project</h4>
+								</div>
+								<div class="modal-body">
+									<form novalidate  ng-submit="createProject(projects.project); projects.hasProjects();" id="addProject" class="form-horizontal" role="form">
+									<input type="hidden" name="_token" value="{{ csrf_token() }}">
+										<div class="form-group">
+											<label for="title" class="control-label sr-only">Title</label>
+											<div class="col-sm-12">
+												<input type="text" ng-model="projects.project.title" ng-init="projects.project.title=''" required class="form-control" id="title" placeholder="Title">
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-12">
+												<input type="number" ng-model="projects.project.duration_day" required ng-init="projects.project.duration_day=''" class="form-control" id="duration_day" placeholder="Days to Deadline">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label sr-only">Description</label>
+											<div class="col-sm-12">
+												<textarea class="form-control" ng-model="projects.project.description" ng-init="projects.project.description=''" id="description" name="task-description" rows="5" cols="30" placeholder="Description"></textarea>
+											</div>
+										</div>
+										<button type="button" id="close_project" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn btn-primary">Save Project</button>
+									</form>
+								</div>
+							</div>
+						</div>
+						<!-- end new project modal -->
+					</div>
+				
+					<!-- new-project widget -->
+					<div class="row">
+						<div class="col-md-8">
+							<div class="widget">
+								<div class="widget-header clearfix">
+									<h3><i class="icon ion-android-list"></i> <span>PROJECT</span></h3>
+									<div class="btn-group widget-header-toolbar">
+										<a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
+										<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
+									</div>
+								</div>
+								<div class="widget-content">
+									<div class="project-list-subheading" style="margin-bottom: 0px; margin-top: 5px;">
+										<p class="lead">You have <span class="label label-warning">no projects</span> yet. Start by creating <span class="label label-success">a new one!</span></p>
+										<button type="button" data-toggle="modal" data-target="#new-project-modal" class="btn btn-primary pull-right btn-new-project" ><i class="icon ion-compose"></i> CREATE NEW PROJECT</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- end new-project widget -->
+				</div>
+				
 				<div class="row">
 					<div class="col-md-8">
 						<!-- MAP -->
@@ -221,6 +285,7 @@
 					<div class="col-md-4">
 						<!-- COMPLETENESS METER -->
 						<div class="widget">
+							<!-- profile-summary widget -->
 							<div class="widget-header clearfix">
 								<h3><i class="icon ion-person"></i> <span>YOUR PROFILE SUMMARY</span></h3>
 								<div class="btn-group widget-header-toolbar">
@@ -233,16 +298,16 @@
 									<div class="progress progress-xs">
 										<div class="progress-bar progress-bar-info completeness-progress" data-transitiongoal="0"></div>
 									</div>
-									<div ng-controller="userProfileSummaryCtrl" ng-init="currentUser" after-render="updateFieldsStyle" ng-show="users.user.name">
+									<div ng-controller="userProfileSummaryCtrl" ng-cloak ng-init="loadCurrentUser(); loadExperiences(); loadEducations(); loadIndustries()" ng-show="user.name">
 										<p class="complete-info">Your profile is <strong id = "pbar-percentage" class="completeness-percentage">0%</strong> complete, please provide information below:</p>
-										<p>First Name: <span class="bold" id="name"><% users.user.name || "empty"  %></span></p>
-										<p>Last Name: <span class="bold" id="last_name"><% users.user.last_name  || "empty"%></span></p>
-										<p>Birthdate: <span class="bold" id="birthday_date"><% users.user.birthday_date || "empty" | date:"dd/MM/yyyy" %></span></p>
-										<p>Sex: <span class="bold" id="sex"><% users.user.sex  || "empty" %></span></p>
-										<p>Phone: <span class="bold" id="phone_number"><% users.user.phone_number  || "empty" %></span></p>
-										<p>Education: <span class="bold" id="education">( <% educations.educations.length || "empty" %> )</span></p>		
-										<p>Experience: <span class="bold" id="experience">( <% experiences.experiences.length || "empty" %> )</span></p>
-										<p>Industry: <span class="bold" id="industry">( <% industries.industries.length || "empty" %> )</span></p>
+										<p>First Name: <span ng-class="{'bold': user.name, 'italic-underline-bold': !user.name}"><% user.name || "empty"  %></span></p>
+										<p>Last Name: <span ng-class="{'bold': user.last_name, 'italic-underline-bold': !user.last_name}"><% user.last_name  || "empty"%></span></p>
+										<p>Birthdate: <span ng-class="{'bold': user.birthday_date, 'italic-underline-bold': !user.birthday_date}"><% user.birthday_date || "empty" | date:"dd/MM/yyyy" %></span></p>
+										<p>Sex: <span ng-class="{'bold': user.sex, 'italic-underline-bold': !user.sex}"><% user.sex  || "empty" %></span></p>
+										<p>Phone: <span ng-class="{'bold': user.phone_number, 'italic-underline-bold': !user.phone_number}"><% user.phone_number  || "empty" %></span></p>
+										<p>Education: <span ng-class="{'bold': educationLength, 'italic-underline-bold': !educationLength}">( <% educationLength || "empty" %> )</span></p>		
+										<p>Experience: <span ng-class="{'bold': experienceLength, 'italic-underline-bold': !experienceLength}">( <% experienceLength || "empty" %> )</span></p>
+										<p>Industry: <span ng-class="{'bold': industryLength, 'italic-underline-bold': !industryLength}">( <% industryLength || "empty" %> )</span></p>
 										<!--<p class="complete-info">Your profile is <strong class="completeness-percentage">60%</strong> complete, please provide information below:</p>
 										<p><a href="#" id="complete-phone-number" data-type="text" data-pk="1" data-title="Phone number">Add your phone number</a></p>
 										<p>
@@ -256,6 +321,7 @@
 							<div class="widget-footer">
 								<a href="{{URL::to('user')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:0}}">Complete your profile</a>
 							</div>
+							<!-- end profile-summary widget -->
 						</div>
 						<!-- END COMPLETENESS METER -->
 					</div>
