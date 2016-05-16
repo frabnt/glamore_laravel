@@ -922,11 +922,12 @@
 			'experiences': [],
 			'experience': null,
 
-			'loadExperience': function () {
+			'loadUserExperience': function () {
 				if (!self.isLoading) {
 					self.isLoading = true;
+					var experiencesByUser = $resource(base_url + '/experience/user/:u_id/', { u_id: current_user_id});
 
-					self.experiences = Experience.query();
+					self.experiences = experiencesByUser.query();
 					self.experiences.$promise.then(function (result) {
 
 
@@ -1012,7 +1013,7 @@
 												Experience.save(experience).$promise.then(function () {
 													toaster.pop('success', 'Created ' + experience.company_name);
 													self.experiences = [];
-													self.loadExperience();
+													self.loadUserExperience();
 
 													self.experience= null;
 													$( "#addExperience" ).removeClass("show");
@@ -1025,7 +1026,7 @@
 
 
 										};
-										self.loadExperience();
+										self.loadUserExperience();
 										return self;
 
 									});
@@ -1081,11 +1082,15 @@
 			'educations': [],
 			'education': null,
 
-			'loadEducation': function () {
+
+
+			'loadUserEducation': function () {
 				if (!self.isLoading) {
 					self.isLoading = true;
 
-					self.educations = Education.query();
+					var educationsByUser = $resource(base_url + '/education/user/:u_id/', { u_id: current_user_id});
+
+					self.educations = educationsByUser.query();
 					self.educations.$promise.then(function (result) {
 
 
@@ -1167,7 +1172,7 @@
 								Education.save(education).$promise.then(function () {
 									toaster.pop('success', 'Created ' + education.school);
 									self.educations = [];
-									self.loadEducation();
+									self.loadUserEducation();
 
 									self.education= null;
 									$( "#addEducation" ).removeClass("show");
@@ -1180,7 +1185,7 @@
 
 
 						};
-						self.loadEducation();
+						self.loadUserEducation();
 						return self;
 
 					});
@@ -1232,11 +1237,17 @@
 			'industry': null,
 			 //'countries':["Bangladesh", "Belgium", "Burkina Faso",  "Bulgaria", "Bosnia and Herzegovina",  "Barbados", "Wallis and Futuna", "Saint Bartelemey", "Bermuda", "Brunei Darussalam", "Bolivia",  "Bahrain",  "Burundi", "Benin",  "Bhutan",  "Jamaica",  "Bouvet Island",  "Botswana", "Samoa", "Brazil",  "Bahamas",  "Jersey",  "Belarus",  "Other Country", "Latvia", "Rwanda", "Serbia", "Timor-Leste", "Reunion", "Luxembourg", "Tajikistan",  "Romania", "Papua New Guinea", "Guinea-Bissau",  "Guam",  "Guatemala", "South Georgia and the South Sandwich Islands", "Greece", "Equatorial Guinea", "Guadeloupe",  "Japan",  "Guyana", "Guernsey", "French Guiana", "Georgia", "Grenada", "United Kingdom", "Gabon", "El Salvador",  "Guinea", "Gambia", "Greenland", "Gibraltar", "Ghana", "Oman", "Tunisia", "Jordan", "Croatia", "Haiti", "Hungary", "Hong Kong", "Honduras", "Heard Island and McDonald Islands", "Venezuela",  "Puerto Rico",  "Palestinian Territory",  "Palau",  "Portugal",  "Svalbard and Jan Mayen",  "Paraguay",  "Iraq",  "Panama",  "French Polynesia",  "Belize",  "Peru",  "Pakistan",  "Philippines",  "Pitcairn",  "Turkmenistan",  "Poland",  "Saint Pierre and Miquelon",  "Zambia",  "Western Sahara",  "Russian Federation",  "Estonia",  "Egypt",  "Tokelau",  "South Africa",  "Ecuador",  "Italy",  "Vietnam",  "Solomon Islands",  "Europe",  "Ethiopia",  "Somalia",  "Zimbabwe",  "Saudi Arabia",  "Spain",  "Eritrea",  "Montenegro",  "Moldova, Republic of",  "Madagascar",  "Saint Martin",  "Morocco",  "Monaco",  "Uzbekistan",  "Myanmar",  "Mali",  "Macao",  "Mongolia",  "Marshall Islands",  "Macedonia",  "Mauritius",  "Malta",  "Malawi",  "Maldives",  "Martinique",  "Northern Mariana Islands",  "Montserrat",  "Mauritania",  "Isle of Man",  "Uganda",  "Tanzania, United Republic of",  "Malaysia",  "Mexico",  "Israel",  "France",  "British Indian Ocean Territory",  "France, Metropolitan",  "Saint Helena",  "Finland",  "Fiji",  "Falkland Islands (Malvinas)",  "Micronesia, Federated States of",  "Faroe Islands",  "Nicaragua",  "Netherlands",  "Norway",  "Namibia",  "Vanuatu",  "New Caledonia",  "Niger",  "Norfolk Island",  "Nigeria",  "New Zealand",  "Nepal",  "Nauru",  "Niue",  "Cook Islands",  "Cote d'Ivoire",  "Switzerland",  "Colombia",  "China",  "Cameroon",  "Chile",  "Cocos (Keeling) Islands",  "Canada",  "Congo",  "Central African Republic",  "Congo, The Democratic Republic of the",  "Czech Republic",  "Cyprus",  "Christmas Island",  "Costa Rica",  "Cape Verde",  "Cuba",  "Swaziland",  "Syrian Arab Republic",  "Kyrgyzstan",  "Kenya",  "Suriname",  "Kiribati",  "Cambodia",  "Saint Kitts and Nevis",  "Comoros",  "Sao Tome and Principe",  "Slovakia",  "Korea, Republic of",  "Slovenia",  "Korea, Democratic People's Republic of",  "Kuwait",  "Senegal",  "San Marino",  "Sierra Leone",  "Seychelles",  "Kazakhstan",  "Cayman Islands",  "Singapore",  "Sweden",  "Sudan",  "Dominican Republic",  "Dominica",  "Djibouti",  "Denmark",  "Virgin Islands, British",  "Germany",  "Yemen",  "Algeria",  "United States",  "Uruguay",  "Mayotte",  "United States Minor Outlying Islands",  "Lebanon",  "Saint Lucia",  "Lao People's Democratic Republic",  "Tuvalu",  "Taiwan",  "Trinidad and Tobago",  "Turkey",  "Sri Lanka",  "Liechtenstein",  "Anonymous Proxy",  "Tonga",  "Lithuania",  "Satellite Provider",  "Liberia",  "Lesotho",  "Thailand",  "French Southern Territories",  "Togo",  "Chad",  "Turks and Caicos Islands",  "Libyan Arab Jamahiriya",  "Holy See (Vatican City State)",  "Saint Vincent and the Grenadines",  "United Arab Emirates",  "Andorra",  "Antigua and Barbuda",  "Afghanistan",  "Anguilla",  "Virgin Islands, U.S.",  "Iceland",  "Iran, Islamic Republic of",  "Armenia",  "Albania",  "Angola",  "Netherlands Antilles",  "Antarctica",  "Asia/Pacific Region",  "American Samoa",  "Argentina",  "Australia",  "Austria",  "Aruba",  "India",  "Aland Islands",  "Azerbaijan",  "Ireland",  "Indonesia",  "Ukraine",  "Qatar",  "Mozambique"],
 
-			 'loadIndustries': function () {
+
+
+
+			
+
+			  'loadUserIndustries': function () {
+			  	var industriesByUser = $resource(base_url + '/industry/user/:u_id/', { u_id: current_user_id});
 			 	if (!self.isLoading) {
 			 		self.isLoading = true;
 
-			 		self.industries = Industry.query();
+			 		self.industries = industriesByUser.query();
 			 		self.industries.$promise.then(function (result) {
 			 			self.industries=result;
 			 			self.isLoading = false;
@@ -1288,13 +1299,13 @@
 			 	var d = $q.defer();
 			 	self.isSaving = true;
 			 	industry.user_id=current_user_id;
-			 	industry.postal_code="";
+			 	
 
 
 			 	Industry.save(industry).$promise.then(function () {
 			 		self.isSaving = false;
 			 		self.industries = [];
-			 		self.loadIndustries();
+			 		self.loadUserIndustries();
 			 		toaster.pop('success', 'Created ' + industry.industry);
 			 		self.industry= null;
 			 		$( "#addIndustry" ).removeClass("show");
@@ -1306,7 +1317,7 @@
 
 
 			};
-			self.loadIndustries();
+			self.loadUserIndustries();
 			return self;
 
 		});
