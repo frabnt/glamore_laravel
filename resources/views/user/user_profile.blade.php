@@ -11,7 +11,7 @@
 <!-- COLUMN RIGHT -->
 		<div id="col-right" class="col-right ">
 			<div class="container-fluid primary-content">
-				<div ng-controller="userCtrl" ng-init='currentUser(); uploadProfileImages()' ng-show="users.user.name !=''" class="user-profile">
+				<div ng-controller="userCtrl" ng-init='currentUser(); uploadProfileImages()' ng-show="!users.isLoading"  class="user-profile">
 	<style>
 	.profile-header-background{
 	height: 310px;

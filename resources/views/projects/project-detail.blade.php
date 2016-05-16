@@ -20,7 +20,7 @@
 	}
 </style>
 
-<div ng-controller="projectCtrl" ng-init='currentProject()' ng-show="projects.project.title !=''" id="col-right" class="col-right ">
+<div ng-controller="projectCtrl" ng-init='currentProject()' ng-show="!projects.isLoading" id="col-right" class="col-right ">
 	<div class="container-fluid primary-content">
 		<!-- PRIMARY CONTENT HEADING -->
 		<div class="primary-content-heading clearfix">

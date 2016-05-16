@@ -70,8 +70,8 @@
 							</div>
 						</div>
 					</form>
-					<div class="top-bar-right pull-right">
-						<div ng-controller="notificationCtrl" ng-init='loadMyNotifications()' class="action-group hidden-xs hidden-sm">
+					<div ng-controller="notificationCtrl"  ng-show="!notifications.isLoading" ng-init='loadMyNotifications()' class="top-bar-right pull-right">
+						<div  class="action-group hidden-xs hidden-sm">
 							<ul>
 
 								<!-- notification: general -->
