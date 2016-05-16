@@ -218,14 +218,6 @@
 				}
 
 				
-				$.alert({
-    title: 'Alert!',
-    content: 'Simple alert!',
-    confirm: function(){
-        $.alert('Confirmed!'); // shorthand.
-    }
-});
-
 				$.confirm({
 					text: notification.description,
 					title: notification.title,

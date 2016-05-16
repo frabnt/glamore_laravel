@@ -116,7 +116,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="#">
+										<a href="{{ url('/settings') }}">
 											<i class="icon ion-ios-gear"></i>
 											<span class="text">Settings</span>
 										</a>
@@ -146,45 +146,45 @@
 						<nav id="main-nav" class="main-nav">
 							<h3>MAIN</h3>
 							<ul class="main-menu">
-								<li class="{{ (Request::is('under-costruction') || Request::is('home') ? 'has-submenu active' : 'has-submenu') }}" >
+								<li class="{{ (Request::is('next-meetings') || Request::is('task-to-do') || Request::is('chart-of-earnings') ||  Request::is('card-of-the-last-project') || Request::is('home') ? 'has-submenu active' : 'has-submenu') }}" >
 									<a href="#" class="submenu-toggle"><i class="icon ion-ios-speedometer-outline"></i><span class="text">Dashboards</span></a>
-									<ul class="{{ (Request::is('home') || Request::is('under-costruction') ? 'list-unstyled sub-menu collapse in' : 'list-unstyled sub-menu collapse') }}" >
+									<ul class="{{ (Request::is('home') ||  Request::is('chart-of-earnings') || Request::is('card-of-the-last-project') || Request::is('task-to-do') || Request::is('next-meetings') ? 'list-unstyled sub-menu collapse in' : 'list-unstyled sub-menu collapse') }}" >
 										<li class="{{ (Request::is('home') ? 'active' : '') }}"><a href="{{ url('/home')}}"><span class="text">Dashboard</span></a></li>
-										<li class="{{-- (Request::is('under-costruction') ? 'active' : '') --}}"><a href="{{ url('/under-costruction')}}"><span class="text">Next meetings</span></a></li>
-										<li class="{{-- (Request::is('under-costruction') ? 'active' : '') --}}"><a href="{{ url('/under-costruction')}}"><span class="text">Task to do</span></a></li>
-										<li class="{{-- (Request::is('under-costruction') ? 'active' : '') --}}"><a href="{{ url('/under-costruction')}}"><span class="text">Card of the last project</span></a></li>
-										<li class="{{-- (Request::is('under-costruction') ? 'active' : '') --}}"><a href="{{ url('/under-costruction')}}"><span class="text">Chart of earnings</span></a></li>
+										<li class="{{ (Request::is('next-meetings') ? 'active' : '') }}"><a href="{{ url('/next-meetings')}}"><span class="text">Next meetings</span></a></li>
+										<li class="{{ (Request::is('task-to-do') ? 'active' : '') }}"><a href="{{ url('/task-to-do')}}"><span class="text">Task to do</span></a></li>
+										<li class="{{ (Request::is('card-of-the-last-project') ? 'active' : '') }}"><a href="{{ url('/card-of-the-last-project')}}"><span class="text">Card of the last project</span></a></li>
+										<li class="{{ (Request::is('chart-of-earnings') ? 'active' : '') }}"><a href="{{ url('/chart-of-earnings')}}"><span class="text">Chart of earnings</span></a></li>
 									</ul>
 								</li>
-								<li class="{{ (Request::is('under-costruction') || Request::is('my-project/*') ? 'has-submenu active' : 'has-submenu') }}">
+								<li class="{{ (Request::is('videoconference') || Request::is('activities') || Request::is('documents-and-notes') || Request::is('my-project/*') ? 'has-submenu active' : 'has-submenu') }}">
 									<a href="#" class="submenu-toggle"><i class="icon ion-ios-paper-outline"></i><span class="text">Projects</span></a>
-									<ul class="{{ (Request::is('my-project/*') || Request::is('under-costruction') ? 'list-unstyled sub-menu collapse in' : 'list-unstyled sub-menu collapse') }}">
+									<ul class="{{ (Request::is('my-project/*') || Request::is('videoconference') || Request::is('documents-and-notes') || Request::is('activities') ? 'list-unstyled sub-menu collapse in' : 'list-unstyled sub-menu collapse') }}">
 										<li class="{{ (Request::is('my-project') ? 'active' : '') }}" ><a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}"><span class="text">Post a project</span></a></li>
-										<li class="{{ (Request::is('under-costruction') ? 'active' : '') }}" ><a href="{{ url('/under-costruction')}}"><span class="text">Activities (task/meeting/call)</span></a></li>
-										<li class="{{ (Request::is('under-costruction') ? 'active' : '') }}" ><a href="{{ url('/under-costruction')}}"><span class="text">Documents and note</span></a></li>
-										<li class="{{ (Request::is('under-costruction') ? 'active' : '') }}" ><a href="{{ url('/under-costruction')}}"><span class="text">Videoconference</span></a></li>
+										<li class="{{ (Request::is('activities') ? 'active' : '') }}" ><a href="{{ url('/activities')}}"><span class="text">Activities (task/meeting/call)</span></a></li>
+										<li class="{{ (Request::is('documents-and-notes') ? 'active' : '') }}" ><a href="{{ url('/documents-and-notes')}}"><span class="text">Documents and note</span></a></li>
+										<li class="{{ (Request::is('videoconference') ? 'active' : '') }}" ><a href="{{ url('/videoconference')}}"><span class="text">Videoconference</span></a></li>
 									</ul>
 								</li>
 
 
 
-								<li class="{{ (Request::is('under-costruction') || Request::is('search-for-affiliate') ? 'has-submenu active' : 'has-submenu') }}" >
+								<li class="{{ (Request::is('bio-affiliate') || Request::is('search-and-join-projects') || Request::is('activities-diary') || Request::is('search-for-affiliate') ? 'has-submenu active' : 'has-submenu') }}" >
 									<a href="#" class="submenu-toggle"><i class="icon ion-person"></i><span class="text">Affiliates</span></a>
-									<ul class="{{ (Request::is('search-for-affiliate') || Request::is('under-costruction') ? 'list-unstyled sub-menu collapse in' : 'list-unstyled sub-menu collapse') }}">
-										<li><a href="{{ url('/search-for-affiliate')}}"><span class="text">BIO Affiliate</span></a></li>
+									<ul class="{{ (Request::is('search-for-affiliate') || Request::is('search-and-join-projects') || Request::is('bio-affiliate') || Request::is('activities-diary') ? 'list-unstyled sub-menu collapse in' : 'list-unstyled sub-menu collapse') }}">
+										<li class="{{ (Request::is('bio-affiliate') ? 'active' : '') }}"><a  href="{{ url('/bio-affiliate')}}"><span class="text">BIO Affiliate</span></a></li>
 										<li class="{{ (Request::is('search-for-affiliate') ? 'active' : '') }}" ><a href="{{ url('/search-for-affiliate') }}"><span class="text">Search for Affiliate</span></a></li>
-										<li><a href="{{ url('/under-costruction')}}"><span class="text">Activities diary</span></a></li>
-										<li><a href="{{ url('/under-costruction')}}"><span class="text">Search and join projects</span></a></li>
+										<li class="{{ (Request::is('activities-diary') ? 'active' : '') }}"><a  href="{{ url('/activities-diary')}}"><span class="text">Activities diary</span></a></li>
+										<li class="{{ (Request::is('search-and-join-projects') ? 'active' : '') }}"><a  href="{{ url('/search-and-join-projects')}}"><span class="text">Search and join projects</span></a></li>
 									</ul>
 								</li>
 
-								<li class="{{ (Request::is('under-costruction') ? 'has-submenu active' : 'has-submenu') }}">
+								<li class="{{ (Request::is('payments-received') || Request::is('invoice-and-remittance') || Request::is('details-of-tax') || Request::is('summary-of-earnings') ? 'has-submenu active' : 'has-submenu') }}">
 									<a href="#" class="submenu-toggle"><i class="icon ion-stats-bars"></i><span class="text">Reports</span></a>
-									<ul class="{{ (Request::is('under-costruction') ? 'list-unstyled sub-menu collapse in' : 'list-unstyled sub-menu collapse') }}">
-										<li><a href="{{ url('/under-costruction')}}"><span class="text">payments received</span></a></li>
-										<li><a href="{{ url('/under-costruction')}}"><span class="text">summary of earnings</span></a></li>
-										<li><a href="{{ url('/under-costruction')}}"><span class="text">details of tax</span></a></li>
-										<li><a href="{{ url('/under-costruction')}}"><span class="text">invoice and remittance</span></a></li>
+									<ul class="{{ (Request::is('payments-received') || Request::is('invoice-and-remittance') || Request::is('details-of-tax') || Request::is('summary-of-earnings') ? 'list-unstyled sub-menu collapse in' : 'list-unstyled sub-menu collapse') }}">
+										<li class="{{ (Request::is('payments-received') ? 'active' : '') }}"><a href="{{ url('/payments-received')}}"><span class="text">payments received</span></a></li>
+										<li class="{{ (Request::is('summary-of-earnings') ? 'active' : '') }}"><a href="{{ url('/summary-of-earnings')}}"><span class="text">summary of earnings</span></a></li>
+										<li class="{{ (Request::is('details-of-tax') ? 'active' : '') }}"><a href="{{ url('/details-of-tax')}}"><span class="text">details of tax</span></a></li>
+										<li class="{{ (Request::is('invoice-and-remittance') ? 'active' : '') }}"><a href="{{ url('/invoice-and-remittance')}}"><span class="text">invoice and remittance</span></a></li>
 									</ul>
 								</li>
 							</ul>

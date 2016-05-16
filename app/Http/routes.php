@@ -124,21 +124,28 @@ Route::group(['middleware' => 'cors'], function(){
 
     Route::auth();
 
-    Route::get('/user/{id}','UserController@showProfile');
-
-    Route::get('/search-for-affiliate', function () {
-        return view('affiliates.search_for_affiliate');
+        
+    //Dasboards
+    Route::get('/next-meetings', function () {
+        return view('dashboards.next_meetings');
     });
 
-    Route::get('/under-costruction', function () {
-        return view('layouts.under_costruction');
+    Route::get('/task-to-do', function () {
+        return view('dashboards.task_to_do');
     });
 
-    // Route::get('/my-project', function () {
-    //     return view('projects.my-project');
-    // });
+    Route::get('/card-of-the-last-project', function () {
+        return view('dashboards.card_of_the_last_project');
+    });
+
+    Route::get('/chart-of-earnings', function () {
+        return view('dashboards.chart_of_earnings');
+    });
+
+    
 
 
+    //projects
     Route::get('/my-project/{id}','ProjectController@show_my_project');
 
     // Route::get('/project-detail/{id}', function () {
@@ -147,11 +154,69 @@ Route::group(['middleware' => 'cors'], function(){
     // });
 
     Route::get('project-detail/{id}', 'ProjectController@project_detail');
-    Route::post('project-detail/{id}', 'ProjectController@addUserToTeam');
+
+    //Route::post('project-detail/{id}', 'ProjectController@addUserToTeam');
+
+    Route::get('/activities', function () {
+        return view('projects.activities');
+    });
+
+    Route::get('/documents-and-notes', function () {
+        return view('projects.documents_and_notes');
+    });
+
+    Route::get('/videoconference', function () {
+        return view('projects.videoconference');
+    });
+
+
+    //affiliates
+    Route::get('/search-for-affiliate', function () {
+        return view('affiliates.search_for_affiliate');
+    });
+
+    Route::get('/bio-affiliate', function () {
+        return view('affiliates.bio_affiliate');
+    });
+
+    Route::get('/activities-diary', function () {
+        return view('affiliates.activities_diary');
+    });
+
+    Route::get('/search-and-join-projects', function () {
+        return view('affiliates.search_and_join_projects');
+    });
+
+
+    //reports
+    Route::get('/payments-received', function () {
+        return view('reports.payments_received');
+    });
+
+    Route::get('/summary-of-earnings', function () {
+        return view('reports.summary_of_earnings');
+    });
+
+    Route::get('/details-of-tax', function () {
+        return view('reports.details_of_tax');
+    });
+
+    Route::get('/invoice-and-remittance', function () {
+        return view('reports.invoice_and_remittance');
+    });
+
+    // Route::get('/my-project', function () {
+    //     return view('projects.my-project');
+    // });
+
+
     
+    // user profile 
     Route::get('/settings', function () {
         return view('settings');
     });
+
+    Route::get('/user/{id}','UserController@showProfile');
 
     //User
     // Route::get('/user/{id}', function (App\User $user) {
