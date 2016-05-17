@@ -10,11 +10,19 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+//get user info
+Route::get('api', ['middleware' => 'oauth' , 'before' => 'oauth', function() {
+ // return the protected resource
+ //echo “success authentication”;
+ $user_id=Authorizer::getResourceOwnerId(); // the token user_id
+ $user=\App\User::find($user_id);// get the user data from database
+return Response::json($user);
+}]);
 
-
-
-
-
+//Oauth token
+Route::post('oauth/access_token', function() {
+ return Response::json(Authorizer::issueAccessToken());
+});
 
 
 
