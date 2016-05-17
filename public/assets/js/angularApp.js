@@ -717,6 +717,18 @@
 
 								
 							},
+							
+							'hasProjects': function () {
+									self.noProjects = true;
+									var myProjects = $resource(base_url + '/project/userinfo/:u_id/', { u_id: current_user_id});
+									var query = myProjects.query();
+									query.$promise.then(function (result) {
+										if(result.length)
+											self.noProjects = false;
+									}, function(error) {
+										toaster.pop('error', 'Plaese check your connection '+ error.status);
+									});
+							},
 
 							'updateProject': function (project) {
 
@@ -1084,7 +1096,6 @@
 
 					self.educations = educationsByUser.query();
 					self.educations.$promise.then(function (result) {
-
 
 								//check if date is an object 
 								angular.forEach(result, function (value, key) {
@@ -1507,7 +1518,6 @@
 						var curUser = $resource(base_url + '/users/:id/', { id: userId});
 						//console.log(curUser.get());
 						//this.user=curUser.get();
-
 						temp=curUser.get(function (data){
 
 							
@@ -1650,71 +1660,70 @@
 				return self;
 
 			});
-			
-app.controller('userProfileSummaryCtrl', function($scope, UserService, EducationService, ExperienceService, IndustryService) {
-	$scope.users = UserService,
-	$scope.currentUser = function() {
-		UserService.loadCurrentUser(current_user_id);
-	},
 
-	$scope.educations = EducationService,
-	$scope.experiences = ExperienceService,
-	$scope.industries = IndustryService,
-	
-	$scope.updateFieldsStyle = function() {
-		//setTimeout(function(){
-			var dbElements = ['name', 'last_name', 'birthday_date', 'about_me', 'sex', 'marital_status', 'phone_number'];
-			var percentage = 0;
-			angular.forEach($scope.users.user, function (value, key) {
-				if(dbElements.indexOf(key) >= 0) {
-					if(!value) {
-						updateFieldStyle(key);
+
+app.controller('userProfileSummaryCtrl', function($scope, $resource, Education, Experience, Industry) {
+		$scope.user = [],
+		$scope.experienceLength = 0,
+		$scope.industryLength = 0,
+		$scope.educationLength = 0,
+		
+		$scope.loadCurrentUser = function(){
+			var curUser = $resource(base_url + '/users/:id/', { id: current_user_id});
+			temp = curUser.get(function (data){			
+				data.birthday_date = new Date(data.birthday_date);
+
+				$scope.user = data;
+				var dbElements = ['name', 'last_name', 'birthday_date', 'about_me', 'sex', 'marital_status', 'phone_number'];
+				var percentage = 0;
+				angular.forEach($scope.user, function (value, key) {
+					if(dbElements.indexOf(key) >= 0) {
+						if(value) {
+							percentage += 10;
+						}
 					}
-					else
-						percentage += 10;
+				});
+			
+				$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+percentage).progressbar();			
+			});
+		}
+		
+		$scope.loadExperiences = function () {
+			var res = $resource(base_url +"/experience/user/:id", {id: current_user_id}, {});
+
+			experiences = res.query();
+			experiences.$promise.then(function (result) {
+				$scope.experienceLength = result.length;
+				if($scope.experienceLength > 0) {
+					$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+10).progressbar();
 				}
 			});
-			
-			if($scope.experiences.experiences.length > 0)
-				percentage += 10;
-			else {
-				updateFieldStyle("experience");
-			}
-			
-			if($scope.industries.industries.length > 0)
-				percentage += 10;
-			else {
-				updateFieldStyle("industry");
-			}
-			
-			if($scope.educations.educations.length > 0)
-				percentage += 10;
-			else {
-				updateFieldStyle("education");
-			}
-			
-			$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+percentage).progressbar();
-			
-			function updateFieldStyle(itemID) {
-				$( "#" + itemID ).toggleClass( "bold" );
-				$( "#" + itemID).toggleClass( "italic-underline-bold" );
-			};
-		//});	
+		},
 		
-	}
+		$scope.loadIndustries = function () {
+			var res = $resource(base_url +"/industry/user/:id", {id: current_user_id}, {});
 
-});
+			industries = res.query();
+			industries.$promise.then(function (result) {
+				$scope.industryLength = result.length;
+				if($scope.industryLength > 0) {
+					$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+10).progressbar();
+				}
+			});
+		},
+		
+		$scope.loadEducations = function () {
+			var res = $resource(base_url +"/education/user/:id", {id: current_user_id}, {});
 
-app.directive('afterRender', ['$timeout', function ($timeout) {
-	var def = {
-		restrict: 'A',
-		terminal: false,
-		transclude: false,
-		link: function (scope, element, attrs) {
-			$timeout(scope.$eval(attrs.afterRender), 0);  //Calling a scoped method
+			educations = res.query();
+			educations.$promise.then(function (result) {
+				$scope.educationLength = result.length;
+				if($scope.educationLength > 0) {
+					$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+10).progressbar();
+				}
+			});
 		}
-	};
-	return def;
-}]);
+
+	});
 
 
