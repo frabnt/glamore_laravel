@@ -62,6 +62,7 @@ Route::get('/emailtest', function () {
 
 Route::group(['middleware' => 'cors'], function(){
     Route::resource('industries', 'industryController');
+    Route::resource('files', 'FileController');
     Route::resource('experiences', 'experienceController');
     Route::resource('educations', 'educationController');
     Route::resource('users', 'UserController');
@@ -86,8 +87,8 @@ Route::group(['middleware' => 'cors'], function(){
     Route::get('project/userinfo', 'ProjectController@prjWithUserInfo');
      //get projects with user info
     Route::get('project/joined/userinfo/{current_user_id}/', 'ProjectController@joinedProjectWithUserInfo');
-
-    
+    //get files by project
+    Route::get('file/project/{id}/', 'FileController@getFilesByProjectId'); 
     //get todos by user id
     Route::get('todo/user/{id}', 'TodoController@todoByUserId');
     //get todos by project id

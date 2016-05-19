@@ -88,6 +88,222 @@
 		});
 	});
 
+	app.factory("File", function ($resource) {
+		return $resource(base_url +"/files/:id/", {id: '@id'}, {
+			update: {
+				method: 'PUT'
+			}
+		});
+	});
+
+
+	app.controller('fileCtrl', function($scope, FileService, $filter, $timeout, toaster) {
+		$scope.files = FileService;
+
+		$scope.updateFile= function(file){
+			FileService.updateFile(file);
+			//console.log($scope.files);
+		},
+
+		// $scope.uploadProfileImages= function(){
+		// 	FileService.uploadProfileImages();
+		// },
+
+		// $scope.loadFiles= function(file){
+		// 	FileService.loadFiles();
+		// },
+
+		$scope.loadFilesOfProject=function(){
+			FileService.loadFilesOfProject();
+			//FileService.loadFilesInTeamWithNotificationInfo();
+		},
+
+
+	});
+
+
+
+
+	app.service('FileService', function ( File, $q, toaster, $resource) {
+
+
+
+		var self = {
+			'addFile': function (file) {
+				this.files.push(file);
+			},
+			'page': 1,
+			'hasMore': true,
+			'isLoading': false,
+			'isSaving': false,
+			'selectedFile': null,
+			'files': [],
+			'file': null,
+			'search': null,
+
+			'loadFiles':function(){
+				
+			},
+			
+			'loadMyFiles':function(){
+				
+			},
+
+			'loadFilesOfProject':function(){
+				var loadFilesOfProject = $resource(base_url + '/file/project/:id/', { id: project_id});
+				//console.log(filesInTeam.get());
+				//this.file=filesInTeam.get();
+				self.files=loadFilesOfProject.query();
+				self.files.$promise.then(function (result) {
+					self.files=result;//console.log(result);
+					self.isLoading = false;
+				});
+			},
+
+					// 'doSearch': function (search) {
+					// 	self.hasMore = true;
+					// 	self.page = 1;
+					// 	self.persons = [];
+					// 	self.search = search;
+					// 	self.loadContacts();
+					// },
+					// 'doOrder': function (order) {
+					// 	self.hasMore = true;
+					// 	self.page = 1;
+					// 	self.persons = [];
+					// 	self.ordering = order;
+					// 	self.loadContacts();
+					// },
+					'loadCurrentFile':function(fileId){
+						var curFile = $resource(base_url + '/files/:id/', { id: fileId});
+						//console.log(curFile.get());
+						//this.file=curFile.get();
+						temp=curFile.get(function (data){
+							self.file= data;
+						});
+						
+
+					},
+
+					'loadFiles': function () {
+						if (!self.isLoading) {
+							self.isLoading = true;
+
+							self.files = File.query();
+							self.files.$promise.then(function (result) {
+								self.files=result;
+								self.isLoading = false;
+
+							});
+						}
+
+					},
+
+
+					'uploadProfileImages': function(){
+			//$scope.file=FileService.uploadProfileImages();
+			//save uploaded image
+			var handleFileSelect = function(evt) {
+
+
+				var files = evt.target.files;
+				var file = files[0];
+				var imageName= file.name;
+
+
+				//if( file.size > 5000000){
+				 	//alert("File maggiore di 5 mb");
+
+
+				 	if (files && file) {
+
+				 		var reader = new FileReader();
+
+				 		reader.onload = function(readerEvt) {
+				 			var binaryString = readerEvt.target.result;
+				 			var binary = btoa(binaryString);
+			 	           //console.log(binary);
+			 	                 //var file=FileService.loadCurrentFile(current_file_id);
+
+			 	                 if(evt.target.id=='profile_image'){
+			 	                 	self.file.profile_image=imageName;
+			 	                 	self.file.upload=binary;
+			 	                 }else{
+			 	                 	
+			 	                 	self.file.background_image=imageName;
+			 	                 	self.file.upload=binary;
+			 	                 }
+
+			 	                 self.updateFile(self.file);
+			 	                 setTimeout(function(){  self.loadCurrentFile(self.file.id); }, 500);
+
+			 	             };
+
+			 	             reader.readAsBinaryString(file);
+			 	         }
+			 	//}
+			 };
+
+			 if (window.File && window.FileReader && window.FileList && window.Blob) {
+			 	document.getElementById('profile_image').addEventListener('change', handleFileSelect, false);
+			 	document.getElementById('background_image').addEventListener('change', handleFileSelect, false);
+			 } else {
+			 	alert('The File APIs are not fully supported in this browser.');
+			 }
+			},
+					// 'loadMore': function () {
+					// 	if (self.hasMore && !self.isLoading) {
+					// 		self.page += 1;
+					// 		self.loadContacts();
+					// 	}
+					// },
+					'updateFile': function (file) {
+
+						self.isSaving = true;
+						File.update({ id:file.id }, file).$promise.then(function() {
+							self.isSaving = false;
+							toaster.pop('success', 'File ' + file.name + ' Updated');
+						},function(error) {
+							toaster.pop('error', 'Plaese check your connection');
+						});
+					},
+					'removeFile': function (file) {
+						self.isDeleting = true;
+						file.$remove().then(function () {
+							self.isDeleting = false;
+							var index = self.files.indexOf(file);
+							self.files.splice(index, 1);
+							self.selectedfile = null;
+							toaster.pop('success', 'Deleted ' + file.name);
+						});
+					},
+					'createFile': function (file) {
+						var d = $q.defer();
+						self.isSaving = true;
+						File.save(file).$promise.then(function () {
+							self.isSaving = false;
+							self.selectedfile = null;
+							self.hasMore = true;
+							self.page = 1;
+							self.files = [];
+							self.loadFiles();
+							toaster.pop('success', 'Created ' + file.name);
+							d.resolve()
+						});
+						return d.promise;
+					}
+
+
+				};
+				return self;
+
+			});
+
+
+
+//***************************************************
+
+
 
 	app.service('NotificationService', function ( $timeout, ProjectService, UserService,  Notification, $q, toaster, $resource) {
 
@@ -1706,19 +1922,7 @@
 				{value: 'QA', text: 'Qatar'},
 				{value: 'MZ', text: 'Mozambique"'}
 			],
-			// var countries = [];
-			//         			$.each({"BD": "Bangladesh", "BE": "Belgium", "BF": "Burkina Faso", "BG": "Bulgaria", "BA": "Bosnia and Herzegovina", "BB": "Barbados", "WF": "Wallis and Futuna", "BL": "Saint Bartelemey", "BM": "Bermuda", "BN": "Brunei Darussalam", "BO": "Bolivia", "BH": "Bahrain", "BI": "Burundi", "BJ": "Benin", "BT": "Bhutan", "JM": "Jamaica", "BV": "Bouvet Island", "BW": "Botswana", "WS": "Samoa", "BR": "Brazil", "BS": "Bahamas", "JE": "Jersey", "BY": "Belarus", "O1": "Other Country", "LV": "Latvia", "RW": "Rwanda", "RS": "Serbia", "TL": "Timor-Leste", "RE": "Reunion", "LU": "Luxembourg", "TJ": "Tajikistan", "RO": "Romania", "PG": "Papua New Guinea", "GW": "Guinea-Bissau", "GU": "Guam", "GT": "Guatemala", "GS": "South Georgia and the South Sandwich Islands", "GR": "Greece", "GQ": "Equatorial Guinea", "GP": "Guadeloupe", "JP": "Japan", "GY": "Guyana", "GG": "Guernsey", "GF": "French Guiana", "GE": "Georgia", "GD": "Grenada", "GB": "United Kingdom", "GA": "Gabon", "SV": "El Salvador", "GN": "Guinea", "GM": "Gambia", "GL": "Greenland", "GI": "Gibraltar", "GH": "Ghana", "OM": "Oman", "TN": "Tunisia", "JO": "Jordan", "HR": "Croatia", "HT": "Haiti", "HU": "Hungary", "HK": "Hong Kong", "HN": "Honduras", "HM": "Heard Island and McDonald Islands", "VE": "Venezuela", "PR": "Puerto Rico", "PS": "Palestinian Territory", "PW": "Palau", "PT": "Portugal", "SJ": "Svalbard and Jan Mayen", "PY": "Paraguay", "IQ": "Iraq", "PA": "Panama", "PF": "French Polynesia", "BZ": "Belize", "PE": "Peru", "PK": "Pakistan", "PH": "Philippines", "PN": "Pitcairn", "TM": "Turkmenistan", "PL": "Poland", "PM": "Saint Pierre and Miquelon", "ZM": "Zambia", "EH": "Western Sahara", "RU": "Russian Federation", "EE": "Estonia", "EG": "Egypt", "TK": "Tokelau", "ZA": "South Africa", "EC": "Ecuador", "IT": "Italy", "VN": "Vietnam", "SB": "Solomon Islands", "EU": "Europe", "ET": "Ethiopia", "SO": "Somalia", "ZW": "Zimbabwe", "SA": "Saudi Arabia", "ES": "Spain", "ER": "Eritrea", "ME": "Montenegro", "MD": "Moldova, Republic of", "MG": "Madagascar", "MF": "Saint Martin", "MA": "Morocco", "MC": "Monaco", "UZ": "Uzbekistan", "MM": "Myanmar", "ML": "Mali", "MO": "Macao", "MN": "Mongolia", "MH": "Marshall Islands", "MK": "Macedonia", "MU": "Mauritius", "MT": "Malta", "MW": "Malawi", "MV": "Maldives", "MQ": "Martinique", "MP": "Northern Mariana Islands", "MS": "Montserrat", "MR": "Mauritania", "IM": "Isle of Man", "UG": "Uganda", "TZ": "Tanzania, United Republic of", "MY": "Malaysia", "MX": "Mexico", "IL": "Israel", "FR": "France", "IO": "British Indian Ocean Territory", "FX": "France, Metropolitan", "SH": "Saint Helena", "FI": "Finland", "FJ": "Fiji", "FK": "Falkland Islands (Malvinas)", "FM": "Micronesia, Federated States of", "FO": "Faroe Islands", "NI": "Nicaragua", "NL": "Netherlands", "NO": "Norway", "NA": "Namibia", "VU": "Vanuatu", "NC": "New Caledonia", "NE": "Niger", "NF": "Norfolk Island", "NG": "Nigeria", "NZ": "New Zealand", "NP": "Nepal", "NR": "Nauru", "NU": "Niue", "CK": "Cook Islands", "CI": "Cote d'Ivoire", "CH": "Switzerland", "CO": "Colombia", "CN": "China", "CM": "Cameroon", "CL": "Chile", "CC": "Cocos (Keeling) Islands", "CA": "Canada", "CG": "Congo", "CF": "Central African Republic", "CD": "Congo, The Democratic Republic of the", "CZ": "Czech Republic", "CY": "Cyprus", "CX": "Christmas Island", "CR": "Costa Rica", "CV": "Cape Verde", "CU": "Cuba", "SZ": "Swaziland", "SY": "Syrian Arab Republic", "KG": "Kyrgyzstan", "KE": "Kenya", "SR": "Suriname", "KI": "Kiribati", "KH": "Cambodia", "KN": "Saint Kitts and Nevis", "KM": "Comoros", "ST": "Sao Tome and Principe", "SK": "Slovakia", "KR": "Korea, Republic of", "SI": "Slovenia", "KP": "Korea, Democratic People's Republic of", "KW": "Kuwait", "SN": "Senegal", "SM": "San Marino", "SL": "Sierra Leone", "SC": "Seychelles", "KZ": "Kazakhstan", "KY": "Cayman Islands", "SG": "Singapore", "SE": "Sweden", "SD": "Sudan", "DO": "Dominican Republic", "DM": "Dominica", "DJ": "Djibouti", "DK": "Denmark", "VG": "Virgin Islands, British", "DE": "Germany", "YE": "Yemen", "DZ": "Algeria", "US": "United States", "UY": "Uruguay", "YT": "Mayotte", "UM": "United States Minor Outlying Islands", "LB": "Lebanon", "LC": "Saint Lucia", "LA": "Lao People's Democratic Republic", "TV": "Tuvalu", "TW": "Taiwan", "TT": "Trinidad and Tobago", "TR": "Turkey", "LK": "Sri Lanka", "LI": "Liechtenstein", "A1": "Anonymous Proxy", "TO": "Tonga", "LT": "Lithuania", "A2": "Satellite Provider", "LR": "Liberia", "LS": "Lesotho", "TH": "Thailand", "TF": "French Southern Territories", "TG": "Togo", "TD": "Chad", "TC": "Turks and Caicos Islands", "LY": "Libyan Arab Jamahiriya", "VA": "Holy See (Vatican City State)", "VC": "Saint Vincent and the Grenadines", "AE": "United Arab Emirates", "AD": "Andorra", "AG": "Antigua and Barbuda", "AF": "Afghanistan", "AI": "Anguilla", "VI": "Virgin Islands, U.S.", "IS": "Iceland", "IR": "Iran, Islamic Republic of", "AM": "Armenia", "AL": "Albania", "AO": "Angola", "AN": "Netherlands Antilles", "AQ": "Antarctica", "AP": "Asia/Pacific Region", "AS": "American Samoa", "AR": "Argentina", "AU": "Australia", "AT": "Austria", "AW": "Aruba", "IN": "India", "AX": "Aland Islands", "AZ": "Azerbaijan", "IE": "Ireland", "ID": "Indonesia", "UA": "Ukraine", "QA": "Qatar", "MZ": "Mozambique"}, function(k, v) {
-			//         				countries.push({id: k, text: v});
-			//         			}); 
-			//         			$('#country').editable({
-			//         					source: countries,
-			//         					select2: {
-			//         					width: 200,
-			//         					placeholder: 'Select country',
-			//         					allowClear: true
-			//         				} 
-			//         			});
-
+			
 			'loadUsersInTeam':function(){
 				var usersInTeam = $resource(base_url + '/user/inteam/:id/', { id: team_id});
 				//console.log(usersInTeam.get());
