@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\File;
+use Storage;
 
 class FileController extends Controller
 {
@@ -21,7 +22,7 @@ class FileController extends Controller
 
     public function getFilesByProjectId($id)
     {
-        return File::where('project_id', '=', $id )->get();
+        return File::where('project_id', '=', $id )->take(10)->orderBy('created_at', 'desc')->get(); 
     }
 
     
@@ -50,12 +51,11 @@ class FileController extends Controller
        $file->path=$request->path;
        $file->user_id  =$request->user_id;
        $file->project_id =$request->project_id;
-       $file->deleted=$request->deleted;
        //upload file
        $decode_file = base64_decode($request->upload);
-       $fileName=time().$request->background_image;
-       Storage::disk('projectfileupload')->put($fileName, $decode_prifile_image);
-       $user->background_image=$fileName;
+       $fileName=time()."_".$request->user_id."_".$request->project_id."_".$request->name;
+       Storage::disk('projectfileupload')->put($fileName, $decode_file);
+       $file->path=$fileName;
 
        $file->save();
        

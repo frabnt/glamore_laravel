@@ -419,7 +419,7 @@
 
 
 						<!-- RECENT FILES -->
-						<div class="widget">
+						<div  ng-controller="fileCtrl" ng-init='loadFilesOfProject(); uploadFile()' class="widget">
 							<div class="widget-header clearfix">
 								<h3><i class="icon ion-document"></i> <span>RECENT FILES</span></h3>
 								<div class="btn-group widget-header-toolbar">
@@ -427,15 +427,15 @@
 									<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
 								</div>
 							</div>
+
+							<input class='hide' id="upload_file" type="file" >
+
 							<div class="widget-content">
 
 								<ul  class="fa-ul recent-file-list bottom-30px">
-									<li><i class="fa-li fa fa-file-pdf-o"></i><a href="#">Project Requirements.pdf</a></li>
-									<li><i class="fa-li fa fa-file-word-o"></i><a href="#">[DRAFT] System Specifications.docx</a></li>
-									<li><i class="fa-li fa fa-file-picture-o"></i><a href="#">Marketing Content-v2.jpg</a></li>
-									<li><i class="fa-li fa fa-file-zip-o"></i><a href="#">All-files-backup.zip</a></li>
+									<li ng-repeat='file in files.files' onaftersave="updateFile(file)"><a href="{{ asset('/assets/upload/file/project')}}/<% file.path %>"><% file.name %></a></li>
 								</ul>
-								<button type="button" class="btn btn-sm btn-primary"><i class="icon ion-upload"></i> Upload</button> <a href="#" class="btn btn-sm btn-default"><i class="icon ion-folder"></i> See all files</a>
+								<button id="upload_file_button" type="button" class="btn btn-sm btn-primary"><i class="icon ion-upload"></i> Upload</button> <a href="#" class="btn btn-sm btn-default"><i class="icon ion-folder"></i> See all files</a>
 							</div>
 						</div>
 						<!-- END RECENT FILES -->
@@ -474,7 +474,10 @@
 
 			$( document ).ready(function() {
 
-
+				$('#upload_file_button').click(function() {
+					
+					$("#upload_file").click();
+				});	
 
 			});
 

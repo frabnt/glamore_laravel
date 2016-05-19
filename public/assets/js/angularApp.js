@@ -105,9 +105,9 @@
 			//console.log($scope.files);
 		},
 
-		// $scope.uploadProfileImages= function(){
-		// 	FileService.uploadProfileImages();
-		// },
+		$scope.uploadFile= function(){
+			FileService.uploadFile();
+		},
 
 		// $scope.loadFiles= function(file){
 		// 	FileService.loadFiles();
@@ -116,7 +116,7 @@
 		$scope.loadFilesOfProject=function(){
 			FileService.loadFilesOfProject();
 			//FileService.loadFilesInTeamWithNotificationInfo();
-		},
+		}
 
 
 	});
@@ -138,8 +138,9 @@
 			'isSaving': false,
 			'selectedFile': null,
 			'files': [],
-			'file': null,
+			'file': {},
 			'search': null,
+			'upload':null,
 
 			'loadFiles':function(){
 				
@@ -153,9 +154,10 @@
 				var loadFilesOfProject = $resource(base_url + '/file/project/:id/', { id: project_id});
 				//console.log(filesInTeam.get());
 				//this.file=filesInTeam.get();
+
 				self.files=loadFilesOfProject.query();
 				self.files.$promise.then(function (result) {
-					self.files=result;//console.log(result);
+					self.files=result;
 					self.isLoading = false;
 				});
 			},
@@ -200,8 +202,7 @@
 					},
 
 
-					'uploadProfileImages': function(){
-			//$scope.file=FileService.uploadProfileImages();
+					'uploadFile': function(){
 			//save uploaded image
 			var handleFileSelect = function(evt) {
 
@@ -210,9 +211,8 @@
 				var file = files[0];
 				var imageName= file.name;
 
-
-				//if( file.size > 5000000){
-				 	//alert("File maggiore di 5 mb");
+				if( file.size < 10000000){
+				 	
 
 
 				 	if (files && file) {
@@ -222,31 +222,33 @@
 				 		reader.onload = function(readerEvt) {
 				 			var binaryString = readerEvt.target.result;
 				 			var binary = btoa(binaryString);
-			 	           //console.log(binary);
 			 	                 //var file=FileService.loadCurrentFile(current_file_id);
 
-			 	                 if(evt.target.id=='profile_image'){
-			 	                 	self.file.profile_image=imageName;
-			 	                 	self.file.upload=binary;
-			 	                 }else{
+			 	                 if(evt.target.id=='upload_file'){
 			 	                 	
-			 	                 	self.file.background_image=imageName;
 			 	                 	self.file.upload=binary;
+			 	                 	self.file.name=imageName;
+			 	                 	self.file.user_id=current_user_id;
+			 	                 	self.file.project_id=project_id;
 			 	                 }
 
-			 	                 self.updateFile(self.file);
-			 	                 setTimeout(function(){  self.loadCurrentFile(self.file.id); }, 500);
+			 	                 self.createFile(self.file);
+			 	                 
+			 	                 setTimeout(function(){  
+			 	                 	self.loadFilesOfProject();
+			 	                 }, 500);
 
 			 	             };
 
 			 	             reader.readAsBinaryString(file);
 			 	         }
-			 	//}
+			 	}else{
+			 		alert("File maggiore di 10 mb");
+			 	}
 			 };
 
 			 if (window.File && window.FileReader && window.FileList && window.Blob) {
-			 	document.getElementById('profile_image').addEventListener('change', handleFileSelect, false);
-			 	document.getElementById('background_image').addEventListener('change', handleFileSelect, false);
+			 	document.getElementById('upload_file').addEventListener('change', handleFileSelect, false);
 			 } else {
 			 	alert('The File APIs are not fully supported in this browser.');
 			 }
@@ -281,12 +283,8 @@
 						var d = $q.defer();
 						self.isSaving = true;
 						File.save(file).$promise.then(function () {
-							self.isSaving = false;
-							self.selectedfile = null;
-							self.hasMore = true;
-							self.page = 1;
-							self.files = [];
-							self.loadFiles();
+							//self.files = [];
+							//self.loadFiles();
 							toaster.pop('success', 'Created ' + file.name);
 							d.resolve()
 						});
@@ -298,11 +296,6 @@
 				return self;
 
 			});
-
-
-
-//***************************************************
-
 
 
 	app.service('NotificationService', function ( $timeout, ProjectService, UserService,  Notification, $q, toaster, $resource) {
