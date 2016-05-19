@@ -23,7 +23,7 @@
 				</div>
 				<!-- END PRIMARY CONTENT HEADING -->
 
-				<div class="row">
+				<div ng-controller="userCtrl" ng-init='currentUser()' ng-show="!users.isLoading" class="row">
 					<!-- left side, main content -->
 					<div class="col-lg-12">
 						<div class="row">
@@ -53,6 +53,21 @@
 							<div class="col-md-5 col-md-offset-1">
 								<div class="knowledge">
 									<h3><a href="#"><i class="icon ion-ios-folder"></i> Roles<span class="pull-right">14</span></a></h3>
+									
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-5">
+								<div class="knowledge">
+									<h3><a href="#"><i class="icon ion-ios-folder"></i> Time Zone <span class="pull-right"></span></a></h3>
+									
+								</div>
+							</div>
+							<div class="col-md-5 col-md-offset-1">
+								<div class="knowledge">
+									<h3><a href="#"><i class="icon ion-ios-folder"></i> Other<span class="pull-right">14</span></a></h3>
 									
 								</div>
 							</div>

@@ -98,7 +98,7 @@
 								<ul>
 									<li>Birthday  <a href="#" editable-date="users.user.birthday_date" data-format="yy-mm-dd" data-viewformat="dd/mm/yyyy" onaftersave="users.updateUser(users.user)" ><% users.user.birthday_date  || "empty" | date:"dd/MM/yyyy" %></a></li>
 									<li>Marital status <a href="#" editable-select="users.user.marital_status" e-ng-options="s.value as s.text for s in users.marital_status"  onaftersave="users.updateUser(users.user)" ><% showMaritalStatus() %></a></li>
-									
+																		
 								</ul>
 							</div>
 							<div class="section">

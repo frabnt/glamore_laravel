@@ -213,7 +213,7 @@ Route::group(['middleware' => 'cors'], function(){
     
     // user profile 
     Route::get('/settings', function () {
-        return view('settings');
+        return view('user.settings');
     });
 
     Route::get('/user/{id}','UserController@showProfile');
