@@ -10709,3 +10709,22 @@ ul.project-activity-list > li .activity-item > i {
     margin-top: 45px;
   }
 }
+
+
+.label-default-bg {
+    background-color: #B8B8B8;
+    padding: .2em .4em .3em;
+    font-size: 90%;
+    line-height: 2;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .5em;
+}
+.div-center-align {
+    display: table;
+    margin: auto;
+    position: relative;
+    left: 8%;
+}

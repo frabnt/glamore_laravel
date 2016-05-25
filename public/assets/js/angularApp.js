@@ -932,8 +932,11 @@
 									var myProjects = $resource(base_url + '/project/userinfo/:u_id/', { u_id: current_user_id});
 									var query = myProjects.query();
 									query.$promise.then(function (result) {
-										if(result.length)
-											self.noProjects = false;
+										if(result.length) {
+                                            self.noProjects = false;
+                                            self.lastProject = result[result.length-1];
+                                            $('.chart').data('easyPieChart').update(self.lastProject.progress);
+                                        }
 									}, function(error) {
 										toaster.pop('error', 'Plaese check your connection '+ error.status);
 									});
@@ -2149,8 +2152,7 @@ app.controller('userProfileSummaryCtrl', function($scope, $resource, Education, 
 						}
 					}
 				});
-			
-				$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+percentage).progressbar();			
+				$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+percentage).progressbar();
 			});
 		}
 		
@@ -2162,7 +2164,7 @@ app.controller('userProfileSummaryCtrl', function($scope, $resource, Education, 
 				$scope.experienceLength = result.length;
 				if($scope.experienceLength > 0) {
 					$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+10).progressbar();
-				}
+                }
 			});
 		},
 		
@@ -2174,7 +2176,7 @@ app.controller('userProfileSummaryCtrl', function($scope, $resource, Education, 
 				$scope.industryLength = result.length;
 				if($scope.industryLength > 0) {
 					$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+10).progressbar();
-				}
+                }
 			});
 		},
 		
@@ -2186,10 +2188,30 @@ app.controller('userProfileSummaryCtrl', function($scope, $resource, Education, 
 				$scope.educationLength = result.length;
 				if($scope.educationLength > 0) {
 					$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+10).progressbar();
-				}
+                }
 			});
 		}
 
 	});
+
+    /*app.filter('splitFilter', function() {
+        return function(input) {
+            var result = "";
+            if(input) {
+                console.log("input: "+input);
+                var titleArray = input.split(' ');
+                angular.forEach(titleArray, function(value, key) {
+                   if(value.length > 10) {
+                       value = value.substring(0, 10)+"...";
+                       result += value + " ";
+                   } else {
+                       result += value + " ";
+                   }
+                });
+                console.log("result: "+result);
+                return input;
+            }
+        }
+    });*/
 
 
