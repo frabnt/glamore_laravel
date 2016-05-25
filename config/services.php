@@ -35,4 +35,20 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'laravel' => [
+           'client_id' =>  env('LARAVEL_CLIENT_ID'),
+           'client_secret' => env('LARAVEL_CLIENT_SECRET'),
+           'redirect' => env('LARAVEL_REDIRECT'),
+    ],
+    'facebook' => [
+        'client_id' =>  env('FACEBOOK_APP_ID'),
+        'client_secret' => env('FACEBOOK_APP_SECRET'),
+        'redirect' => env('FACEBOOK_REDIRECT'),
+    ],
+    'google' => [
+        'client_id' =>  env('GOOGLE_APP_ID'),
+        'client_secret' => env('GOOGLE_APP_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT'),
+    ]
+
 ];

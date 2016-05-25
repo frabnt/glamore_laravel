@@ -8,15 +8,25 @@
 		'mgcrea.ngStrap',
 		'toaster',
 		'ngAnimate',
-		'ui.select'
+		'ui.select',
+		'angular-cookies'
 		]);
 
 	app.run(function(editableOptions) {
 			  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+			  
 			});
 
-	app.config(function ($httpProvider, laddaProvider, $datepickerProvider, $interpolateProvider) {
-				//$httpProvider.defaults.headers.common['Authorization'] = 'Token 20002cd74d5ce124ae219e739e18956614aab490';
+	app.config(function ($httpProvider, laddaProvider, $datepickerProvider, $interpolateProvider, CookiesProvider ) {
+		
+		// if (Cookies.get('access_token')=='' || angular.isUndefined(Cookies.get('access_token'))){
+		// 	console.log("token scaduto");
+		// 	window.location.href = base_url+'/logout';
+		// }
+	
+
+	//$httpProvider.defaults.headers.common['Authorization'] = 'Bearer '+ Cookies.get('access_token');
+				// $httpProvider.defaults.headers.common['Authorization'] = 'Bearer '+ $cookies['access_token'];
 				//$resourceProvider.defaults.stripTrailingSlashes = false;
 				// $http.defaults.transformRequest.push(function (data) {
 				//             data.csrfToken = $browser.cookies().csrfToken;

@@ -122,7 +122,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="{{ url('/logout') }}">
+										<a id="logout" href="{{ url('/logout') }}">
 											<i class="icon ion-power"></i>
 											<span >Logout</span>
 										</a>
@@ -231,6 +231,7 @@
 			<script src={{ asset("assets/angular_lib/spin.js/spin.js" ) }}></script>
 			<script src={{ asset("assets/angular_lib/angular-spinner/angular-spinner.min.js" ) }}></script>
 			<script src={{ asset("assets/angular_lib/angular-auto-validate/dist/jcs-auto-validate.min.js" ) }}></script>
+			<script src={{ asset("assets/angular_lib/angular-cookie/angular-cookies.min.js" ) }}></script>
 			<script src={{ asset("assets/angular_lib/ladda/dist/ladda.min.js" ) }}></script>
 			<script src={{ asset("assets/angular_lib/angular-ladda/dist/angular-ladda.min.js" ) }}></script>
 			<script src={{ asset("assets/angular_lib/angular-strap/dist/angular-strap.min.js" ) }}></script>
@@ -246,6 +247,30 @@
 @show
 
 @yield('script')
+
+<script>
+
+	$( document ).ready(function() {
+
+		//remove access_token on logout
+		$("#logout").click(function() {
+
+			setCookie('access_token', "", 0);
+
+		});
+
+		
+		function setCookie(cname, cvalue, exdays) {
+			var d = new Date();
+			d.setTime(d.getTime() + (exdays*24*60*60*1000));
+			var expires = "expires="+d.toUTCString();
+			document.cookie = cname + "=" + cvalue + "; " + expires;
+		}
+
+
+	});
+
+</script>
 
 
 

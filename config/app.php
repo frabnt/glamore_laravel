@@ -158,6 +158,7 @@ return [
         Barryvdh\Cors\ServiceProvider::class,
         LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
         LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
         //Collective\Html\HtmlServiceProvider::class,
 
 
@@ -209,6 +210,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Authorizer' => LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 
