@@ -238,7 +238,9 @@
 			<script src={{ asset("assets/angular_lib/angular-strap/dist/angular-strap.tpl.min.js" ) }}></script>
 			<script src={{ asset("assets/angular_lib/AngularJS-Toaster/toaster.min.js" ) }}></script>
 			<script src={{ asset('assets/js/queen-common.js') }}></script>
-			<script src={{ asset('assets/js/plugins/moment/moment.min.js') }}></script>
+			<script src={{ asset('assets/js/plugins/moment/moment.js') }}></script>
+			<script src={{ asset('assets/js/plugins/moment/moment-timezone-with-data.js') }}></script>
+			<script src={{ asset('assets/js/plugins/jstz/jstz.min.js') }}></script>
 			<script>
 			window.current_user_id = {!! auth()->user()->id !!};
 			window.base_url={!! json_encode(url('/')) !!};
@@ -252,20 +254,15 @@
 
 	$( document ).ready(function() {
 
-		//remove access_token on logout
-		$("#logout").click(function() {
+			var tz = jstz.determine();
+			var tz_name=tz.name();
+			// console.log(tz.name());
+			
 
-			setCookie('access_token', "", 0);
-
-		});
-
-		
-		function setCookie(cname, cvalue, exdays) {
-			var d = new Date();
-			d.setTime(d.getTime() + (exdays*24*60*60*1000));
-			var expires = "expires="+d.toUTCString();
-			document.cookie = cname + "=" + cvalue + "; " + expires;
-		}
+		var currentDate = moment();
+		// console.log(currentDate);
+				
+		// console.log(currentDate.tz(tz_name).format());
 
 
 	});

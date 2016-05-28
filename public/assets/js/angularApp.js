@@ -350,8 +350,38 @@
 
 						angular.forEach(result, function (value, key) {
 				
-								value.created_at=moment(value.created_at,  "YYYYMMDD").fromNow();
-							
+								
+
+								//var created=moment(value.created_at).tz("Europe/Berlin").format();//.fromNow();
+								
+								// console.log(created);
+								// console.log(value.created_at);
+								//value.created_at=moment(created,  "YYYYMMDD").fromNow();
+
+
+								var utcDate = moment.utc(value.created_at);
+								var dateWithTimezone = utcDate.tz("Europe/Berlin").format();
+
+								value.created_at=moment(dateWithTimezone,  "YYYY-MM-DD HH:mm:ss").fromNow();
+
+
+
+
+
+								// var todate=moment.utc(value.created_at, "YYYY-MM-DD HH:mm:ss").toDate();
+								// value.created_at=moment(todate,  "YYYY-MM-DD HH:mm:ss").fromNow();
+								// console.log(todate);
+
+
+
+
+								// var localTime  = moment.utc(value.created_at).toDate();
+    				// 			localTime = moment(localTime).format('YYYY-MM-DD HH:mm:ss');
+    				// 			console.log(localTime);
+
+
+
+
 						});	
 
 						self.notifications=result;
