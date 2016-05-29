@@ -47,7 +47,7 @@ class AdminSettingController extends Controller
         $AdminSetting->currency_symbol=$request->currency_symbol;
         $AdminSetting->date_format=$request->date_format;
         $AdminSetting->time_format=$request->time_format;
-        $AdminSetting->1000s_separator=$request->1000s_separator;
+        $AdminSetting->thousand_separator=$request->thousand_separator;
         $AdminSetting->decimal_symbol=$request->decimal_symbol;
 
         $AdminSetting->save();
@@ -93,7 +93,7 @@ class AdminSettingController extends Controller
         $AdminSetting->currency_symbol=$request->currency_symbol;
         $AdminSetting->date_format=$request->date_format;
         $AdminSetting->time_format=$request->time_format;
-        $AdminSetting->1000s_separator=$request->1000s_separator;
+        $AdminSetting->thousand_separator=$request->thousand_separator;
         $AdminSetting->decimal_symbol=$request->decimal_symbol;
 
         $AdminSetting->save();

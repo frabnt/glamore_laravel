@@ -8,8 +8,20 @@ use App\Http\Requests;
 use App\User;
 use App\UserSetting;
 
+
 class UserSettingController extends Controller
 {
+
+    /**
+     * 
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getUserSettingByUserId($id)
+    {
+         return UserSetting::where('user_id', '=', $id )->get();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +50,7 @@ class UserSettingController extends Controller
      */
     public function store(Request $request)
     {
-        $UserSetting = UserSetting::find($id);
+        $UserSetting = new UserSetting;
 
         $UserSetting->user_id=$request->user_id;
         $UserSetting->timezone=$request->timezone;
@@ -47,7 +59,7 @@ class UserSettingController extends Controller
         $UserSetting->user_type=$request->user_type;
         $UserSetting->date_format=$request->date_format;
         $UserSetting->time_format=$request->time_format;
-        $UserSetting->1000s_separator=$request->1000s_separator;
+        $UserSetting->thousand_separator=$request->thousand_separator;
         $UserSetting->decimal_symbol=$request->decimal_symbol;
         $UserSetting->send_notification_by_mail=$request->send_notification_by_mail;
         $UserSetting->first_access=$request->first_access;
@@ -65,7 +77,7 @@ class UserSettingController extends Controller
      */
     public function show($id)
     {
-        //
+        return UserSetting::find($id);
     }
 
     /**
@@ -92,15 +104,15 @@ class UserSettingController extends Controller
 
         $UserSetting->user_id=$request->user_id;
         $UserSetting->timezone=$request->timezone;
-        $UserSetting->currency_name=$request->currency_name;
-        $UserSetting->currency_symbol=$request->currency_symbol;
-        $UserSetting->user_type=$request->user_type;
-        $UserSetting->date_format=$request->date_format;
-        $UserSetting->time_format=$request->time_format;
-        $UserSetting->1000s_separator=$request->1000s_separator;
-        $UserSetting->decimal_symbol=$request->decimal_symbol;
-        $UserSetting->send_notification_by_mail=$request->send_notification_by_mail;
-        $UserSetting->first_access=$request->first_access;
+        // $UserSetting->currency_name=$request->currency_name;
+        // $UserSetting->currency_symbol=$request->currency_symbol;
+        // $UserSetting->user_type=$request->user_type;
+        // $UserSetting->date_format=$request->date_format;
+        // $UserSetting->time_format=$request->time_format;
+        // $UserSetting->thousand_separator=$request->thousand_separator;
+        // $UserSetting->decimal_symbol=$request->decimal_symbol;
+        // $UserSetting->send_notification_by_mail=$request->send_notification_by_mail;
+        // $UserSetting->first_access=$request->first_access;
 
         $UserSetting->save();
     }

@@ -8,6 +8,7 @@ use App\UserTeamRole;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Notification;
+use App\UserSetting;
 
 class UserController extends Controller
 {

@@ -44,6 +44,8 @@ Route::post('oauth/access_token', function() {
         Route::resource('notifications', 'NotificationController');
         Route::resource('roles', 'RoleController');
         Route::resource('permission', 'PermissionController');
+        Route::resource('user_setting', 'UserSettingController');
+        Route::resource('admin_setting', 'AdminSettingController');
         //get educations by user id
         Route::get('education/user/{id}', 'educationController@eduByUserId');
         //get experiences by user id
@@ -86,6 +88,8 @@ Route::post('oauth/access_token', function() {
         Route::get('/notification/user/{user_id}', 'NotificationController@showNotificationByUserId');
         Route::get('/notification/project/{project_id}', 'NotificationController@showNotificationByProjectId');
         Route::get('/notification/project/delete/{user_id}/{project_id}', 'NotificationController@deleteNotificationsByUsrIdAndByProjectId');
+        //get user settingsby user id
+        Route::get('/user/setting/{user_id}/', 'UserSettingController@getUserSettingByUserId');
     });
 
 
@@ -105,7 +109,7 @@ Route::post('oauth/access_token', function() {
 |
 */
 
-Route::group(['middleware' => ['web', 'auth']], function () {
+Route::group(['middleware' => ['cors','web', 'auth']], function () {
 
     //Resources
     Route::resource('industries', 'industryController');
@@ -119,6 +123,8 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::resource('notifications', 'NotificationController');
     Route::resource('roles', 'RoleController');
     Route::resource('permission', 'PermissionController');
+    Route::resource('user_setting', 'UserSettingController');
+    Route::resource('admin_setting', 'AdminSettingController');
     //get educations by user id
     Route::get('education/user/{id}', 'educationController@eduByUserId');
     //get experiences by user id
@@ -161,6 +167,9 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/notification/user/{user_id}', 'NotificationController@showNotificationByUserId');
     Route::get('/notification/project/{project_id}', 'NotificationController@showNotificationByProjectId');
     Route::get('/notification/project/delete/{user_id}/{project_id}', 'NotificationController@deleteNotificationsByUsrIdAndByProjectId');
+    //get user settingsby user id
+    Route::get('/user/setting/{user_id}/', 'UserSettingController@getUserSettingByUserId');
+
 
 
     

@@ -21,7 +21,7 @@ class CreateUserSettingsTable extends Migration
             $table->text('user_type')->nullable();
             $table->text('date_format')->nullable();
             $table->text('time_format')->nullable();
-            $table->text('1000s_separator')->nullable();
+            $table->text('thousand_separator')->nullable();
             $table->text('decimal_symbol')->nullable();
             $table->boolean('send_notification_by_mail')->default(0);
             $table->boolean('first_access')->default(0);

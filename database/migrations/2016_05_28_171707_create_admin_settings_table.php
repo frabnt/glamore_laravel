@@ -19,7 +19,7 @@ class CreateAdminSettingsTable extends Migration
             $table->text('currency_symbol')->nullable();
             $table->text('date_format')->nullable();
             $table->text('time_format')->nullable();
-            $table->text('1000s_separator')->nullable();
+            $table->text('thousand_separator')->nullable();
             $table->text('decimal_symbol')->nullable();
             $table->timestamps();
         });
