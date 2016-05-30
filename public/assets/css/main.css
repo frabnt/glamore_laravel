@@ -10710,7 +10710,6 @@ ul.project-activity-list > li .activity-item > i {
   }
 }
 
-
 .label-default-bg {
     background-color: #B8B8B8;
     padding: .2em .4em .3em;
@@ -10727,4 +10726,60 @@ ul.project-activity-list > li .activity-item > i {
     margin: auto;
     position: relative;
     left: 8%;
+}
+
+.project-animated-list.ng-enter {
+    -webkit-transition: 1s;
+    transition: 1s;
+    margin-right: 50%;
+}
+
+.project-animated-list.ng-enter-active {
+    margin-right: 0;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+.project-animated-list p {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    -ms-word-break: break-all;
+    /* This is the dangerous one in WebKit, as it breaks things wherever */
+    word-break: break-all;
+    /* Instead use this non-standard one: */
+    word-break: break-word;
+
+    /* Adds a hyphen where the word breaks, if supported (No Blink) */
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+#new-project-label {
+    margin-right: 60px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+#new-project-btn {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+@media screen and (max-width: 1300px) {
+    #new-project-btn {
+        float: none !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #new-project-btn {
+        font-size: 80%;
+    }
+    #new-project-btn i {
+        font-size: small;
+    }
 }

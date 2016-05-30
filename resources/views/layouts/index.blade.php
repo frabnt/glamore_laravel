@@ -54,42 +54,51 @@
                 display: table-cell;
                 vertical-align: middle;
                 width: 70%;
-                padding-left: 1.5em;
+                padding-left: 1em;
                 padding-right: 3em;
-                font-size: 80%;
+                font-size: 80%
             }
-            .chart-info-head {
-              margin: 0;
-            }
-            #content_right_head span{
-                display:inline-block;
-                width:180px;
-                white-space: nowrap;
-                overflow:hidden !important;
-                text-overflow: ellipsis;
+
+            .chart-info h5 {
+                overflow-wrap: break-word;
+                word-wrap: break-word;
+
+                -ms-word-break: break-all;
+                /* This is the dangerous one in WebKit, as it breaks things wherever */
+                word-break: break-all;
+                /* Instead use this non-standard one: */
+                word-break: break-word;
+
+                /* Adds a hyphen where the word breaks, if supported (No Blink) */
+                -ms-hyphens: auto;
+                -moz-hyphens: auto;
+                -webkit-hyphens: auto;
+                hyphens: auto;
+                margin: 0;
             }
 
             @media screen and (max-width: 360px) {
                 .chart-info {
-                    padding-left: 0.5em;
+                    padding-left: 1.5em;
                 }
 
                 .chart-container {
-                    padding-left: 6%;
+                    padding-left: 2%;
                 }
                 .div-center-align {
                     position: relative;
-                    left: -6%;
+                    left: -4%;
                 }
             }
 
             @media screen and (max-width: 300px) {
-                .chart-container {
-                    padding-left: -0%;
-                }
                 .div-center-align {
                     position: relative;
-                    left: -10%;
+                    left: -9%;
+                    width: 70%;
+                }
+                .chart-info {
+                    padding-left: 0.5em;
                 }
             }
 
@@ -309,44 +318,9 @@
                             </div>
                             <!-- end new project modal -->
                         </div>
-
-                        <!-- last-project widget -->
-                        <div class="row" ng-show="!projects.noProjects">
-                            <div class="col-md-4 col-md-offset-4">
-                                <div class="widget">
-                                    <div class="widget-header clearfix">
-                                        <h3><i class="icon ion-pin"></i> <span>LAST PROJECT PROGRESS</span></h3>
-                                        <div class="btn-group widget-header-toolbar">
-                                            <a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
-                                            <a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="widget-content">
-                                        <div class="div-center-align">
-                                            <div class="chart-container">
-                                                <span class="chart" data-percent="<% projects.lastProject.progress %>">
-                                                    <span class="percent"></span>
-                                                </span>
-                                            </div>
-                                            <div class="chart-info">
-                                                <h5 class="chart-info-head">
-                                                    <span class="label-default-bg">Title:</span> <a href="{{URL::to('project-detail/')}}/<% projects.lastProject.id %>"><span class="bold"><% projects.lastProject.title | limitTo:20 %><% projects.lastProject.title.length > 20 ? '...' : '' %></span></a>
-                                                </h5>
-                                                <br>
-                                                <h5 class="chart-info-head"><span class="label-default-bg">Duration:</span> <span class="bold"><% projects.lastProject.duration_day %></span></h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="widget-footer">
-                                        <a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}">All Projects</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end last-project widget -->
 				
                         <!-- new-project widget -->
-                        <div class="row"  ng-show="projects.noProjects">
+                        <div class="row" ng-show="projects.noProjects">
                             <div class="col-md-8">
                                 <div class="widget">
                                     <div class="widget-header clearfix">
@@ -357,9 +331,9 @@
                                         </div>
                                     </div>
                                     <div class="widget-content">
-                                        <div class="project-list-subheading" style="margin-bottom: 0px; margin-top: 5px;">
-                                            <p class="lead">You have <span class="label label-warning">no projects</span> yet. Start by creating <span class="label label-success">a new one!</span></p>
-                                            <button type="button" data-toggle="modal" data-target="#new-project-modal" class="btn btn-primary pull-right btn-new-project" ><i class="icon ion-compose"></i> CREATE NEW PROJECT</button>
+                                        <div class="project-list-subheading">
+                                            <p id="new-project-label" class="lead">You have <span class="label label-warning">no projects</span> yet. Start by creating <span class="label label-success">a new one!</span></p>
+                                            <button id="new-project-btn" type="button" data-toggle="modal" data-target="#new-project-modal" class="btn btn-primary" ><i class="icon ion-compose"></i> CREATE NEW PROJECT</button>
                                         </div>
                                     </div>
                                 </div>
@@ -397,26 +371,31 @@
                         <!-- </div> -->
 
                         <!-- TASK PROGRESS -->
-                        <div class="col-md-4">
+                        <div class="col-md-4" ng-controller="projectCtrl">
                             <div class="widget">
                                 <div class="widget-header clearfix">
-                                    <h3><i class="icon ion-android-list"></i> <span>TASK PROGRESS</span></h3>
+                                    <h3><i class="icon ion-android-list"></i> <span>PROJECTS PROGRESS</span></h3>
                                     <div class="btn-group widget-header-toolbar">
                                         <a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
                                         <a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
                                     </div>
                                 </div>
-                                <div class="widget-content">
+                                <div class="widget-content" ng-cloak>
                                     <ul class="task-list list-unstyled">
-                                        <li>
-                                            <p>Updating Users Settings <span class="label label-danger">23%</span></p>
+
+                                        <p ng-if="projects.noProjects">No projects to show</p>
+
+                                        <li class="project-animated-list" ng-repeat="project in projects.myProjects | limitTo:6">
+                                            <p><a href="{{URL::to('project-detail/')}}/<% project.id %>"><% project.title | limitTo:30 %><% project.title.length > 24 ? '...' : '' %>&emsp;&emsp;&emsp;&nbsp;</a><span ng-class="{'label-danger': project.progress < 30, 'label-warning': (project.progress > 30 && project.progress < 60), 'label-success': project.progress > 60}" class="label"><% project.progress || "0" %> %</span></p>
                                             <div class="progress progress-xs">
-                                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="23" aria-valuemin="0" aria-valuemax="100" style="width:23%">
-                                                    <span class="sr-only">23% Complete</span>
+                                                <div ng-class="{'progress-bar-danger': project.progress < 30, 'progress-bar-warning': (project.progress > 30 && project.progress < 60), 'progress-bar-success': project.progress > 60}" class="progress-bar" role="progressbar" aria-valuenow="23" aria-valuemin="0" aria-valuemax="100" style="width:<% project.progress %>%">
+                                                    <!-- <span class="sr-only">23% Complete</span> -->
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
+										
+										
+                                        <!-- <li>
                                             <p>Load &amp; Stress Test <span class="label label-success">80%</span></p>
                                             <div class="progress progress-xs">
                                                 <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
@@ -455,19 +434,20 @@
                                                     <span class="sr-only">35% Complete</span>
                                                 </div>
                                             </div>
-                                        </li>
+                                        </li> -->
                                     </ul>
-                                    <br/>
-                                    <a href="#">View all tasks</a> <span class="badge">15</span>
+                                </div>
+                                <div class="widget-footer">
+                                    <a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}">View All Projects</a> <span ng-cloak class="badge"><% projects.myProjects.length %></span>
                                 </div>
                             </div>
                             <!-- END TASK PROGRESS -->
                         </div>
 
-                        <div class="col-md-4">
-                            <div class="widget">
+                        <!-- <div class="col-md-4">
+                            <div class="widget"> -->
                                 <!-- Employee-of-the-month widget -->
-                                <div class="widget-header clearfix">
+                                <!-- <div class="widget-header clearfix">
                                     <h3><i class="icon ion-person"></i> <span>EMPLOYEE OF THE MONTH</span></h3>
                                     <div class="btn-group widget-header-toolbar">
                                         <a href="#" title="Refresh" class="btn btn-link"><i class="icon ion-ios-refresh-empty"></i></a>
@@ -487,54 +467,90 @@
                                     </ul>
                                     <hr class="dashed" />
                                     <button type="button" class="btn btn-large btn-primary"><i class="icon ion-thumbsup"></i> Appreciate!</button>
-                                </div>
+                                </div> -->
                                 <!-- end Employee-of-the-month widget -->
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="widget">
-                                <!-- profile-summary widget -->
-                                <div class="widget-header clearfix">
-                                    <h3><i class="icon ion-person"></i> <span>YOUR PROFILE SUMMARY</span></h3>
-                                    <div class="btn-group widget-header-toolbar">
-                                        <a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
-                                        <a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
-                                    </div>
-                                </div>
-                                <div class="widget-content">
-                                    <div class="completeness-meter">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-info completeness-progress" data-transitiongoal="0"></div>
-                                        </div>
-                                        <div ng-controller="userProfileSummaryCtrl" ng-cloak ng-init="loadCurrentUser(); loadExperiences(); loadEducations(); loadIndustries()" ng-show="user.name">
-                                            <p class="complete-info">Your profile is <strong id = "pbar-percentage" class="completeness-percentage">0%</strong> complete, please provide information below:</p>
-                                            <p>First Name: <span ng-class="{'bold': user.name, 'italic-underline-bold': !user.name}"><% user.name || "empty"  %></span></p>
-                                            <p>Last Name: <span ng-class="{'bold': user.last_name, 'italic-underline-bold': !user.last_name}"><% user.last_name  || "empty"%></span></p>
-                                            <p>Birthdate: <span ng-class="{'bold': user.birthday_date, 'italic-underline-bold': !user.birthday_date}"><% user.birthday_date || "empty" | date:"dd/MM/yyyy" %></span></p>
-                                            <p>Sex: <span ng-class="{'bold': user.sex, 'italic-underline-bold': !user.sex}"><% user.sex  || "empty" %></span></p>
-                                            <p>Phone: <span ng-class="{'bold': user.phone_number, 'italic-underline-bold': !user.phone_number}"><% user.phone_number  || "empty" %></span></p>
-                                            <p>Education: <span ng-class="{'bold': educationLength, 'italic-underline-bold': !educationLength}">( <% educationLength || "empty" %> )</span></p>
-                                            <p>Experience: <span ng-class="{'bold': experienceLength, 'italic-underline-bold': !experienceLength}">( <% experienceLength || "empty" %> )</span></p>
-                                            <p>Industry: <span ng-class="{'bold': industryLength, 'italic-underline-bold': !industryLength}">( <% industryLength || "empty" %> )</span></p>
-                                            <!--<p class="complete-info">Your profile is <strong class="completeness-percentage">60%</strong> complete, please provide information below:</p>
-                                            <p><a href="#" id="complete-phone-number" data-type="text" data-pk="1" data-title="Phone number">Add your phone number</a></p>
-                                            <p>
-                                                <a href="#" id="complete-sex" data-type="select" data-pk="1" data-value="" data-prepend="Select sex" data-title="Select sex"></a>
-                                            </p>
-                                            <p><a href="#" id="complete-birthdate" data-type="combodate" data-value="1984-05-23" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select date of birth">Select date of birth</a></p>
-                                            <p><a href="#" id="complete-nickname" data-type="text" data-pk="1" data-title="Nickname" data-placeholder="your nickname">Add your nickname</a></p> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="widget-footer">
-                                    <a href="{{URL::to('user')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:0}}">Complete your profile</a>
-                                </div>
-                                <!-- end profile-summary widget -->
-                            </div>
-                        </div>
+                            <!-- </div>
+                        </div> -->
+
+                        <div ng-controller="projectCtrl" ng-show="!projects.noProjects" ng-cloak>
+                            <!-- last-project widget -->
+							<!-- <div class="row" > -->
+								<div class="col-md-4"  >
+									<div class="widget">
+										<div class="widget-header clearfix">
+											<h3><i class="icon ion-pin"></i> <span>LAST PROJECT PROGRESS</span></h3>
+											<div class="btn-group widget-header-toolbar">
+												<a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
+												<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
+											</div>
+										</div>
+										<div class="widget-content div-center-align">
+                                            <div class="chart-container">
+                                                <span class="chart" data-percent="<% projects.lastProject.progress %>">
+                                                    <span class="percent"></span>
+                                                </span>
+                                            </div>
+                                            <div class="chart-info">
+                                                <h5>
+                                                    <span class="label-default-bg">Title:</span> <a href="{{URL::to('project-detail/')}}/<% projects.lastProject.id %>"><span class="bold"><% projects.lastProject.title | limitTo:24 %><% projects.lastProject.title.length > 24 ? '...' : '' %></span></a>
+                                                </h5>
+                                                <br>
+                                                <h5><span class="label-default-bg">Duration:</span> <span class="bold"><% projects.lastProject.duration_day %></span></h5>
+                                            </div>
+										</div>
+										<div class="widget-footer">
+											<a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}">All Projects</a>
+										</div>
+									</div>
+								</div>
+							<!-- </div> -->
+							<!-- end last-project widget -->
+						</div>
+
+						<div class="col-md-4">
+							<div class="widget">
+								<!-- profile-summary widget -->
+								<div class="widget-header clearfix">
+									<h3><i class="icon ion-person"></i> <span>YOUR PROFILE SUMMARY</span></h3>
+									<div class="btn-group widget-header-toolbar">
+										<a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
+										<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
+									</div>
+								</div>
+								<div class="widget-content">
+									<div class="completeness-meter">
+										<div class="progress progress-xs">
+											<div class="progress-bar progress-bar-info completeness-progress" data-transitiongoal="0"></div>
+										</div>
+										<div ng-controller="userProfileSummaryCtrl" ng-init="loadCurrentUser(); loadExperiences(); loadEducations(); loadIndustries()" ng-show="user.name" ng-cloak>
+											<p class="complete-info">Your profile is <strong id = "pbar-percentage" class="completeness-percentage">0%</strong> complete, please provide information below:</p>
+											<p>First Name: <span ng-class="{'bold': user.name, 'italic-underline-bold': !user.name}"><% user.name || "empty"  %></span></p>
+											<p>Last Name: <span ng-class="{'bold': user.last_name, 'italic-underline-bold': !user.last_name}"><% user.last_name  || "empty"%></span></p>
+											<p>Birthdate: <span ng-class="{'bold': user.birthday_date, 'italic-underline-bold': !user.birthday_date}"><% user.birthday_date || "empty" | date:"dd/MM/yyyy" %></span></p>
+											<p>Sex: <span ng-class="{'bold': user.sex, 'italic-underline-bold': !user.sex}"><% user.sex  || "empty" %></span></p>
+											<p>Phone: <span ng-class="{'bold': user.phone_number, 'italic-underline-bold': !user.phone_number}"><% user.phone_number  || "empty" %></span></p>
+											<p>Education: <span ng-class="{'bold': educationLength, 'italic-underline-bold': !educationLength}">( <% educationLength || "empty" %> )</span></p>
+											<p>Experience: <span ng-class="{'bold': experienceLength, 'italic-underline-bold': !experienceLength}">( <% experienceLength || "empty" %> )</span></p>
+											<p>Industry: <span ng-class="{'bold': industryLength, 'italic-underline-bold': !industryLength}">( <% industryLength || "empty" %> )</span></p>
+											<!--<p class="complete-info">Your profile is <strong class="completeness-percentage">60%</strong> complete, please provide information below:</p>
+											<p><a href="#" id="complete-phone-number" data-type="text" data-pk="1" data-title="Phone number">Add your phone number</a></p>
+											<p>
+												<a href="#" id="complete-sex" data-type="select" data-pk="1" data-value="" data-prepend="Select sex" data-title="Select sex"></a>
+											</p>
+											<p><a href="#" id="complete-birthdate" data-type="combodate" data-value="1984-05-23" data-format="YYYY-MM-DD" data-viewformat="DD/MM/YYYY" data-template="D / MMM / YYYY" data-pk="1" data-title="Select date of birth">Select date of birth</a></p>
+											<p><a href="#" id="complete-nickname" data-type="text" data-pk="1" data-title="Nickname" data-placeholder="your nickname">Add your nickname</a></p> -->
+										</div>
+									</div>
+								</div>
+								<div class="widget-footer">
+									<a href="{{URL::to('user')}}/{{ isset(Auth::user()->id) ? Auth::user()->id:0}}">Complete your profile</a>
+								</div>
+								<!-- end profile-summary widget -->
+							</div>
+						</div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
+                    <!-- <div class="row">
+                        <div class="col-md-4"> -->
                             <!-- NEWS FEED WIDGET -->
                             <!-- <div class="widget widget-live-feed">
                                 <div class="widget-header clearfix">
@@ -599,8 +615,8 @@
                                 </div>
                             </div> -->
                             <!-- END NEWS FEED WIDGET -->
-                        </div>
-                    </div>
+                        <!-- </div>
+                    </div> -->
 			    </div>
 			</div>
 		@stop

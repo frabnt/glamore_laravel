@@ -928,14 +928,17 @@
 							},
 							
 							'hasProjects': function () {
-									self.noProjects = true;
+
 									var myProjects = $resource(base_url + '/project/userinfo/:u_id/', { u_id: current_user_id});
 									var query = myProjects.query();
 									query.$promise.then(function (result) {
 										if(result.length) {
+											self.myProjects = result;
                                             self.noProjects = false;
                                             self.lastProject = result[result.length-1];
                                             $('.chart').data('easyPieChart').update(self.lastProject.progress);
+                                        } else {
+                                            self.noProjects = true;
                                         }
 									}, function(error) {
 										toaster.pop('error', 'Plaese check your connection '+ error.status);
@@ -2140,7 +2143,7 @@ app.controller('userProfileSummaryCtrl', function($scope, $resource, Education, 
 		$scope.loadCurrentUser = function(){
 			var curUser = $resource(base_url + '/users/:id/', { id: current_user_id});
 			temp = curUser.get(function (data){			
-				data.birthday_date = new Date(data.birthday_date);
+				//data.birthday_date = new Date(data.birthday_date);
 
 				$scope.user = data;
 				var dbElements = ['name', 'last_name', 'birthday_date', 'about_me', 'sex', 'marital_status', 'phone_number'];
