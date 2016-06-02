@@ -141,7 +141,7 @@
 		});
 
 
-	app.service('UserSettingService', function ( $timeout, UserSetting, $q, toaster, $resource) {
+	app.service('UserSettingService', function ( $timeout, UserSetting, $q, toaster, $resource, $rootScope) {
 
 
 
@@ -274,6 +274,7 @@
 				self.settings.$promise.then(function (result) {
 
 					self.settings=result[0];  
+					$rootScope.UserSettings=self.settings;
 
 					// se la user preference non esiste la creo inserendo il time zone corrente
 					if(angular.isUndefined(self.settings)){
@@ -534,7 +535,7 @@
 			});
 
 
-	app.service('NotificationService', function ( $timeout, ProjectService, UserService,  Notification, $q, toaster, $resource) {
+	app.service('NotificationService', function ( $timeout, ProjectService, UserService,  Notification, $q, toaster, $resource, $rootScope) {
 
 
 
@@ -584,9 +585,9 @@
 								// console.log(value.created_at);
 								//value.created_at=moment(created,  "YYYYMMDD").fromNow();
 
-
+								//convert from utc to user timezoen
 								var utcDate = moment.utc(value.created_at);
-								var dateWithTimezone = utcDate.tz("Europe/Berlin").format();
+								var dateWithTimezone = utcDate.tz($rootScope.UserSettings.timezone).format();
 
 								value.created_at=moment(dateWithTimezone,  "YYYY-MM-DD HH:mm:ss").fromNow();
 
