@@ -111,8 +111,8 @@ class UserSettingController extends Controller
         // $UserSetting->time_format=$request->time_format;
         // $UserSetting->thousand_separator=$request->thousand_separator;
         // $UserSetting->decimal_symbol=$request->decimal_symbol;
-        // $UserSetting->send_notification_by_mail=$request->send_notification_by_mail;
-        // $UserSetting->first_access=$request->first_access;
+        $UserSetting->send_notification_by_mail=$request->send_notification_by_mail;
+        $UserSetting->first_access=$request->first_access;
 
         $UserSetting->save();
     }

@@ -49,6 +49,13 @@
 
 		<body class="fixed-top-active dashboard">
 			<toaster-container ></toaster-container >
+			
+
+			<div ng-controller="usersSettingCtrl" ng-show="!usersSettings.isLoading"  class="row">
+
+				</div>
+				
+
 			<!-- WRAPPER -->
 			<div class="wrapper">
 				<!-- TOP NAV BAR -->
@@ -202,8 +209,6 @@
 
 				<!-- Content -->
 				@yield('content')
-
-
 
 				<!-- END COLUMN RIGHT -->
 			</div>

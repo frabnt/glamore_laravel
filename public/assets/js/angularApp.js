@@ -125,17 +125,18 @@
 			  return ($scope.usersSetting.settings.timezone && selected.length) ? selected[0].text : 'Choose your timezone';
 			};
 		}, 2000);
+		
 
 		$scope.updateUserSetting= function(usersSetting){
 			UserSettingService.updateUserSetting(usersSetting);
 		}
 
 
-		// $scope.createTodo= function(usersSetting){
-		// 	//console.log(usersSetting);
-		// 	TodoService.createTodo(usersSetting);
+		$scope.createUserSetting= function(usersSetting){
+			//console.log(usersSetting);
+			UserSettingService.createUserSetting(usersSetting);
 			
-		// },
+		}
 
 		});
 
@@ -150,118 +151,118 @@
 			'settings': null,
 			'timezone':[
 			{value: '', text: 'Choose your timezone'},
-			{value:'Pacific/Midway'      , text:'Midway Island'},
-			{value:'US/Samoa'            , text:'Samoa'},
-			{value:'US/Hawaii'           , text:'Hawaii'},
-			{value:'US/Alaska'           , text:'Alaska'},
-			{value:'US/Pacific'          , text:'Pacific Time (US &amp; Canada)'},
-			{value:'America/Tijuana'     , text:'Tijuana'},
-			{value:'US/Arizona'          , text:'Arizona'},
-			{value:'US/Mountain'         , text:'Mountain Time (US &amp; Canada)'},
-			{value:'America/Chihuahua'   , text:'Chihuahua'},
-			{value:'America/Mazatlan'    , text:'Mazatlan'},
-			{value:'America/Mexico_City' , text:'Mexico City'},
-			{value:'America/Monterrey'   , text:'Monterrey'},
-			{value:'Canada/Saskatchewan' , text:'Saskatchewan'},
-			{value:'US/Central'          , text:'Central Time (US &amp; Canada)'},
-			{value:'US/Eastern'          , text:'Eastern Time (US &amp; Canada)'},
-			{value:'US/East-Indiana'     , text:'Indiana (East)'},
-			{value:'America/Bogota'      , text:'Bogota'},
-			{value:'America/Lima'        , text:'Lima'},
-			{value:'America/Caracas'     , text:'Caracas'},
-			{value:'Canada/Atlantic'     , text:'Atlantic Time (Canada)'},
-			{value:'America/La_Paz'      , text:'La Paz'},
-			{value:'America/Santiago'    , text:'Santiago'},
-			{value:'Canada/Newfoundland' , text:'Newfoundland'},
-			{value:'America/Buenos_Aires', text:'Buenos Aires'},
-			{value:'Greenland'           , text:'Greenland'},
-			{value:'Atlantic/Stanley'    , text:'Stanley'},
-			{value:'Atlantic/Azores'     , text:'Azores'},
-			{value:'Atlantic/Cape_Verde' , text:'Cape Verde Is.'},
-			{value:'Africa/Casablanca'   , text:'Casablanca'},
-			{value:'Europe/Dublin'       , text:'Dublin'},
-			{value:'Europe/Lisbon'       , text:'Lisbon'},
-			{value:'Europe/London'       , text:'London'},
-			{value:'Africa/Monrovia'     , text:'Monrovia'},
-			{value:'Europe/Amsterdam'    , text:'Amsterdam'},
-			{value:'Europe/Belgrade'     , text:'Belgrade'},
-			{value:'Europe/Berlin'       , text:'Berlin'},
-			{value:'Europe/Bratislava'   , text:'Bratislava'},
-			{value:'Europe/Brussels'     , text:'Brussels'},
-			{value:'Europe/Budapest'     , text:'Budapest'},
-			{value:'Europe/Copenhagen'   , text:'Copenhagen'},
-			{value:'Europe/Ljubljana'    , text:'Ljubljana'},
-			{value:'Europe/Madrid'       , text:'Madrid'},
-			{value:'Europe/Paris'        , text:'Paris'},
-			{value:'Europe/Prague'       , text:'Prague'},
-			{value:'Europe/Rome'         , text:'Rome'},
-			{value:'Europe/Sarajevo'     , text:'Sarajevo'},
-			{value:'Europe/Skopje'       , text:'Skopje'},
-			{value:'Europe/Stockholm'    , text:'Stockholm'},
-			{value:'Europe/Vienna'       , text:'Vienna'},
-			{value:'Europe/Warsaw'       , text:'Warsaw'},
-			{value:'Europe/Zagreb'       , text:'Zagreb'},
-			{value:'Europe/Athens'       , text:'Athens'},
-			{value:'Europe/Bucharest'    , text:'Bucharest'},
-			{value:'Africa/Cairo'        , text:'Cairo'},
-			{value:'Africa/Harare'       , text:'Harare'},
-			{value:'Europe/Helsinki'     , text:'Helsinki'},
-			{value:'Europe/Istanbul'     , text:'Istanbul'},
-			{value:'Asia/Jerusalem'      , text:'Jerusalem'},
-			{value:'Europe/Kiev'         , text:'Kyiv'},
-			{value:'Europe/Minsk'        , text:'Minsk'},
-			{value:'Europe/Riga'         , text:'Riga'},
-			{value:'Europe/Sofia'        , text:'Sofia'},
-			{value:'Europe/Tallinn'      , text:'Tallinn'},
-			{value:'Europe/Vilnius'      , text:'Vilnius'},
-			{value:'Asia/Baghdad'        , text:'Baghdad'},
-			{value:'Asia/Kuwait'         , text:'Kuwait'},
-			{value:'Africa/Nairobi'      , text:'Nairobi'},
-			{value:'Asia/Riyadh'         , text:'Riyadh'},
-			{value:'Europe/Moscow'       , text:'Moscow'},
-			{value:'Asia/Tehran'         , text:'Tehran'},
-			{value:'Asia/Baku'           , text:'Baku'},
-			{value:'Europe/Volgograd'    , text:'Volgograd'},
-			{value:'Asia/Muscat'         , text:'Muscat'},
-			{value:'Asia/Tbilisi'        , text:'Tbilisi'},
-			{value:'Asia/Yerevan'        , text:'Yerevan'},
-			{value:'Asia/Kabul'          , text:'Kabul'},
-			{value:'Asia/Karachi'        , text:'Karachi'},
-			{value:'Asia/Tashkent'       , text:'Tashkent'},
-			{value:'Asia/Kolkata'        , text:'Kolkata'},
-			{value:'Asia/Kathmandu'      , text:'Kathmandu'},
-			{value:'Asia/Yekaterinburg'  , text:'Ekaterinburg'},
-			{value:'Asia/Almaty'         , text:'Almaty'},
-			{value:'Asia/Dhaka'          , text:'Dhaka'},
-			{value:'Asia/Novosibirsk'    , text:'Novosibirsk'},
-			{value:'Asia/Bangkok'        , text:'Bangkok'},
-			{value:'Asia/Jakarta'        , text:'Jakarta'},
-			{value:'Asia/Krasnoyarsk'    , text:'Krasnoyarsk'},
-			{value:'Asia/Chongqing'      , text:'Chongqing'},
-			{value:'Asia/Hong_Kong'      , text:'Hong Kong'},
-			{value:'Asia/Kuala_Lumpur'   , text:'Kuala Lumpur'},
-			{value:'Australia/Perth'     , text:'Perth'},
-			{value:'Asia/Singapore'      , text:'Singapore'},
-			{value:'Asia/Taipei'         , text:'Taipei'},
-			{value:'Asia/Ulaanbaatar'    , text:'Ulaan Bataar'},
-			{value:'Asia/Urumqi'         , text:'Urumqi'},
-			{value:'Asia/Irkutsk'        , text:'Irkutsk'},
-			{value:'Asia/Seoul'          , text:'Seoul'},
-			{value:'Asia/Tokyo'          , text:'Tokyo'},
-			{value:'Australia/Adelaide'  , text:'Adelaide'},
-			{value:'Australia/Darwin'    , text:'Darwin'},
-			{value:'Asia/Yakutsk'        , text:'Yakutsk'},
-			{value:'Australia/Brisbane'  , text:'Brisbane'},
-			{value:'Australia/Canberra'  , text:'Canberra'},
-			{value:'Pacific/Guam'        , text:'Guam'},
-			{value:'Australia/Hobart'    , text:'Hobart'},
-			{value:'Australia/Melbourne' , text:'Melbourne'},
-			{value:'Pacific/Port_Moresby', text:'Port Moresby'},
-			{value:'Australia/Sydney'    , text:'Sydney'},
-			{value:'Asia/Vladivostok'    , text:'Vladivostok'},
-			{value:'Asia/Magadan'        , text:'Magadan'},
-			{value:'Pacific/Auckland'    , text:'Auckland'},
-			{value:'Pacific/Fiji'        , text:'Fiji"'},
+			{value:'Pacific/Midway'      , text:'Pacific/Midway'      },
+			{value:'US/Samoa'            , text:'US/Samoa'            },
+			{value:'US/Hawaii'           , text:'US/Hawaii'           },
+			{value:'US/Alaska'           , text:'US/Alaska'           },
+			{value:'US/Pacific'          , text:'US/Pacific'          },
+			{value:'America/Tijuana'     , text:'America/Tijuana'     },
+			{value:'US/Arizona'          , text:'US/Arizona'          },
+			{value:'US/Mountain'         , text:'US/Mountain'         },
+			{value:'America/Chihuahua'   , text:'America/Chihuahua'   },
+			{value:'America/Mazatlan'    , text:'America/Mazatlan'    },
+			{value:'America/Mexico_City' , text:'America/Mexico_City' },
+			{value:'America/Monterrey'   , text:'America/Monterrey'   },
+			{value:'Canada/Saskatchewan' , text:'Canada/Saskatchewan' },
+			{value:'US/Central'          , text:'US/Central'          },
+			{value:'US/Eastern'          , text:'US/Eastern'          },
+			{value:'US/East-Indiana'     , text:'US/East-Indiana'     },
+			{value:'America/Bogota'      , text:'America/Bogota'      },
+			{value:'America/Lima'        , text:'America/Lima'        },
+			{value:'America/Caracas'     , text:'America/Caracas'     },
+			{value:'Canada/Atlantic'     , text:'Canada/Atlantic'     },
+			{value:'America/La_Paz'      , text:'America/La_Paz'      },
+			{value:'America/Santiago'    , text:'America/Santiago'    },
+			{value:'Canada/Newfoundland' , text:'Canada/Newfoundland' },
+			{value:'America/Buenos_Aires', text:'America/Buenos_Aires'},
+			{value:'Greenland'           , text:'Greenland'           },
+			{value:'Atlantic/Stanley'    , text:'Atlantic/Stanley'    },
+			{value:'Atlantic/Azores'     , text:'Atlantic/Azores'     },
+			{value:'Atlantic/Cape_Verde' , text:'Atlantic/Cape_Verde' },
+			{value:'Africa/Casablanca'   , text:'Africa/Casablanca'   },
+			{value:'Europe/Dublin'       , text:'Europe/Dublin'       },
+			{value:'Europe/Lisbon'       , text:'Europe/Lisbon'       },
+			{value:'Europe/London'       , text:'Europe/London'       },
+			{value:'Africa/Monrovia'     , text:'Africa/Monrovia'     },
+			{value:'Europe/Amsterdam'    , text:'Europe/Amsterdam'    },
+			{value:'Europe/Belgrade'     , text:'Europe/Belgrade'     },
+			{value:'Europe/Berlin'       , text:'Europe/Berlin'       },
+			{value:'Europe/Bratislava'   , text:'Europe/Bratislava'   },
+			{value:'Europe/Brussels'     , text:'Europe/Brussels'     },
+			{value:'Europe/Budapest'     , text:'Europe/Budapest'     },
+			{value:'Europe/Copenhagen'   , text:'Europe/Copenhagen'   },
+			{value:'Europe/Ljubljana'    , text:'Europe/Ljubljana'    },
+			{value:'Europe/Madrid'       , text:'Europe/Madrid'       },
+			{value:'Europe/Paris'        , text:'Europe/Paris'        },
+			{value:'Europe/Prague'       , text:'Europe/Prague'       },
+			{value:'Europe/Rome'         , text:'Europe/Rome'         },
+			{value:'Europe/Sarajevo'     , text:'Europe/Sarajevo'     },
+			{value:'Europe/Skopje'       , text:'Europe/Skopje'       },
+			{value:'Europe/Stockholm'    , text:'Europe/Stockholm'    },
+			{value:'Europe/Vienna'       , text:'Europe/Vienna'       },
+			{value:'Europe/Warsaw'       , text:'Europe/Warsaw'       },
+			{value:'Europe/Zagreb'       , text:'Europe/Zagreb'       },
+			{value:'Europe/Athens'       , text:'Europe/Athens'       },
+			{value:'Europe/Bucharest'    , text:'Europe/Bucharest'    },
+			{value:'Africa/Cairo'        , text:'Africa/Cairo'        },
+			{value:'Africa/Harare'       , text:'Africa/Harare'       },
+			{value:'Europe/Helsinki'     , text:'Europe/Helsinki'     },
+			{value:'Europe/Istanbul'     , text:'Europe/Istanbul'     },
+			{value:'Asia/Jerusalem'      , text:'Asia/Jerusalem'      },
+			{value:'Europe/Kiev'         , text:'Europe/Kiev'         },
+			{value:'Europe/Minsk'        , text:'Europe/Minsk'        },
+			{value:'Europe/Riga'         , text:'Europe/Riga'         },
+			{value:'Europe/Sofia'        , text:'Europe/Sofia'        },
+			{value:'Europe/Tallinn'      , text:'Europe/Tallinn'      },
+			{value:'Europe/Vilnius'      , text:'Europe/Vilnius'      },
+			{value:'Asia/Baghdad'        , text:'Asia/Baghdad'        },
+			{value:'Asia/Kuwait'         , text:'Asia/Kuwait'         },
+			{value:'Africa/Nairobi'      , text:'Africa/Nairobi'      },
+			{value:'Asia/Riyadh'         , text:'Asia/Riyadh'         },
+			{value:'Europe/Moscow'       , text:'Europe/Moscow'       },
+			{value:'Asia/Tehran'         , text:'Asia/Tehran'         },
+			{value:'Asia/Baku'           , text:'Asia/Baku'           },
+			{value:'Europe/Volgograd'    , text:'Europe/Volgograd'    },
+			{value:'Asia/Muscat'         , text:'Asia/Muscat'         },
+			{value:'Asia/Tbilisi'        , text:'Asia/Tbilisi'        },
+			{value:'Asia/Yerevan'        , text:'Asia/Yerevan'        },
+			{value:'Asia/Kabul'          , text:'Asia/Kabul'          },
+			{value:'Asia/Karachi'        , text:'Asia/Karachi'        },
+			{value:'Asia/Tashkent'       , text:'Asia/Tashkent'       },
+			{value:'Asia/Kolkata'        , text:'Asia/Kolkata'        },
+			{value:'Asia/Kathmandu'      , text:'Asia/Kathmandu'      },
+			{value:'Asia/Yekaterinburg'  , text:'Asia/Yekaterinburg'  },
+			{value:'Asia/Almaty'         , text:'Asia/Almaty'         },
+			{value:'Asia/Dhaka'          , text:'Asia/Dhaka'          },
+			{value:'Asia/Novosibirsk'    , text:'Asia/Novosibirsk'    },
+			{value:'Asia/Bangkok'        , text:'Asia/Bangkok'        },
+			{value:'Asia/Jakarta'        , text:'Asia/Jakarta'        },
+			{value:'Asia/Krasnoyarsk'    , text:'Asia/Krasnoyarsk'    },
+			{value:'Asia/Chongqing'      , text:'Asia/Chongqing'      },
+			{value:'Asia/Hong_Kong'      , text:'Asia/Hong_Kong'      },
+			{value:'Asia/Kuala_Lumpur'   , text:'Asia/Kuala_Lumpur'   },
+			{value:'Australia/Perth'     , text:'Australia/Perth'     },
+			{value:'Asia/Singapore'      , text:'Asia/Singapore'      },
+			{value:'Asia/Taipei'         , text:'Asia/Taipei'         },
+			{value:'Asia/Ulaanbaatar'    , text:'Asia/Ulaanbaatar'    },
+			{value:'Asia/Urumqi'         , text:'Asia/Urumqi'         },
+			{value:'Asia/Irkutsk'        , text:'Asia/Irkutsk'        },
+			{value:'Asia/Seoul'          , text:'Asia/Seoul'          },
+			{value:'Asia/Tokyo'          , text:'Asia/Tokyo'          },
+			{value:'Australia/Adelaide'  , text:'Australia/Adelaide'  },
+			{value:'Australia/Darwin'    , text:'Australia/Darwin'    },
+			{value:'Asia/Yakutsk'        , text:'Asia/Yakutsk'        },
+			{value:'Australia/Brisbane'  , text:'Australia/Brisbane'  },
+			{value:'Australia/Canberra'  , text:'Australia/Canberra'  },
+			{value:'Pacific/Guam'        , text:'Pacific/Guam'        },
+			{value:'Australia/Hobart'    , text:'Australia/Hobart'    },
+			{value:'Australia/Melbourne' , text:'Australia/Melbourne' },
+			{value:'Pacific/Port_Moresby', text:'Pacific/Port_Moresby'},
+			{value:'Australia/Sydney'    , text:'Australia/Sydney'    },
+			{value:'Asia/Vladivostok'    , text:'Asia/Vladivostok'    },
+			{value:'Asia/Magadan'        , text:'Asia/Magadan'        },
+			{value:'Pacific/Auckland'    , text:'Pacific/Auckland'    },
+			{value:'Pacific/Fiji'        , text:'Pacific/Fiji'        },
 			],
 
 			'loadUserSetting': function () {
@@ -271,65 +272,65 @@
 
 				self.settings=loadUserSetting.query();
 				self.settings.$promise.then(function (result) {
-					self.settings=result[0];
+
+					self.settings=result[0];  
+
+					// se la user preference non esiste la creo inserendo il time zone corrente
+					if(angular.isUndefined(self.settings)){
+
+						var tz = jstz.determine();
+						var settings={user_id:current_user_id, timezone:tz.name()};
+						self.createUserSetting(settings);
+
+					}
 					self.isLoading = false;
 				});
 
 
-				// var allNotifications=self.notifications.length;
-				// 					if(allNotifications >0){
+				},
 
-			},
+				'updateUserSetting': function (settings) {
+					console.log(settings);
+					self.isSaving = true;
 
-			'updateUserSetting': function (settings) {
-
-				self.isSaving = true;
-
-				UserSetting.update({ id:settings.id }, settings).$promise.then(function() {
-					self.isSaving = false;
-					toaster.pop('success', 'Settings Updated');
-				},function(error) {
-					toaster.pop('error', 'Plaese check your connection');
-				});
-							},
+					UserSetting.update({ id:settings.id }, settings).$promise.then(function() {
+						self.isSaving = false;
+						toaster.pop('success', 'Settings Updated');
+					},function(error) {
+						toaster.pop('error', 'Plaese check your connection');
+					});
+				},
 
 
-			// 				'createTodo': function (usersSetting) {
-			// 					$('#close_usersSetting_dialog').click();
-			// 									//console.log(usersSetting);
-			// 									var d = $q.defer();
-			// 									self.isSaving = true;
-			// 									usersSetting.user_id=current_user_id;
-			// 									usersSetting.project_id=project_id;
-			// 									usersSetting.done=0;
+				'createUserSetting': function (settings) {
 
-			// 									//usersSetting.date_start=   moment(usersSetting.date_start).format('YYYY-MM-DD');
-			// 									//usersSetting.date_end= moment(usersSetting.date_end).format('YYYY-MM-DD');
+					var d = $q.defer();
+					self.isSaving = true;
+					settings.user_id=current_user_id;
+					settings.send_notification_by_mail=0;
+					settings.first_access=1;
 
+					UserSetting.save(settings).$promise.then(function () {
+						toaster.pop('success', 'User Settings Created ');
+						self.settings = [];
+						self.loadUserSetting();
 
-			// 									Todo.save(usersSetting).$promise.then(function () {
-			// 										toaster.pop('success', 'Created ' + usersSetting.title);
-			// 										self.usersSettings = [];
-			// 										//self.loadTodo();
-			// 										self.loadMyTodosOfCurrentProject(user_id, project_id);
+						d.resolve();
 
-			// 										self.usersSetting= null;
-			// 										d.resolve();
-
-			// 										self.isSaving = false;
-			// 									},function(error) {
-			// 										toaster.pop('error', 'Plaese check your connection '+ error.status);
-			// 										console.log(error);
-			// 									});
-			// 									return d.promise;
-			// 								}
+						self.isSaving = false;
+					},function(error) {
+						toaster.pop('error', 'Plaese check your connection '+ error.status);
+						console.log(error);
+					});
+					return d.promise;
+				}
 
 
-										};
-										self.loadUserSetting();
-										return self;
+			};
+			self.loadUserSetting();
+			return self;
 
-									});
+		});
 
 
 	app.controller('fileCtrl', function($scope, FileService, $filter, $timeout, toaster) {
