@@ -259,17 +259,7 @@
 
 	$( document ).ready(function() {
 
-			var tz = jstz.determine();
-			var tz_name=tz.name();
-			// console.log(tz.name());
-			
-
-		var currentDate = moment();
-		// console.log(currentDate);
-				
-		// console.log(currentDate.tz(tz_name).format());
-
-
+	
 	});
 
 </script>

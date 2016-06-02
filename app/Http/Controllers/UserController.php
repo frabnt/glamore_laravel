@@ -204,10 +204,10 @@ where project_id=".$project_id.")
         //Save image uploaded
         if($request->upload!=''){
     
-
+ 
             if($request->profile_image != $user->profile_image){
                 $decode_prifile_image = base64_decode($request->upload);
-                $fileName=time().$request->profile_image;
+                $fileName=time()."_".$id."_".$request->profile_image;
                 Storage::disk('userimgupload')->put($fileName, $decode_prifile_image);
             
                 //$file = \Config::get('upload.upload').$fileName;
@@ -217,7 +217,7 @@ where project_id=".$project_id.")
     
             if($request->background_image != $user->background_image){
                 $decode_prifile_image = base64_decode($request->upload);
-                $fileName=time().$request->background_image;
+                $fileName=time()."_".$id."_".$request->background_image;
                 Storage::disk('userimgupload')->put($fileName, $decode_prifile_image);
                 $user->background_image=$fileName;
             }

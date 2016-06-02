@@ -1159,6 +1159,57 @@
 
 								
 							},
+									'uploadProfileImages': function(){
+							//$scope.user=UserService.uploadProfileImages();
+							//save uploaded image
+							var handleFileSelect = function(evt) {
+
+
+								var files = evt.target.files;
+								var file = files[0];
+								var imageName= file.name;
+
+
+								//if( file.size > 5000000){
+								 	//alert("File maggiore di 5 mb");
+
+
+								 	if (files && file) {
+
+								 		var reader = new FileReader();
+
+								 		reader.onload = function(readerEvt) {
+								 			var binaryString = readerEvt.target.result;
+								 			var binary = btoa(binaryString);
+							 	           //console.log(binary);
+							 	                 //var user=UserService.loadCurrentUser(current_user_id);
+
+							 	                 if(evt.target.id=='profile_image'){
+							 	                 	self.project.profile_image=imageName;
+							 	                 	self.project.upload=binary;
+							 	                 }else{
+							 	                 	
+							 	                 	self.project.background_image=imageName;
+							 	                 	self.project.upload=binary;
+							 	                 }
+
+							 	                 self.updateProject(self.project);
+							 	                 setTimeout(function(){  self.loadCurrentProject(self.project.id); }, 500);
+
+							 	             };
+
+							 	             reader.readAsBinaryString(file);
+							 	         }
+							 	//}
+							 };
+
+							 if (window.File && window.FileReader && window.FileList && window.Blob) {
+							 	document.getElementById('profile_image').addEventListener('change', handleFileSelect, false);
+							 	document.getElementById('background_image').addEventListener('change', handleFileSelect, false);
+							 } else {
+							 	alert('The File APIs are not fully supported in this browser.');
+							 }
+							},
 
 
 							'loadMyProject': function (user_id) {
@@ -1342,7 +1393,7 @@
 				var selected = $filter('filter')($scope.projects.priority, {value: $scope.projects.project.priority});
 				return ($scope.projects.project.priority && selected.length) ? selected[0].text : 'Choose...';
 			};
-		}, 1000);
+		}, 2000);
 
 
 
@@ -1389,7 +1440,13 @@
 
 		$scope.currentProject = function() {
 			ProjectService.loadCurrentProject(project_id);
+		},
+
+		$scope.uploadProfileImages = function() {
+			ProjectService.uploadProfileImages();
 		}
+
+		
 
 
 	});
@@ -2353,7 +2410,6 @@
 					// 	}
 					// },
 					'updateUser': function (user) {
-						console.log(user);
 						self.isSaving = true;
 						User.update({ id:user.id }, user).$promise.then(function() {
 							self.isSaving = false;

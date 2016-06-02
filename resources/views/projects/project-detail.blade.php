@@ -10,7 +10,7 @@
 <!-- COLUMN RIGHT -->
 
 <style>
-	.avatar{
+	.team_image{
 
 		width: 40px;
 		height: 40px;
@@ -20,23 +20,89 @@
 	}
 </style>
 
-<div ng-controller="projectCtrl" ng-init='currentProject()' ng-show="!projects.isLoading" id="col-right" class="col-right ">
+<div ng-controller="projectCtrl" ng-init='currentProject(); uploadProfileImages()' ng-show="!projects.isLoading" id="col-right" class="col-right ">
 	<div class="container-fluid primary-content">
 		<!-- PRIMARY CONTENT HEADING -->
 		<div class="primary-content-heading clearfix">
-			<h2><a href="#" editable-text="projects.project.title"  onaftersave="projects.updateProject(projects.project)" ><% projects.project.title|| "empty" %></a></h2>
-			<ul class="breadcrumb pull-left">
-				<li><i class="icon ion-home"></i><a href="#">Home</a></li>
-				<li><a href="#">Pages</a></li>
-				<li class="active">Project Detail</li>
-			</ul>
 
 
-		
+			                    <style>
+			                    .profile-header-background{
+			                    height: 210px;
+			                    background: url("{{ asset('/assets/upload/img/project')}}/<% projects.project.background_image || 'city.jpg' %>");
+			                    background-repeat:no-repeat;
+			                    background-size: cover;
+			                    }
+			                    .profile-info-left{
+			                    	height: 170px;
+			                    }
+			                    .profile-header-background:hover{
+			                        opacity: 0.3; 
+			                    }
+
+			                    .avatar:hover{
+			                        opacity: 0.1;
+			                    }
+
+			                    .hide{
+			                        display: none;
+			                    }
+
+			                    .show{
+			                        display: block;
+			                    }
+
+
+
+			                    .avatar{
+			                        height: 150px;
+			                        width:150px;
+			                    }
+
+			                    #imgprofile.ion-ios-reverse-camera {
+			                        font-size: 90px;
+			                        color: white;
+			                        margin-bottom: -144px;
+			                        
+			                    }
+
+			                    #imgbackground.ion-ios-reverse-camera {
+			                        font-size: 190px;
+			                        margin-left: 50%;
+			                        color: white;
+			                    }
+			                    </style>
+
+			                    <div class="profile-header-background">
+			                        <div id="imgbackground" class="ion-ios-reverse-camera hide"></div>
+			                    </div>
+
+			                    <input class='hide' id="profile_image" type="file" >
+			            		<input class='hide' id="background_image" type="file"   name="background_image" > 
+
+			                    <div class="row">
+			                        <div class="col-md-4">
+			                            
+			                            <div   class="profile-info-left">
+			                                <div  class="text-center">
+			                    <!--                            <div class="spinner"
+			                                                     ng-show="user.isLoading" >
+			                                                    <span us-spinner="{radius:8, width:5, length: 3, lines:9}" ></span >
+
+			                                                    <p >Loading...</p >
+			                                                    </div > -->
+			                             <div id="imgprofile" class="ion-ios-reverse-camera hide"></div>
+			                             <img   ng-src="{{ asset('/assets/upload/img/project')}}/<% projects.project.profile_image || 'avatar.png' %>" alt="Avatar" class="avatar" />
+			                             <h2><a href="#" editable-text="projects.project.title"  onaftersave="projects.updateProject(projects.project)" ><% projects.project.title|| "empty" %></a></h2>
+			                                                </div>
+			    </div>
+			</div>
+			
+	
 
 		</div>
 		<!-- END PRIMARY CONTENT HEADING -->
-		<div class="row">
+	
 			<div class="col-md-8">
 
 				<div  class="project-section general-info">
@@ -62,7 +128,7 @@
 									<ul class="list-inline team-list">
 										
 										<li ng-repeat='user in users.usersInTeam'>
-											<img ng-src="{{ asset('/assets/upload/img/user')}}/<% user.profile_image || 'avatar.png' %>" class="img-circle avatar" alt="Avatar" />
+											<img ng-src="{{ asset('/assets/upload/img/user')}}/<% user.profile_image || 'avatar.png' %>" class="img-circle team_image" alt="Avatar" />
 											<p><a href="#"><strong><% user.name %> <% user.last_name %></strong></a></p>
 											<p ng-if="user.user_id==projects.project.user_id" class="text-muted">Project Owner</p>
 											<p ng-if="!(user.user_id==projects.project.user_id)" class="text-muted">Partecipant</p>
@@ -473,6 +539,51 @@
 		<script>
 
 			$( document ).ready(function() {
+
+				//Change profile image
+
+
+
+				 	//abilito e disabilito la visualizzazione dell'icona image change sul background profile
+				 	$('.profile-header-background').mouseleave(function() {
+
+				 		$('#imgbackground').addClass("hide");
+				 		$('#imgbackground').removeClass("show");
+					});	
+
+					$('.profile-header-background').mouseenter(function() {
+
+				 		$('#imgbackground').addClass("show");
+				 		$('#imgbackground').removeClass("hide");
+					});	
+
+
+
+
+				    //abilito e disabilito la visualizzazione dell'icona image change sul profile
+					$('.avatar').mouseleave(function() {
+
+				 		$('#imgprofile').addClass("hide");
+				 		$('#imgprofile').removeClass("show");
+				 		});	
+
+					$('.avatar').mouseenter(function() {
+
+				 		$('#imgprofile').addClass("show");
+				 		$('#imgprofile').removeClass("hide");
+					});	
+					
+
+
+				 	$('.profile-header-background').click(function() {
+				 		
+				 		$("#background_image").click();
+				 	});	
+
+				 	$('.avatar').click(function() {
+				 		$("#profile_image").click();
+				 		
+				 	});	
 
 				$('#upload_file_button').click(function() {
 					

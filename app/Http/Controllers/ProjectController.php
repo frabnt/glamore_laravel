@@ -10,6 +10,7 @@ use App\User;
 use App\Team;
 use Config;
 use App\UserTeamRole;
+use Storage;
 class ProjectController extends Controller
 {
     /**
@@ -285,6 +286,29 @@ SELECT team_id FROM glamore_dev.user_team_role where user_id =".$current_user_id
         $project->status=$request->status;
         $project->team_id=$request->team_id;
         $project->user_id=$request->user_id;
+
+        //Save image uploaded
+        if($request->upload!=''){
+        
+
+
+            if($request->profile_image != $project->profile_image){
+                $decode_prifile_image = base64_decode($request->upload);
+                $fileName=time()."_".$request->user_id."_".$id."_".$request->profile_image;
+                Storage::disk('projectimgupload')->put($fileName, $decode_prifile_image);
+                //$file = \Config::get('upload.upload').$fileName;
+                //file_put_contents($file, $decode_prifile_image);
+                $project->profile_image=$fileName;
+            }
+        
+            if($request->background_image != $project->background_image){
+                $decode_prifile_image = base64_decode($request->upload);
+                $fileName=time()."_".$request->user_id."_".$id."_".$request->background_image;
+                Storage::disk('projectimgupload')->put($fileName, $decode_prifile_image);
+                $project->background_image=$fileName;
+            }
+
+        }
 
         
         $project->save();
