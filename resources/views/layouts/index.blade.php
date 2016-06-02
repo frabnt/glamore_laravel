@@ -15,10 +15,6 @@
 
             }
 
-            .icon {
-                margin-right: 5px;
-            }
-
             .chart {
                 position: relative;
                 display: inline-block;
