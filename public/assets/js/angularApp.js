@@ -696,14 +696,16 @@
 
 				
 				$.confirm({
-					text: notification.description,
+					content: notification.body,
 					title: notification.title,
 					confirmButton: "Accept",
 					cancelButton: "Reject",
 					post: false,
-					confirmButtonClass: "btn-danger",
-					cancelButtonClass: "btn-default",
+					confirmButtonClass: "btn-success",
+					cancelButtonClass: "btn-danger",
 					dialogClass: "modal-dialog modal-lg",
+					backgroundDismiss: false,
+					theme: 'black',
 					confirm: function() {
 
 				// set as accepted
@@ -912,7 +914,7 @@
 
 
 								$.confirm({
-									text: "Are you sure you want to delete that todo?",
+									content: "Are you sure you want to delete that todo?",
 									title: "Confirmation required",
 									confirmButton: "Yes I am",
 									cancelButton: "No",
@@ -920,6 +922,7 @@
 									confirmButtonClass: "btn-danger",
 									cancelButtonClass: "btn-default",
 									dialogClass: "modal-dialog modal-lg",
+									theme: 'black',
 									confirm: function() {
 										self.isDeleting = true;
 										Todo.remove({ id:todo.id }).$promise.then(function () {
@@ -1250,7 +1253,7 @@
 
 
 								$.confirm({
-									text: "Are you sure you want to delete that project?",
+									content: "Are you sure you want to delete that project?",
 									title: "Confirmation required",
 									confirmButton: "Yes I am",
 									cancelButton: "No",
@@ -1258,6 +1261,7 @@
 									confirmButtonClass: "btn-danger",
 									cancelButtonClass: "btn-default",
 									dialogClass: "modal-dialog modal-lg",
+									theme: 'black',
 									confirm: function() {
 										self.isDeleting = true;
 										Project.remove({ id:project.id }).$promise.then(function () {
@@ -1556,7 +1560,7 @@
 
 
 				$.confirm({
-					text: "Are you sure you want to delete that experience?",
+					content: "Are you sure you want to delete that experience?",
 					title: "Confirmation required",
 					confirmButton: "Yes I am",
 					cancelButton: "No",
@@ -1564,6 +1568,7 @@
 					confirmButtonClass: "btn-danger",
 					cancelButtonClass: "btn-default",
 					dialogClass: "modal-dialog modal-lg",
+					theme: 'black',
 					confirm: function() {
 						self.isDeleting = true;
 						Experience.remove({ id:experience.id }).$promise.then(function () {
@@ -1712,7 +1717,7 @@
 
 
 				$.confirm({
-					text: "Are you sure you want to delete that education?",
+					content: "Are you sure you want to delete that education?",
 					title: "Confirmation required",
 					confirmButton: "Yes I am",
 					cancelButton: "No",
@@ -1720,6 +1725,7 @@
 					confirmButtonClass: "btn-danger",
 					cancelButtonClass: "btn-default",
 					dialogClass: "modal-dialog modal-lg",
+					theme: 'black',
 					confirm: function() {
 						self.isDeleting = true;
 						Education.remove({ id:education.id }).$promise.then(function () {
@@ -1844,7 +1850,7 @@
 			 'deleteIndustry': function (industry) {
 
 			 	$.confirm({
-			 		text: "Are you sure you want to delete that industry?",
+			 		content: "Are you sure you want to delete that industry?",
 			 		title: "Confirmation required",
 			 		confirmButton: "Yes I am",
 			 		cancelButton: "No",
@@ -1852,6 +1858,7 @@
 			 		confirmButtonClass: "btn-danger",
 			 		cancelButtonClass: "btn-default",
 			 		dialogClass: "modal-dialog modal-lg",
+			 		theme: 'black',
 			 		confirm: function() {
 			 			self.isDeleting = true;
 			 			Industry.remove({ id:industry.id }).$promise.then(function () {
@@ -2475,7 +2482,7 @@
 						}
 
 					},
-					
+
 					// 'loadMore': function () {
 					// 	if (self.hasMore && !self.isLoading) {
 					// 		self.page += 1;

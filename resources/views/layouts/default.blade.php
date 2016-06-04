@@ -19,6 +19,7 @@
 	<link href={{ asset('assets/css/ionicons.css') }} rel="stylesheet" type="text/css">
 	<link href={{ asset('assets/css/main.css') }} rel="stylesheet" type="text/css">
 	<link href={{ asset('assets/angular_lib/ngImgCrop/ng-img-crop.css') }} rel="stylesheet" type="text/css">
+		<link href={{ asset('assets/js/plugins/jquery-confirm/jquery-confirm.min.css') }} rel="stylesheet" type="text/css">
 	<link href={{ asset('assets/angular_lib/angular-xeditable-0.1.8/css/xeditable.css') }} rel="stylesheet" type="text/css">
 	<link href={{ asset('assets/angular_lib/AngularJS-Toaster/toaster.css') }} rel="stylesheet" type="text/css">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.16.1/select.min.css" rel="stylesheet" media="screen">
@@ -221,7 +222,7 @@
 			<script src={{ asset('assets/js/jquery/jquery-2.1.0.min.js') }}></script>
 			<script src={{ asset('assets/js/bootstrap/bootstrap.js') }}></script>
 			<script src={{ asset('assets/js/plugins/bootstrap-multiselect/bootstrap-multiselect.js') }}></script>
-			<script src={{ asset('assets/js/plugins/jquery.confirm.min.js') }}></script>
+			<script src={{ asset('assets/js/plugins/jquery-confirm/jquery-confirm.min.js') }}></script>
 			<script src={{ asset('assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}></script>
 			<script src={{ asset("assets/angular_lib/angular/angular.min.js") }}></script>
 			<script src={{ asset('assets/angular_lib/angular-xeditable-0.1.8/js/xeditable.min.js') }}></script>
@@ -255,6 +256,9 @@
 <script>
 
 	$( document ).ready(function() {
+
+
+
 
 	
 	});
