@@ -11,7 +11,7 @@
 <!-- COLUMN RIGHT -->
 		<div id="col-right" class="col-right ">
 			<div class="container-fluid primary-content">
-				<div ng-controller="userCtrl" ng-init='currentUser(); uploadProfileImages()' ng-show="!users.isLoading"  class="user-profile">
+				<div ng-controller="userCtrl" ng-init='currentUser(); uploadProfileImage(); uploadBackgroundImage()' ng-show="!users.isLoading"  class="user-profile">
 	<style>
 	.profile-header-background{
 	height: 310px;
@@ -54,6 +54,17 @@
 		margin-left: 50%;
 		color: white;
 	}
+	.cropArea {
+	  background: #E4E4E4;
+	  overflow: hidden;
+	  width:333px;
+	  height:333px;
+	}
+	#cropped_image{
+      overflow: hidden;
+	  width:100%;
+	  height:100%;
+	}
 	</style>
 
 					<div class="profile-header-background">
@@ -86,6 +97,36 @@
 								
 								<input class='hide' id="profile_image" type="file" >
 								<input class='hide' id="background_image" type="file"   name="background_image" > 
+
+
+								<!-- profile modal crop image -->
+								<div class="modal fade" id="crop_profile_image" tabindex="-1" role="dialog" aria-hidden="true">
+								    <div class="modal-dialog">
+								        <div class="modal-content">
+								            <div class="modal-header">
+								                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								                <h4 class="modal-title" id="myModalLabel">Crop Image</h4>
+								            </div>
+								            <div class="modal-body">
+
+								            <div>Image crop:</div>
+								            <div class="cropArea">
+								              <img-crop image="myImage" area-type="circle"  result-image="myCroppedImage"></img-crop>
+								            </div>
+								            <div>Preview:</div>
+								            <div><img id="cropped_image" ng-src="<%myCroppedImage%>" /></div>								            
+
+								                    <button type="button" id="close_project" class="btn btn-default" data-dismiss="modal">Close</button>
+								                    <button type="button" ng-click="save_cropped_image(users.user)" class="btn btn-primary">Save image</button>
+								               
+								            </div>
+								        </div>
+								    </div>
+								</div>
+								<!-- end profile modal crop image -->
+
+
+
 
 
 								<h3>About Me</h3>

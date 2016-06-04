@@ -18,9 +18,20 @@
 	.todolist{
 		margin-top: 22px;
 	}
+		.cropArea {
+		  background: #E4E4E4;
+		  overflow: hidden;
+		  width:333px;
+		  height:333px;
+		}
+		#cropped_image{
+	      overflow: hidden;
+		  width:100%;
+		  height:100%;
+		}
 </style>
 
-<div ng-controller="projectCtrl" ng-init='currentProject(); uploadProfileImages()' ng-show="!projects.isLoading" id="col-right" class="col-right ">
+<div ng-controller="projectCtrl" ng-init='currentProject(); uploadProfileImage(); uploadBackgroundImage()' ng-show="!projects.isLoading" id="col-right" class="col-right ">
 	<div class="container-fluid primary-content">
 		<!-- PRIMARY CONTENT HEADING -->
 		<div class="primary-content-heading clearfix">
@@ -79,6 +90,32 @@
 
 			                    <input class='hide' id="profile_image" type="file" >
 			            		<input class='hide' id="background_image" type="file"   name="background_image" > 
+
+			            		<!-- profile modal crop image -->
+			            		<div class="modal fade" id="crop_profile_image" tabindex="-1" role="dialog" aria-hidden="true">
+			            		    <div class="modal-dialog">
+			            		        <div class="modal-content">
+			            		            <div class="modal-header">
+			            		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			            		                <h4 class="modal-title" id="myModalLabel">Crop Image</h4>
+			            		            </div>
+			            		            <div class="modal-body">
+
+			            		            <div>Image crop:</div>
+			            		            <div class="cropArea">
+			            		              <img-crop image="myImage" area-type="square"  result-image="myCroppedImage"></img-crop>
+			            		            </div>
+			            		            <div>Preview:</div>
+			            		            <div><img id="cropped_image" ng-src="<%myCroppedImage%>" /></div>								            
+
+			            		                    <button type="button" id="close_project" class="btn btn-default" data-dismiss="modal">Close</button>
+			            		                    <button type="button" ng-click="save_cropped_image(projects.project)" class="btn btn-primary">Save image</button>
+			            		               
+			            		            </div>
+			            		        </div>
+			            		    </div>
+			            		</div>
+			            		<!-- end profile modal crop image -->
 
 			                    <div class="row">
 			                        <div class="col-md-4">

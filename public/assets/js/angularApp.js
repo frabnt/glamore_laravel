@@ -9,7 +9,8 @@
 		'toaster',
 		'ngAnimate',
 		'ui.select',
-		'angular-cookies'
+		'angular-cookies',
+		'ngImgCrop'
 		]);
 
 	app.run(function(editableOptions) {
@@ -1040,6 +1041,7 @@
 
 
 			'loadCurrentProject':function(projectId){
+				var deferred = $q.defer();
 				var curProject = $resource(base_url + '/projects/:id/', { id: projectId});
 								//console.log(curUser.get());
 								//this.user=curUser.get();
@@ -1052,7 +1054,7 @@
 
 									self.project= data;
 
-
+									deferred.resolve();
 									//animate chart on project detail
 									setTimeout(function(){ 
 										$('.chart').easyPieChart({
@@ -1064,9 +1066,10 @@
 											}
 										});
 									}, 500);
+
 								});
 								
-
+								return deferred.promise;
 							},
 
 							'setActivePendingClosed': function(){
@@ -1159,65 +1162,10 @@
 
 								
 							},
-									'uploadProfileImages': function(){
-							//$scope.user=UserService.uploadProfileImages();
-							//save uploaded image
-							var handleFileSelect = function(evt) {
-
-
-								var files = evt.target.files;
-								var file = files[0];
-								var imageName= file.name;
-
-
-								//if( file.size > 5000000){
-								 	//alert("File maggiore di 5 mb");
-
-
-								 	if (files && file) {
-
-								 		var reader = new FileReader();
-
-								 		reader.onload = function(readerEvt) {
-								 			var binaryString = readerEvt.target.result;
-								 			var binary = btoa(binaryString);
-							 	           //console.log(binary);
-							 	                 //var user=UserService.loadCurrentUser(current_user_id);
-
-							 	                 if(evt.target.id=='profile_image'){
-							 	                 	self.project.profile_image=imageName;
-							 	                 	self.project.upload=binary;
-							 	                 }else{
-							 	                 	
-							 	                 	self.project.background_image=imageName;
-							 	                 	self.project.upload=binary;
-							 	                 }
-
-							 	                 self.updateProject(self.project);
-							 	                 setTimeout(function(){  self.loadCurrentProject(self.project.id); }, 500);
-
-							 	             };
-
-							 	             reader.readAsBinaryString(file);
-							 	         }
-							 	//}
-							 };
-
-							 if (window.File && window.FileReader && window.FileList && window.Blob) {
-							 	document.getElementById('profile_image').addEventListener('change', handleFileSelect, false);
-							 	document.getElementById('background_image').addEventListener('change', handleFileSelect, false);
-							 } else {
-							 	alert('The File APIs are not fully supported in this browser.');
-							 }
-							},
-
 
 							'loadMyProject': function (user_id) {
 								
-									
-
 									var myProjects = $resource(base_url + '/project/userinfo/:u_id/', { u_id: user_id});
-
 
 									//if (!self.isLoading) {
 										self.isLoading = true;
@@ -1264,16 +1212,18 @@
 							},
 
 							'updateProject': function (project) {
-
+								var deferred = $q.defer();
 								self.isSaving = true;
 								
 								Project.update({ id:project.id }, project).$promise.then(function() {
 									self.isSaving = false;
 									toaster.pop('success', 'Project ' + project.title + ' Updated');
+									deferred.resolve();
 								},function(error) {
 									console.log(error);
 									toaster.pop('error', 'Plaese check your connection');
 								});
+								return deferred.promise;
 							},
 							'updateProgress': function (progress) {
 
@@ -1383,6 +1333,94 @@
 	app.controller('projectCtrl', function($scope, ProjectService, $filter, $timeout, toaster) {
 		$scope.projects = ProjectService;
 
+				$scope.myImage='';
+				$scope.myCroppedImage='';
+				$scope.tempImageName="";
+
+				$scope.uploadProfileImage= function(){
+					$(document).ready(function() {
+
+						$timeout(function() {
+
+							var handleFileSelect=function(evt) {
+								var file=evt.currentTarget.files[0];
+							  //$scope.profile_image=file.name;
+							  //$scope.background_image=file.name;
+							  $scope.tempImageName=file.name;
+							  var reader = new FileReader();
+							  reader.onload = function (evt) {
+							  	$('#crop_profile_image').modal();
+							  	$scope.$apply(function($scope){
+							  		$scope.myImage=evt.target.result;
+							  	});
+							  };
+							  //console.log( reader.readAsBinaryString(file));
+							  reader.readAsDataURL(file);
+							};
+							angular.element(document.querySelector('#profile_image')).on('change',handleFileSelect);
+
+							$scope.$watch('myCroppedImage', function() {
+
+								if(!angular.isUndefined($scope.myCroppedImage)){
+									var binary = $scope.myCroppedImage.split(',')[1];
+									$scope.projects.project.upload=binary;
+								}
+
+
+					        //$scope.projects.project.data=$scope.myCroppedImage;
+					    });
+
+						}, 2000);
+
+					});	
+		},
+
+				$scope.save_cropped_image=function(project){
+					$scope.projects.project.profile_image=$scope.tempImageName;
+					ProjectService.updateProject(project).then(function(){
+							ProjectService.loadCurrentProject(project_id).then(function(){		
+								$('#crop_profile_image').modal('hide');
+								$scope.uploadProfileImage();
+							});
+					});
+					
+					
+					
+				},
+
+				$scope.uploadBackgroundImage= function(){
+
+					$(document).ready(function() {
+
+						$timeout(function() {
+
+							var handleFileSelect=function(evt) {
+								var file=evt.currentTarget.files[0];
+								var imageName= file.name;				 
+								var reader = new FileReader();
+								reader.onload = function (evt) {
+									var binaryString = evt.target.result;
+									var binary = btoa(binaryString);
+									$scope.projects.project.background_image=imageName;
+									$scope.projects.project.upload=binary;
+
+									ProjectService.updateProject($scope.projects.project).then(function(){
+										ProjectService.loadCurrentProject(project_id).then(function(){		
+											$scope.uploadBackgroundImage();
+										});
+									});
+
+								};
+							  //console.log( reader.readAsBinaryString(file));
+							  reader.readAsBinaryString(file);(file);
+							};
+							angular.element(document.querySelector('#background_image')).on('change',handleFileSelect);
+
+						}, 2000);
+
+					});	
+				},
+
 
 		$timeout(function() {
 			$scope.showStatus = function() {
@@ -1440,11 +1478,11 @@
 
 		$scope.currentProject = function() {
 			ProjectService.loadCurrentProject(project_id);
-		},
-
-		$scope.uploadProfileImages = function() {
-			ProjectService.uploadProfileImages();
 		}
+
+		// $scope.uploadProfileImages = function() {
+		// 	ProjectService.uploadProfileImages();
+		// }
 
 		
 
@@ -1891,11 +1929,96 @@
 		
 	});
 
-
-
-
 	app.controller('userCtrl', function($scope, NotificationService,  UserService, $filter, $timeout, toaster) {
 		$scope.users = UserService;
+
+		$scope.myImage='';
+		$scope.myCroppedImage='';
+		$scope.tempImageName="";
+
+		$scope.uploadProfileImage= function(){
+			$(document).ready(function() {
+
+				$timeout(function() {
+
+					var handleFileSelect=function(evt) {
+						var file=evt.currentTarget.files[0];
+					  //$scope.profile_image=file.name;
+					  //$scope.background_image=file.name;
+					  $scope.tempImageName=file.name;
+					  var reader = new FileReader();
+					  reader.onload = function (evt) {
+					  	$('#crop_profile_image').modal();
+					  	$scope.$apply(function($scope){
+					  		$scope.myImage=evt.target.result;
+					  	});
+					  };
+					  //console.log( reader.readAsBinaryString(file));
+					  reader.readAsDataURL(file);
+					};
+					angular.element(document.querySelector('#profile_image')).on('change',handleFileSelect);
+
+					$scope.$watch('myCroppedImage', function() {
+
+						if(!angular.isUndefined($scope.myCroppedImage)){
+							var binary = $scope.myCroppedImage.split(',')[1];
+							$scope.users.user.upload=binary;
+						}
+
+
+			        //$scope.users.user.data=$scope.myCroppedImage;
+			    });
+
+				}, 2000);
+
+			});	
+},
+
+		$scope.save_cropped_image=function(user){
+			$scope.users.user.profile_image=$scope.tempImageName;
+			UserService.updateUser(user).then(function(){
+					UserService.loadCurrentUser(current_user_id).then(function(){		
+						$('#crop_profile_image').modal('hide');
+						$scope.uploadProfileImage();
+					});
+			});
+			
+			
+			
+		},
+
+		$scope.uploadBackgroundImage= function(){
+
+			$(document).ready(function() {
+
+				$timeout(function() {
+
+					var handleFileSelect=function(evt) {
+						var file=evt.currentTarget.files[0];
+						var imageName= file.name;				 
+						var reader = new FileReader();
+						reader.onload = function (evt) {
+							var binaryString = evt.target.result;
+							var binary = btoa(binaryString);
+							$scope.users.user.background_image=imageName;
+							$scope.users.user.upload=binary;
+
+							UserService.updateUser($scope.users.user).then(function(){
+								UserService.loadCurrentUser(current_user_id).then(function(){		
+									$scope.uploadBackgroundImage();
+								});
+							});
+
+						};
+					  //console.log( reader.readAsBinaryString(file));
+					  reader.readAsBinaryString(file);(file);
+					};
+					angular.element(document.querySelector('#background_image')).on('change',handleFileSelect);
+
+				}, 2000);
+
+			});	
+		},
 
 		$timeout(function() {
 			$scope.showMaritalStatus = function() {
@@ -1920,9 +2043,7 @@
 			//console.log($scope.users);
 		},
 
-		$scope.uploadProfileImages= function(){
-			UserService.uploadProfileImages();
-		},
+
 
 		$scope.loadUsers= function(user){
 			UserService.loadUsers();
@@ -2308,6 +2429,7 @@
 					// 	self.loadContacts();
 					// },
 					'loadCurrentUser':function(userId){
+						var deferred = $q.defer();
 						var curUser = $resource(base_url + '/users/:id/', { id: userId});
 						//console.log(curUser.get());
 						//this.user=curUser.get();
@@ -2318,12 +2440,14 @@
 							
 
 							self.user= data;
+							deferred.resolve();
 						});
 						
-
+						return deferred.promise;
 					},
 
 					'loadUsers': function () {
+						var deferred = $q.defer();
 						if (!self.isLoading) {
 							self.isLoading = true;
 
@@ -2331,10 +2455,10 @@
 							self.users.$promise.then(function (result) {
 								self.users=result;
 								self.isLoading = false;
-
+								deferred.resolve();
 							});
 						}
-
+						return deferred.promise;
 					},
 
 					'loadUsersAffiliatesPage': function () {
@@ -2351,58 +2475,7 @@
 						}
 
 					},
-
-					'uploadProfileImages': function(){
-			//$scope.user=UserService.uploadProfileImages();
-			//save uploaded image
-			var handleFileSelect = function(evt) {
-
-
-				var files = evt.target.files;
-				var file = files[0];
-				var imageName= file.name;
-
-
-				//if( file.size > 5000000){
-				 	//alert("File maggiore di 5 mb");
-
-
-				 	if (files && file) {
-
-				 		var reader = new FileReader();
-
-				 		reader.onload = function(readerEvt) {
-				 			var binaryString = readerEvt.target.result;
-				 			var binary = btoa(binaryString);
-			 	           //console.log(binary);
-			 	                 //var user=UserService.loadCurrentUser(current_user_id);
-
-			 	                 if(evt.target.id=='profile_image'){
-			 	                 	self.user.profile_image=imageName;
-			 	                 	self.user.upload=binary;
-			 	                 }else{
-			 	                 	
-			 	                 	self.user.background_image=imageName;
-			 	                 	self.user.upload=binary;
-			 	                 }
-
-			 	                 self.updateUser(self.user);
-			 	                 setTimeout(function(){  self.loadCurrentUser(self.user.id); }, 500);
-
-			 	             };
-
-			 	             reader.readAsBinaryString(file);
-			 	         }
-			 	//}
-			 };
-
-			 if (window.File && window.FileReader && window.FileList && window.Blob) {
-			 	document.getElementById('profile_image').addEventListener('change', handleFileSelect, false);
-			 	document.getElementById('background_image').addEventListener('change', handleFileSelect, false);
-			 } else {
-			 	alert('The File APIs are not fully supported in this browser.');
-			 }
-			},
+					
 					// 'loadMore': function () {
 					// 	if (self.hasMore && !self.isLoading) {
 					// 		self.page += 1;
@@ -2410,13 +2483,16 @@
 					// 	}
 					// },
 					'updateUser': function (user) {
+						var deferred = $q.defer();
 						self.isSaving = true;
 						User.update({ id:user.id }, user).$promise.then(function() {
 							self.isSaving = false;
 							toaster.pop('success', 'User ' + user.name + ' Updated');
+							deferred.resolve();
 						},function(error) {
 							toaster.pop('error', 'Plaese check your connection');
 						});
+						return deferred.promise;
 					},
 					'removeUser': function (user) {
 						self.isDeleting = true;

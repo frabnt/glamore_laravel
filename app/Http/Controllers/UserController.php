@@ -200,7 +200,6 @@ where project_id=".$project_id.")
         $user->linkedin_page = $request->linkedin_page; 
         $user->dribbble_page = $request->dribbble_page; 
         $user->gplus_page = $request->gplus_page ; 
-
         //Save image uploaded
         if($request->upload!=''){
     
