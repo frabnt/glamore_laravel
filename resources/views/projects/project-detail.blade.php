@@ -198,14 +198,8 @@
 
 													<!-- SCROLLING DATA TABLE -->
 													<div class="widget">
-														<div class="widget-header clearfix">
-															<h3><i class="icon ion-ios-grid-view-outline"></i> <span>Users List</span></h3>
-															<div class="btn-group widget-header-toolbar visible-lg">
-																<a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
-																<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
-															</div>
-														</div>
 														<div class="widget-content">
+														<label>Search:<input type="search" class="form-control input-sm" ng-model="searchBox" aria-controls="datatable-column-interactive"></label>
 															<div class="table-responsive">
 																<table id="datatable-basic-scrolling" class="table table-sorting table-hover datatable">
 																	<thead>
@@ -217,7 +211,7 @@
 																	</thead>
 																	<tbody>
 																		
-																		<tr ng-repeat='user in users.usersNotInTeam'>
+																		<tr ng-repeat='user in users.usersNotInTeam | filter:searchBox'>
 																			<td><% user.name %> </td>
 																			<td><% user.last_name %></td>
 																			<td ng-if="user.id==projects.project.user_id">
@@ -242,7 +236,6 @@
 																				<p  class="text-muted">Invitation sent</p>
 																			</td>
 																		</tr>
-																	
 																	</tbody>
 																</table>
 															</div>
@@ -271,14 +264,8 @@
 
 													<!-- SCROLLING DATA TABLE -->
 													<div class="widget">
-														<div class="widget-header clearfix">
-															<h3><i class="icon ion-ios-grid-view-outline"></i> <span>Users List</span></h3>
-															<div class="btn-group widget-header-toolbar visible-lg">
-																<a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
-																<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
-															</div>
-														</div>
 														<div class="widget-content">
+														<label>Search:<input type="search" class="form-control input-sm" ng-model="searchBox" aria-controls="datatable-column-interactive"></label>
 															<div class="table-responsive">
 																<table id="datatable-basic-scrolling" class="table table-sorting table-hover datatable">
 																	<thead>
@@ -290,7 +277,7 @@
 																	</thead>
 																	<tbody>
 																		
-																		<tr ng-repeat='user in users.usersInTeam'>
+																		<tr ng-repeat='user in users.usersInTeam | filter: searchBox'>
 																			<td ng-if="user.user_id!=projects.project.user_id" class="text-muted"><% user.name %> </td>
 																			<td ng-if="user.user_id!=projects.project.user_id"><% user.last_name %></td>
 																			<td ng-if="user.user_id!=projects.project.user_id">

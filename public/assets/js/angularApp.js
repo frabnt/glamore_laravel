@@ -657,11 +657,16 @@
 			},
 			'sendInviteToUser':function(user_id_to , module, project_id){
 
+				var deferred = $q.defer();
+
 				var sendInviteUrl = $resource(base_url + '/user/notification/invite/:user_id_to/:user_id_from/:module/:project_id/', { user_id_to:user_id_to,user_id_from:current_user_id,module:module,project_id:project_id});
 				sendInviteUrl.get(function (data){
 					toaster.pop('success', 'Invite sent');
+				deferred.resolve();
 
 				});
+
+				return deferred.promise;
 			},
 			'rmNotificationByUserIdAndProjectId':function(user_id , project_id){
 
@@ -2075,8 +2080,10 @@
 		$scope.sendInvite=function(user,project_id){
 
 
-			NotificationService.sendInviteToUser(user.id, 'Project', project_id);
-			UserService.loadUsersNotInTeam();
+			NotificationService.sendInviteToUser(user.id, 'Project', project_id).then(function(){
+				UserService.loadUsersNotInTeam();
+			});
+			
 		},
 
 		$scope.addUserInTeam= function(user){
