@@ -23,7 +23,7 @@
 				</div>
 				<!-- END PRIMARY CONTENT HEADING -->
 
-				<div class="row">
+				<div ng-controller="usersSettingCtrl" ng-show="!usersSettings.isLoading"  class="row">
 					<!-- left side, main content -->
 					<div class="col-lg-12">
 						<div class="row">
@@ -37,8 +37,7 @@
 								<div class="knowledge">
 									<h3><a href="#"><i class="icon ion-ios-folder"></i> Notification <span class="pull-right"></span></a></h3>
 									<label class="fancy-checkbox">
-										<input type="checkbox">
-										<span class="todo-text">Send notification by mail</span>
+									<a  href="#" editable-checkbox="usersSetting.settings.send_notification_by_mail" e-title="Send notificatio by email?" onaftersave="usersSetting.updateUserSetting(usersSetting.settings)"><% usersSetting.settings.send_notification_by_mail && "Send notification by email" || "Don't send notification by email" %></a>									
 									</label>
 								</div>
 							</div>
@@ -53,6 +52,20 @@
 							<div class="col-md-5 col-md-offset-1">
 								<div class="knowledge">
 									<h3><a href="#"><i class="icon ion-ios-folder"></i> Roles<span class="pull-right">14</span></a></h3>
+									
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-5">
+								<div class="knowledge">
+									<h3><a href="#"><i class="icon ion-ios-folder"></i> Time Zone <span class="pull-right"></span></a></h3>
+								<a href="#" editable-select="usersSetting.settings.timezone" e-ng-options="s.value as s.text for s in usersSetting.timezone"  onaftersave="usersSetting.updateUserSetting(usersSetting.settings)" ><% showTimeZone() %></a>								</div>
+							</div>
+							<div class="col-md-5 col-md-offset-1">
+								<div class="knowledge">
+									<h3><a href="#"><i class="icon ion-ios-folder"></i> Other<span class="pull-right">14</span></a></h3>
 									
 								</div>
 							</div>

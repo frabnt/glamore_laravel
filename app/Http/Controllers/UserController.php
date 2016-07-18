@@ -8,6 +8,7 @@ use App\UserTeamRole;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Notification;
+use App\UserSetting;
 
 class UserController extends Controller
 {
@@ -17,7 +18,7 @@ class UserController extends Controller
         
 
         $user=User::find($id);
-        return view('user.user_profile', compact('user'));
+        return view('user.user_profile');
 
         
     }
@@ -64,12 +65,12 @@ class UserController extends Controller
 public function getAllUsersWithNotificationInfoByProjectId ($project_id)
 {
 
-$notification = \DB::select( \DB::raw("(select users.id, users.last_name, users.profile_image, users.name, notifications.title as notification_title,  notifications.accepted as notification_accepted,notifications.rejected as notification_rejected, notifications.read as notification_read
+$notification = \DB::select( \DB::raw("(select users.id, users.last_name, users.profile_image, users.name, notifications.title as notification_title,  notifications.accepted as notification_accepted,notifications.rejected as notification_rejected, notifications.read as notification_read, notifications.id as notification_id
 from user_notification 
 join users on users.id=user_notification.user_id
 join notifications on notifications.id = user_notification.notification_id
 where user_notification.project_id =".$project_id.") union (
-select users.id, users.last_name, users.profile_image, users.name, null, null,null,null
+select users.id, users.last_name, users.profile_image, users.name, null, null,null,null, null
 from users 
 where id not in (select user_id
 from user_notification
@@ -199,14 +200,13 @@ where project_id=".$project_id.")
         $user->linkedin_page = $request->linkedin_page; 
         $user->dribbble_page = $request->dribbble_page; 
         $user->gplus_page = $request->gplus_page ; 
-
         //Save image uploaded
         if($request->upload!=''){
     
-
+ 
             if($request->profile_image != $user->profile_image){
                 $decode_prifile_image = base64_decode($request->upload);
-                $fileName=time().$request->profile_image;
+                $fileName=time()."_".$id."_".$request->profile_image;
                 Storage::disk('userimgupload')->put($fileName, $decode_prifile_image);
             
                 //$file = \Config::get('upload.upload').$fileName;
@@ -216,7 +216,7 @@ where project_id=".$project_id.")
     
             if($request->background_image != $user->background_image){
                 $decode_prifile_image = base64_decode($request->upload);
-                $fileName=time().$request->background_image;
+                $fileName=time()."_".$id."_".$request->background_image;
                 Storage::disk('userimgupload')->put($fileName, $decode_prifile_image);
                 $user->background_image=$fileName;
             }

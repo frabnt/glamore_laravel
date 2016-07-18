@@ -28,14 +28,14 @@
 	<div class="container-fluid">
 		<div class="content-box-bordered login-box box-with-help">
 			<h1>Log in to your account</h1>
-			<form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+			<form id="form_data" class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
 			{!! csrf_field() !!}
 				<div class="form-group">
 					<label for="inputEmail3b" class="control-label sr-only">Email</label>
 					<div class="col-sm-12">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="icon ion-email"></i></span>
-							<input type="email" class="form-control" name="email" value="{{ old('email') }}" id="inputEmail3b" placeholder="Email">
+							<input id="username" type="email" class="form-control" name="email" value="{{ old('email') }}" id="inputEmail3b" placeholder="Email">
 							
 						</div>
 						@if ($errors->has('email'))
@@ -50,7 +50,7 @@
 					<div class="col-sm-12">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="icon ion-locked"></i></span>
-							<input type="password" class="form-control" id="inputPassword3b" placeholder="Password" name="password">                              
+							<input id="password" type="password" class="form-control" id="inputPassword3b" placeholder="Password" name="password">                              
 						</div>
 						 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -69,7 +69,7 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-7">
-						<button type="submit" class="btn btn-success btn-block">Sign in</button>
+						<button id="submit" type="submit" class="btn btn-success btn-block">Sign in</button>
 					</div>
 					<div class="col-md-5 text-right">
 						<a href="{{ url('/password/reset') }}"><em>forgot password?</em></a>
@@ -81,15 +81,17 @@
 		</div>
 		<div class="login-separator text-center"><span>or sign up with</span></div>
 		<div class="text-center">
-			<button type="button" class="btn btn-login-social btn-login-facebook"><span>Facebook</span></button>
-			<button type="button" class="btn btn-login-social btn-login-twitter"><span>Twitter</span></button>
-			<button type="button" class="btn btn-login-social btn-login-googleplus"><span>Google Plus</span></button>
+			<a class="btn btn-login-social btn-login-facebook" href="{{ route('social.login', ['facebook']) }}">Facebook</a>
+			<a class="btn btn-login-social btn-login-twitter" href="{{ route('social.login', ['twitter']) }}">Twitter</a>
+			<a class="btn btn-login-social btn-login-googleplus" href="{{ route('social.login', ['google']) }}">Google</a>
 		</div>
 	</div>
 	<!-- Javascript -->
 	<script src="assets/js/jquery/jquery-2.1.0.min.js"></script>
 	<script src="assets/js/bootstrap/bootstrap.js"></script>
 	<script src="assets/js/queen-form-layouts.js"></script>
+
 </body>
+
 
 </html>

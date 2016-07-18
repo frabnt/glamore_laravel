@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         	'id'=>1,
             'name' => 'admin',
             'email' => 'stefano.stirati@triweb.it',
-            'password' => bcrypt('triweb'),
+            'password' => bcrypt('triwebGlamore16'),
         ]);
 
         DB::table('roles')->insert([

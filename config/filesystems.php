@@ -54,6 +54,12 @@ return [
 
         ],//app/upload/img/user
 
+        'projectimgupload' => [
+            'driver' => 'local',
+            'root'   => public_path('/assets/upload/img/project'),
+
+        ],//app/upload/img/user
+
         'projectfileupload' => [
             'driver' => 'local',
             'root'   => public_path('/assets/upload/file/project'),

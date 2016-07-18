@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Permission;
 use App\Http\Requests;
+use App\Permission;
+
 
 class PermissionController extends Controller
 {
@@ -40,7 +41,7 @@ class PermissionController extends Controller
 
         $permission->name = $request->name; 
         $permission->display_name = $request->display_name;
-        $permission->description  = $request->description  ; 
+        $permission->description  = $request->description; 
         $permission->save();
         
         return $permission;
@@ -81,7 +82,7 @@ class PermissionController extends Controller
 
         $permission->name = $request->name; 
         $permission->display_name = $request->display_name;
-        $permission->description   = $request->description  ; 
+        $permission->description   = $request->description; 
         $permission->save();
     }
 

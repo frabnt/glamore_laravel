@@ -10,7 +10,7 @@
 <!-- COLUMN RIGHT -->
 
 <style>
-	.avatar{
+	.team_image{
 
 		width: 40px;
 		height: 40px;
@@ -18,25 +18,128 @@
 	.todolist{
 		margin-top: 22px;
 	}
+		.cropArea {
+		  background: #E4E4E4;
+		  overflow: hidden;
+		  width:333px;
+		  height:333px;
+		}
+		#cropped_image{
+	      overflow: hidden;
+		  width:100%;
+		  height:100%;
+		}
 </style>
 
-<div ng-controller="projectCtrl" ng-init='currentProject()' ng-show="projects.project.title !=''" id="col-right" class="col-right ">
+<div ng-controller="projectCtrl" ng-init='currentProject(); uploadProfileImage(); uploadBackgroundImage()' ng-show="!projects.isLoading" id="col-right" class="col-right ">
 	<div class="container-fluid primary-content">
 		<!-- PRIMARY CONTENT HEADING -->
 		<div class="primary-content-heading clearfix">
-			<h2><a href="#" editable-text="projects.project.title"  onaftersave="projects.updateProject(projects.project)" ><% projects.project.title|| "empty" %></a></h2>
-			<ul class="breadcrumb pull-left">
-				<li><i class="icon ion-home"></i><a href="#">Home</a></li>
-				<li><a href="#">Pages</a></li>
-				<li class="active">Project Detail</li>
-			</ul>
 
 
-		
+			                    <style>
+			                    .profile-header-background{
+			                    height: 210px;
+			                    background: url("{{ asset('/assets/upload/img/project')}}/<% projects.project.background_image || 'city.jpg' %>");
+			                    background-repeat:no-repeat;
+			                    background-size: cover;
+			                    }
+			                    .profile-info-left{
+			                    	height: 170px;
+			                    }
+			                    .profile-header-background:hover{
+			                        opacity: 0.3; 
+			                    }
+
+			                    .avatar:hover{
+			                        opacity: 0.1;
+			                    }
+
+			                    .hide{
+			                        display: none;
+			                    }
+
+			                    .show{
+			                        display: block;
+			                    }
+
+
+
+			                    .avatar{
+			                        height: 150px;
+			                        width:150px;
+			                    }
+
+			                    #imgprofile.ion-ios-reverse-camera {
+			                        font-size: 90px;
+			                        color: white;
+			                        margin-bottom: -144px;
+			                        
+			                    }
+
+			                    #imgbackground.ion-ios-reverse-camera {
+			                        font-size: 190px;
+			                        margin-left: 50%;
+			                        color: white;
+			                    }
+			                    </style>
+
+			                    <div class="profile-header-background">
+			                        <div id="imgbackground" class="ion-ios-reverse-camera hide"></div>
+			                    </div>
+
+			                    <input class='hide' id="profile_image" type="file" >
+			            		<input class='hide' id="background_image" type="file"   name="background_image" > 
+
+			            		<!-- profile modal crop image -->
+			            		<div class="modal fade" id="crop_profile_image" tabindex="-1" role="dialog" aria-hidden="true">
+			            		    <div class="modal-dialog">
+			            		        <div class="modal-content">
+			            		            <div class="modal-header">
+			            		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			            		                <h4 class="modal-title" id="myModalLabel">Crop Image</h4>
+			            		            </div>
+			            		            <div class="modal-body">
+
+			            		            <div>Image crop:</div>
+			            		            <div class="cropArea">
+			            		              <img-crop image="myImage" area-type="square"  result-image="myCroppedImage"></img-crop>
+			            		            </div>
+			            		            <div>Preview:</div>
+			            		            <div><img id="cropped_image" ng-src="<%myCroppedImage%>" /></div>								            
+
+			            		                    <button type="button" id="close_project" class="btn btn-default" data-dismiss="modal">Close</button>
+			            		                    <button type="button" ng-click="save_cropped_image(projects.project)" class="btn btn-primary">Save image</button>
+			            		               
+			            		            </div>
+			            		        </div>
+			            		    </div>
+			            		</div>
+			            		<!-- end profile modal crop image -->
+
+			                    <div class="row">
+			                        <div class="col-md-4">
+			                            
+			                            <div   class="profile-info-left">
+			                                <div  class="text-center">
+			                    <!--                            <div class="spinner"
+			                                                     ng-show="user.isLoading" >
+			                                                    <span us-spinner="{radius:8, width:5, length: 3, lines:9}" ></span >
+
+			                                                    <p >Loading...</p >
+			                                                    </div > -->
+			                             <div id="imgprofile" class="ion-ios-reverse-camera hide"></div>
+			                             <img   ng-src="{{ asset('/assets/upload/img/project')}}/<% projects.project.profile_image || 'avatar.png' %>" alt="Avatar" class="avatar" />
+			                             <h2><a href="#" editable-text="projects.project.title"  onaftersave="projects.updateProject(projects.project)" ><% projects.project.title|| "empty" %></a></h2>
+			                                                </div>
+			    </div>
+			</div>
+			
+	
 
 		</div>
 		<!-- END PRIMARY CONTENT HEADING -->
-		<div class="row">
+	
 			<div class="col-md-8">
 
 				<div  class="project-section general-info">
@@ -62,7 +165,7 @@
 									<ul class="list-inline team-list">
 										
 										<li ng-repeat='user in users.usersInTeam'>
-											<img ng-src="{{ asset('/assets/upload/img/user')}}/<% user.profile_image || 'avatar.png' %>" class="img-circle avatar" alt="Avatar" />
+											<img ng-src="{{ asset('/assets/upload/img/user')}}/<% user.profile_image || 'avatar.png' %>" class="img-circle team_image" alt="Avatar" />
 											<p><a href="#"><strong><% user.name %> <% user.last_name %></strong></a></p>
 											<p ng-if="user.user_id==projects.project.user_id" class="text-muted">Project Owner</p>
 											<p ng-if="!(user.user_id==projects.project.user_id)" class="text-muted">Partecipant</p>
@@ -95,14 +198,8 @@
 
 													<!-- SCROLLING DATA TABLE -->
 													<div class="widget">
-														<div class="widget-header clearfix">
-															<h3><i class="icon ion-ios-grid-view-outline"></i> <span>Users List</span></h3>
-															<div class="btn-group widget-header-toolbar visible-lg">
-																<a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
-																<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
-															</div>
-														</div>
 														<div class="widget-content">
+														<label>Search:<input type="search" class="form-control input-sm" ng-model="searchBox" aria-controls="datatable-column-interactive"></label>
 															<div class="table-responsive">
 																<table id="datatable-basic-scrolling" class="table table-sorting table-hover datatable">
 																	<thead>
@@ -114,7 +211,7 @@
 																	</thead>
 																	<tbody>
 																		
-																		<tr ng-repeat='user in users.usersNotInTeam'>
+																		<tr ng-repeat='user in users.usersNotInTeam | filter:searchBox'>
 																			<td><% user.name %> </td>
 																			<td><% user.last_name %></td>
 																			<td ng-if="user.id==projects.project.user_id">
@@ -139,7 +236,6 @@
 																				<p  class="text-muted">Invitation sent</p>
 																			</td>
 																		</tr>
-																	
 																	</tbody>
 																</table>
 															</div>
@@ -168,14 +264,8 @@
 
 													<!-- SCROLLING DATA TABLE -->
 													<div class="widget">
-														<div class="widget-header clearfix">
-															<h3><i class="icon ion-ios-grid-view-outline"></i> <span>Users List</span></h3>
-															<div class="btn-group widget-header-toolbar visible-lg">
-																<a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
-																<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
-															</div>
-														</div>
 														<div class="widget-content">
+														<label>Search:<input type="search" class="form-control input-sm" ng-model="searchBox" aria-controls="datatable-column-interactive"></label>
 															<div class="table-responsive">
 																<table id="datatable-basic-scrolling" class="table table-sorting table-hover datatable">
 																	<thead>
@@ -187,7 +277,7 @@
 																	</thead>
 																	<tbody>
 																		
-																		<tr ng-repeat='user in users.usersInTeam'>
+																		<tr ng-repeat='user in users.usersInTeam | filter: searchBox'>
 																			<td ng-if="user.user_id!=projects.project.user_id" class="text-muted"><% user.name %> </td>
 																			<td ng-if="user.user_id!=projects.project.user_id"><% user.last_name %></td>
 																			<td ng-if="user.user_id!=projects.project.user_id">
@@ -419,7 +509,7 @@
 
 
 						<!-- RECENT FILES -->
-						<div class="widget">
+						<div  ng-controller="fileCtrl" ng-init='loadFilesOfProject(); uploadFile()' class="widget">
 							<div class="widget-header clearfix">
 								<h3><i class="icon ion-document"></i> <span>RECENT FILES</span></h3>
 								<div class="btn-group widget-header-toolbar">
@@ -427,15 +517,15 @@
 									<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
 								</div>
 							</div>
+
+							<input class='hide' id="upload_file" type="file" >
+
 							<div class="widget-content">
 
 								<ul  class="fa-ul recent-file-list bottom-30px">
-									<li><i class="fa-li fa fa-file-pdf-o"></i><a href="#">Project Requirements.pdf</a></li>
-									<li><i class="fa-li fa fa-file-word-o"></i><a href="#">[DRAFT] System Specifications.docx</a></li>
-									<li><i class="fa-li fa fa-file-picture-o"></i><a href="#">Marketing Content-v2.jpg</a></li>
-									<li><i class="fa-li fa fa-file-zip-o"></i><a href="#">All-files-backup.zip</a></li>
+									<li ng-repeat='file in files.files' onaftersave="updateFile(file)"><a href="{{ asset('/assets/upload/file/project')}}/<% file.path %>"><% file.name %></a></li>
 								</ul>
-								<button type="button" class="btn btn-sm btn-primary"><i class="icon ion-upload"></i> Upload</button> <a href="#" class="btn btn-sm btn-default"><i class="icon ion-folder"></i> See all files</a>
+								<button id="upload_file_button" type="button" class="btn btn-sm btn-primary"><i class="icon ion-upload"></i> Upload</button> <a href="#" class="btn btn-sm btn-default"><i class="icon ion-folder"></i> See all files</a>
 							</div>
 						</div>
 						<!-- END RECENT FILES -->
@@ -474,7 +564,55 @@
 
 			$( document ).ready(function() {
 
+				//Change profile image
 
+
+
+				 	//abilito e disabilito la visualizzazione dell'icona image change sul background profile
+				 	$('.profile-header-background').mouseleave(function() {
+
+				 		$('#imgbackground').addClass("hide");
+				 		$('#imgbackground').removeClass("show");
+					});	
+
+					$('.profile-header-background').mouseenter(function() {
+
+				 		$('#imgbackground').addClass("show");
+				 		$('#imgbackground').removeClass("hide");
+					});	
+
+
+
+
+				    //abilito e disabilito la visualizzazione dell'icona image change sul profile
+					$('.avatar').mouseleave(function() {
+
+				 		$('#imgprofile').addClass("hide");
+				 		$('#imgprofile').removeClass("show");
+				 		});	
+
+					$('.avatar').mouseenter(function() {
+
+				 		$('#imgprofile').addClass("show");
+				 		$('#imgprofile').removeClass("hide");
+					});	
+					
+
+
+				 	$('.profile-header-background').click(function() {
+				 		
+				 		$("#background_image").click();
+				 	});	
+
+				 	$('.avatar').click(function() {
+				 		$("#profile_image").click();
+				 		
+				 	});	
+
+				$('#upload_file_button').click(function() {
+					
+					$("#upload_file").click();
+				});	
 
 			});
 

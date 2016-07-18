@@ -10,6 +10,11 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
+use League\OAuth2\Server;
+use Log;
+
 
 class AuthController extends Controller
 {
@@ -31,7 +36,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    //protected $redirectTo = '/home';
 
     /**
      * Create a new authentication controller instance.
@@ -39,9 +44,40 @@ class AuthController extends Controller
      * @return void
      */
     public function __construct()
-    {
-        $this->middleware('guest', ['except' => 'logout']);
-    }
+        {
+            $this->redirectPath = route('home');
+
+        }
+
+        public function redirectToProvider($provider)
+        {
+            return Socialite::driver($provider)->redirect();
+        }
+        
+         public function handleProviderCallback($provider)
+        {
+         //notice we are not doing any validation, you should do it
+
+            $user = Socialite::driver($provider)->user();
+             
+            // stroing data to our use table and logging them in
+            $data = [
+                'name' => $user->getName(),
+                'email' => $user->getEmail()
+            ];
+         
+            // Here, check if the user already exists in your records
+
+            $my_user = User::where('email','=', $user->getEmail())->first();
+            if($my_user === null) {
+                    Auth::login(User::firstOrCreate($data));
+            } else {
+                Auth::login($my_user);
+            }
+
+            //after login redirecting to home page
+            return redirect($this->redirectPath());
+        }
 
     /**
      * Get a validator for an incoming registration request.
@@ -68,6 +104,8 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+
+        
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

@@ -27,7 +27,6 @@
 						<li><a href="#">Pages</a></li>
 						<li class="active">Projects</li>
 					</ul>
-					
 
 				</div>
                                             <!-- quick task modal -->
