@@ -256,7 +256,7 @@ join user_team_role on  user_team_role.user_id = users.id
 join projects on user_team_role.team_id = projects.team_id
 join teams on teams.id = user_team_role.team_id
 where projects.user_id !=".$current_user_id." and users.id !=".$current_user_id." and teams.id in (
-SELECT team_id FROM glamore_dev.user_team_role where user_id =".$current_user_id." 
+SELECT team_id FROM user_team_role where user_id =".$current_user_id." 
 )") );
             return $projects;
             
