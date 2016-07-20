@@ -267,7 +267,9 @@
 			],
 
 			'loadUserSetting': function () {
-				
+
+				var deferred = $q.defer();
+					
 				self.isLoading = true;
 				var loadUserSetting = $resource(base_url + '/user/setting/:id/', { id: current_user_id});
 
@@ -284,11 +286,13 @@
 						var settings={user_id:current_user_id, timezone:tz.name()};
 						self.createUserSetting(settings);
 
+
 					}
 					self.isLoading = false;
+					deferred.resolve();
 				});
 
-
+				return deferred.promise;
 				},
 
 				'updateUserSetting': function (settings) {
@@ -536,7 +540,7 @@
 			});
 
 
-	app.service('NotificationService', function ( $timeout, ProjectService, UserService,  Notification, $q, toaster, $resource, $rootScope) {
+	app.service('NotificationService', function ( $timeout, ProjectService, UserService,  Notification, $q, toaster, $resource, $rootScope, UserSettingService) {
 
 
 
@@ -586,11 +590,14 @@
 								// console.log(value.created_at);
 								//value.created_at=moment(created,  "YYYYMMDD").fromNow();
 
-								//convert from utc to user timezoen
+								UserSettingService.loadUserSetting().then(function(){		
 								var utcDate = moment.utc(value.created_at);
 								var dateWithTimezone = utcDate.tz($rootScope.UserSettings.timezone).format();
 
 								value.created_at=moment(dateWithTimezone,  "YYYY-MM-DD HH:mm:ss").fromNow();
+								});
+								//convert from utc to user timezone
+								
 
 
 
