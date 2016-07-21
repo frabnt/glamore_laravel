@@ -1054,6 +1054,23 @@
 			{value: 'MEDIUM', text: 'MEDIUM'}
 			],
 
+			'loadRemainingDays':function(){
+
+
+				var dateFormat=moment(self.project.date_start).format("YYYY-MM-DD");
+				var date_start=moment(dateFormat, "YYYY-MM-DD");
+				var date_end=moment(date_start, "YYYY-MM-DD").add('days', self.project.duration_day);
+				var now=moment();
+
+				var daysRemaining=date_end.diff(now, 'days');
+
+				if (daysRemaining < 0) {
+				    daysRemaining=0;
+				}
+
+				self.project.remaining_day=daysRemaining;
+			},
+
 
 			'loadCurrentProject':function(projectId){
 				var deferred = $q.defer();
@@ -1065,8 +1082,6 @@
 
 									
 									data.date_start=new Date(data.date_start);
-									
-
 									self.project= data;
 
 									deferred.resolve();
@@ -1233,6 +1248,8 @@
 								Project.update({ id:project.id }, project).$promise.then(function() {
 									self.isSaving = false;
 									toaster.pop('success', 'Project ' + project.title + ' Updated');
+									self.loadRemainingDays(moment(project.date_start).format("YYYY/MM/DD"), project.duration_day);
+									//console.log(moment(project.date_start).format("YYYY/MM/DD"));
 									deferred.resolve();
 								},function(error) {
 									console.log(error);
@@ -1458,6 +1475,7 @@
 
 	$scope.loadMyProject=function(){
 		ProjectService.loadMyProject(current_user_id);
+
 	},
 
 	$scope.loadJoinedProject=function(){
@@ -1468,7 +1486,9 @@
 
 
 		$scope.updateProject= function(project){
-			ProjectService.updateProject(project);
+			ProjectService.updateProject(project).then(function(){		
+			ProjectService.loadRemainingDays();
+		});
 
 		},
 
@@ -1493,7 +1513,9 @@
 		},
 
 		$scope.currentProject = function() {
-			ProjectService.loadCurrentProject(project_id);
+			ProjectService.loadCurrentProject(project_id).then(function(){		
+			ProjectService.loadRemainingDays();
+		});
 		}
 
 		// $scope.uploadProfileImages = function() {

@@ -152,7 +152,7 @@
 								<dt>Date:</dt>
 								<dd> <a href="#" editable-date="projects.project.date_start" data-format="yy-mm-dd" data-viewformat="dd/mm/yyyy" onaftersave="projects.updateProject(projects.project)" ><% projects.project.date_start  || "empty" | date:"dd/MM/yyyy" %></a></dd>
 								<dt>Duration:</dt>
-								<dd><a href="#" editable-number="projects.project.duration_day"  onaftersave="updateProject(projects.project)"><% projects.project.duration_day || "empty"%></a> days <span class="text-muted"><small>(50 days remaining)</small></span></dd>
+								<dd><a href="#" editable-number="projects.project.duration_day"  onaftersave="updateProject(projects.project)"><% projects.project.duration_day || "empty"%></a> days <span class="text-muted"><small>( <% projects.project.remaining_day %> days remaining)</small></span></dd>
 								<dt>Client:</dt>
 								<dd><a href="#" editable-text="projects.project.client"  onaftersave="projects.updateProject(projects.project)" ><% projects.project.client || "empty" %></a></dd>
 								<dt>Priority:</dt>
