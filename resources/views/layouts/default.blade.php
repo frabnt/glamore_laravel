@@ -48,7 +48,7 @@
 			@yield('header')
 		</head>
 
-		<body class="fixed-top-active dashboard">
+		<body class="fixed-top-active dashboard" ng-cloak>
 			<toaster-container ></toaster-container >
 			
 

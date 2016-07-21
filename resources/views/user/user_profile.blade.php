@@ -188,7 +188,7 @@
 											<div class="form-group">
 												<label for="postal_code" class="col-sm-3 control-label">Postal code</label>
 												<div class="col-sm-9">
-													<input type="number" ng-model="industries.industry.postal_code" class="form-control" name="postal_code" id="postal_code" placeholder="Title">
+													<input type="text" ng-model="industries.industry.postal_code" class="form-control" name="postal_code" id="postal_code" placeholder="Title">
 												</div>
 											</div>
 											<div class="form-group">
@@ -216,7 +216,7 @@
 											    <tr> <td>Country</td>
 											    <td> <a href="#" editable-text="industry.country"  onaftersave="updateIndustry(industry)" ><% industry.country || "empty"%></a></td></tr>
 											    <tr><td>Postal code</td>
-											    <td><a href="#" editable-number="industry.postal_code"  onaftersave="updateIndustry(industry)"><% industry.postal_code || "empty"%></a></td></tr>
+											    <td><a href="#" editable-text="industry.postal_code"  onaftersave="updateIndustry(industry)"><% industry.postal_code || "empty"%></a></td></tr>
 											    <tr><td>Industry</td>
 											    <td><a href="#" editable-text="industry.industry" e-required onaftersave="updateIndustry(industry)"><% industry.industry || "empty"%></a></td></tr>
 											<tr><a ng-click="deleteIndustry(industry)" class="ind_delete btn btn-primary btn-block" >Delete </a></tr>
