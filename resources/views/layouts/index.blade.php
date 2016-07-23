@@ -370,7 +370,7 @@
                         <div class="col-md-4" ng-controller="projectCtrl">
                             <div class="widget">
                                 <div class="widget-header clearfix">
-                                    <h3><i class="icon ion-android-list"></i> <span>PROJECTS PROGRESS</span></h3>
+                                    <h3><i class="icon ion-android-list"></i> <span>MY PROJECTS STATUS</span></h3>
                                     <div class="btn-group widget-header-toolbar">
                                         <a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
                                         <a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
@@ -474,7 +474,7 @@
 								<div class="col-md-4"  >
 									<div class="widget">
 										<div class="widget-header clearfix">
-											<h3><i class="icon ion-pin"></i> <span>LAST PROJECT PROGRESS</span></h3>
+											<h3><i class="icon ion-pin"></i> <span>LAST PROJECT CREATED</span></h3>
 											<div class="btn-group widget-header-toolbar">
 												<a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
 												<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
@@ -507,7 +507,7 @@
 							<div class="widget">
 								<!-- profile-summary widget -->
 								<div class="widget-header clearfix">
-									<h3><i class="icon ion-person"></i> <span>YOUR PROFILE SUMMARY</span></h3>
+									<h3><i class="icon ion-person"></i> <span>MY PROFILE</span></h3>
 									<div class="btn-group widget-header-toolbar">
 										<a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
 										<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
