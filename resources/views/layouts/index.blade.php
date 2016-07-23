@@ -518,12 +518,12 @@
 										<div class="progress progress-xs">
 											<div class="progress-bar progress-bar-info completeness-progress" data-transitiongoal="0"></div>
 										</div>
-										<div ng-controller="userProfileSummaryCtrl" ng-init="loadCurrentUser(); loadExperiences(); loadEducations(); loadIndustries()" ng-show="user.name" ng-cloak>
+										<div ng-controller="userProfileSummaryCtrl" ng-init="loadCurrentUser();" ng-show="user.name" ng-cloak>
 											<p class="complete-info">Your profile is <strong id = "pbar-percentage" class="completeness-percentage">0%</strong> complete, please provide information below:</p>
 											<p>First Name: <span ng-class="{'bold': user.name, 'italic-underline-bold': !user.name}"><% user.name || "empty"  %></span></p>
 											<p>Last Name: <span ng-class="{'bold': user.last_name, 'italic-underline-bold': !user.last_name}"><% user.last_name  || "empty"%></span></p>
 											<p>Birthdate: <span ng-class="{'bold': user.birthday_date, 'italic-underline-bold': !user.birthday_date}"><% user.birthday_date || "empty" | date:"dd/MM/yyyy" %></span></p>
-											<p>Sex: <span ng-class="{'bold': user.sex, 'italic-underline-bold': !user.sex}"><% user.sex  || "empty" %></span></p>
+											<!-- <p>Sex: <span ng-class="{'bold': user.sex, 'italic-underline-bold': !user.sex}"><% user.sex  || "empty" %></span></p> -->
 											<p>Phone: <span ng-class="{'bold': user.phone_number, 'italic-underline-bold': !user.phone_number}"><% user.phone_number  || "empty" %></span></p>
 											<p>Education: <span ng-class="{'bold': educationLength, 'italic-underline-bold': !educationLength}">( <% educationLength || "empty" %> )</span></p>
 											<p>Experience: <span ng-class="{'bold': experienceLength, 'italic-underline-bold': !experienceLength}">( <% experienceLength || "empty" %> )</span></p>
