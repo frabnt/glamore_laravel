@@ -276,9 +276,10 @@
 						<!-- END ORDER STATUS -->
 					<!-- </div> -->
 
-                    <div ng-controller="projectCtrl" ng-cloak ng-init="projects.hasProjects();" >
-                        <div class="modal fade" id="new-project-modal" tabindex="-1" role="dialog" aria-hidden="true">
-                            <!-- new project modal -->
+                    <div ng-controller="projectCtrl" ng-cloak ng-init="projects.hasProjects();">
+                        
+						<!-- new project modal -->
+						<div class="modal fade" id="new-project-modal" tabindex="-1" role="dialog" aria-hidden="true">   
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -286,7 +287,7 @@
                                         <h4 class="modal-title" id="myModalLabel">Create Project</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <form novalidate  ng-submit="createProject(projects.project); projects.hasProjects();" id="addProject" class="form-horizontal" role="form">
+                                        <form novalidate ng-submit="createProject(projects.project);" id="addProject" class="form-horizontal" role="form">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <div class="form-group">
                                                 <label for="title" class="control-label sr-only">Title</label>
@@ -312,8 +313,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end new project modal -->
                         </div>
+						<!-- end new project modal -->
 				
                         <!-- new-project widget -->
                         <div class="row" ng-show="projects.noProjects">
@@ -434,7 +435,7 @@
                                     </ul>
                                 </div>
                                 <div class="widget-footer">
-                                    <a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}">View All Projects</a> <span ng-cloak class="badge"><% projects.myProjects.length %></span>
+                                    <a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}">View My Projects</a> <span ng-cloak class="badge"><% projects.myProjects.length %></span>
                                 </div>
                             </div>
                             <!-- END TASK PROGRESS -->
@@ -491,11 +492,11 @@
                                                     <span class="label-default-bg">Title:</span> <a href="{{URL::to('project-detail/')}}/<% projects.lastProject.id %>"><span class="bold"><% projects.lastProject.title | limitTo:24 %><% projects.lastProject.title.length > 24 ? '...' : '' %></span></a>
                                                 </h5>
                                                 <br>
-                                                <h5><span class="label-default-bg">Duration:</span> <span class="bold"><% projects.lastProject.duration_day %></span></h5>
+                                                <h5><span class="label-default-bg">Duration:</span> <span class="bold"><% projects.lastProject.duration_day %> days</span></h5>
                                             </div>
 										</div>
 										<div class="widget-footer">
-											<a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}">All Projects</a>
+											<a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}">My Projects</a>
 										</div>
 									</div>
 								</div>

@@ -1122,6 +1122,7 @@
 							},	
 
 							'loadProject': function () {
+								console.log("loading prj");
 								if (!self.isLoading) {
 									self.isLoading = true;
 
@@ -1138,7 +1139,6 @@
 																	//console.log(value.company_name);
 																	value.date_end=new   Date(value.date_end);
 																	value.date_start=new   Date(value.date_start);
-
 																});
 
 																
@@ -1224,7 +1224,6 @@
 							},
 							
 							'hasProjects': function () {
-
 									var myProjects = $resource(base_url + '/project/userinfo/:u_id/', { u_id: current_user_id});
 									var query = myProjects.query();
 									query.$promise.then(function (result) {
@@ -1233,7 +1232,7 @@
                                             self.noProjects = false;
                                             self.lastProject = result[result.length-1];
                                             $('.chart').data('easyPieChart').update(self.lastProject.progress);
-                                        } else {
+										} else {
                                             self.noProjects = true;
                                         }
 									}, function(error) {
@@ -1341,17 +1340,23 @@
 																	//self.projects = [];
 																	//self.loadMyProject();
 																	self.myProjects.push(result);
-
+																	self.projects.push(result);
 																	//self.loadMyProject();
 
 																	self.project= null;
 																	self.setActivePendingClosed();
 																	d.resolve();
 																	self.isSaving = false;
+																	
+																	self.noProjects = false;
+																	self.lastProject = result;
+																	self.loadProject()
+																	//$('.chart').data('easyPieChart').update(self.lastProject.progress);
 																},function(error) {
 																	toaster.pop('error', 'Plaese check your connection '+ error.status);
 																	console.log(error);
 																});
+																
 																return d.promise;
 															}
 
@@ -1504,7 +1509,6 @@
 			ProjectService.createProject(project);
 
 		},
-
 
 		$scope.deleteProject= function(project){
 

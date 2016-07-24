@@ -56,8 +56,8 @@
 
 				</div>
 			
-			<!-- quick task modal -->
-			<div ng-controller="projectCtrl" class="modal fade" id="quick-task-modal" tabindex="-1" role="dialog" aria-hidden="true">
+			<!-- new project modal -->
+			<div ng-controller="projectCtrl" class="modal fade" id="new-project-modal" tabindex="-1" role="dialog" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -65,7 +65,7 @@
 							<h4 class="modal-title" id="myModalLabel">Post a Project</h4>
 						</div>
 						<div class="modal-body">
-							<form novalidate  ng-submit="createProject(projects.project)" id="addProject" class="form-horizontal" role="form">
+							<form novalidate  ng-submit="createProject(projects.project); projects.hasProject()" id="addProject" class="form-horizontal" role="form">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 								<div class="form-group">
 									<label for="title" class="control-label sr-only">Title</label>
@@ -93,7 +93,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- end quick task modal -->
+			<!-- end new project modal -->
 				
 
 			<!-- WRAPPER -->
@@ -205,10 +205,10 @@
 								</li>
 								<li class="{{ (Request::is('videoconference') || Request::is('activities') || Request::is('documents-and-notes') || Request::is('my-project/*') ? 'has-submenu active' : 'has-submenu') }}">
 									<a href="#" class="submenu-toggle"><i class="icon ion-ios-paper-outline"></i><span class="text">Projects</span></a>
-									<ul class="{{ (Request::is('my-project/*') || Request::is('videoconference') || Request::is('documents-and-notes') || Request::is('activities') ? 'list-unstyled sub-menu collapse in' : 'list-unstyled sub-menu collapse') }}">
+									<ul class="{{ (Request::is('projects') || Request::is('my-project/*') || Request::is('videoconference') || Request::is('documents-and-notes') || Request::is('activities') ? 'list-unstyled sub-menu collapse in' : 'list-unstyled sub-menu collapse') }}">
 										<li class="{{ (Request::is('projects') ? 'active' : '') }}" ><a href="{{ url('/projects') }}"><span class="text">See all projects</span></a></li>
-										<li><a data-toggle="modal" data-target="#quick-task-modal" href="#"><span class="text">Post a new project</span></a></li>
-										<li class="{{ (Request::is('my-project') ? 'active' : '') }}" ><a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}"><span class="text">My projects</span></a></li>
+										<li><a data-toggle="modal" data-target="#new-project-modal" href="#"><span class="text">Post a new project</span></a></li>
+										<li class="{{ (Request::is('my-project/*') ? 'active' : '') }}" ><a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}"><span class="text">My projects</span></a></li>
 										<!-- <li class="{{ (Request::is('activities') ? 'active' : '') }}" ><a href="{{ url('/activities')}}"><span class="text">Activities (task/meeting/call)</span></a></li>
 										<li class="{{ (Request::is('documents-and-notes') ? 'active' : '') }}" ><a href="{{ url('/documents-and-notes')}}"><span class="text">Documents and note</span></a></li>
 										<li class="{{ (Request::is('videoconference') ? 'active' : '') }}" ><a href="{{ url('/videoconference')}}"><span class="text">Videoconference</span></a></li> -->
@@ -219,7 +219,7 @@
 
 								<li class="{{ (Request::is('bio-affiliate') || Request::is('search-and-join-projects') || Request::is('activities-diary') || Request::is('search-for-affiliate') ? 'has-submenu active' : 'has-submenu') }}" >
 									<a href="#" class="submenu-toggle"><i class="icon ion-person"></i><span class="text">Affiliates</span></a>
-									<ul class="{{ (Request::is('search-for-affiliate') || Request::is('search-and-join-projects') || Request::is('bio-affiliate') || Request::is('activities-diary') ? 'list-unstyled sub-menu collapse in' : 'list-unstyled sub-menu collapse') }}">
+									<ul class="{{ (Request::is('user/*') || Request::is('search-for-affiliate') || Request::is('search-and-join-projects') || Request::is('bio-affiliate') || Request::is('activities-diary') ? 'list-unstyled sub-menu collapse in' : 'list-unstyled sub-menu collapse') }}">
 										<!-- <li class="{{ (Request::is('bio-affiliate') ? 'active' : '') }}"><a  href="{{ url('/bio-affiliate')}}"><span class="text">BIO Affiliate</span></a></li> -->
 										<li class="{{ (Request::is('user/*') ? 'active' : '') }}"><a  href="{{ url('/user')}}/{!! auth()->user()->id !!}"><span class="text">My profile</span></a></li>
 										<li class="{{ (Request::is('search-for-affiliate') ? 'active' : '') }}" ><a href="{{ url('/search-for-affiliate') }}"><span class="text">Search for Affiliate</span></a></li>

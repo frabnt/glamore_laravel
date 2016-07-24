@@ -135,7 +135,7 @@ public function show_my_project($id){
 
     public function index()
     {
-        return Project::all();
+        return view('projects.all-projects');
     }
 
     /**
