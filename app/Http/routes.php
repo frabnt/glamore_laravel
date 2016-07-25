@@ -198,6 +198,9 @@ Route::group(['middleware' => ['cors','web', 'auth']], function () {
 
     //projects
     Route::get('/my-project/{id}','ProjectController@show_my_project');
+	
+	//get all projects
+	Route::get('/all-projects', 'ProjectController@allProjects');
 
     // Route::get('/project-detail/{id}', function () {
     //     //return view('projects.project-detail');

@@ -203,10 +203,10 @@
 										<li class="{{ (Request::is('chart-of-earnings') ? 'active' : '') }}"><a href="{{ url('/chart-of-earnings')}}"><span class="text">Chart of earnings</span></a></li> -->
 									</ul>
 								</li>
-								<li class="{{ (Request::is('videoconference') || Request::is('activities') || Request::is('documents-and-notes') || Request::is('my-project/*') ? 'has-submenu active' : 'has-submenu') }}">
+								<li class="{{ (Request::is('all-projects') || Request::is('videoconference') || Request::is('activities') || Request::is('documents-and-notes') || Request::is('my-project/*') ? 'has-submenu active' : 'has-submenu') }}">
 									<a href="#" class="submenu-toggle"><i class="icon ion-ios-paper-outline"></i><span class="text">Projects</span></a>
-									<ul class="{{ (Request::is('projects') || Request::is('my-project/*') || Request::is('videoconference') || Request::is('documents-and-notes') || Request::is('activities') ? 'list-unstyled sub-menu collapse in' : 'list-unstyled sub-menu collapse') }}">
-										<li class="{{ (Request::is('projects') ? 'active' : '') }}" ><a href="{{ url('/projects') }}"><span class="text">See all projects</span></a></li>
+									<ul class="{{ (Request::is('all-projects') || Request::is('my-project/*') || Request::is('videoconference') || Request::is('documents-and-notes') || Request::is('activities') ? 'list-unstyled sub-menu collapse in' : 'list-unstyled sub-menu collapse') }}">
+										<li class="{{ (Request::is('all-projects') ? 'active' : '') }}" ><a href="{{ url('/all-projects') }}"><span class="text">See all projects</span></a></li>
 										<li><a data-toggle="modal" data-target="#new-project-modal" href="#"><span class="text">Post a new project</span></a></li>
 										<li class="{{ (Request::is('my-project/*') ? 'active' : '') }}" ><a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}"><span class="text">My projects</span></a></li>
 										<!-- <li class="{{ (Request::is('activities') ? 'active' : '') }}" ><a href="{{ url('/activities')}}"><span class="text">Activities (task/meeting/call)</span></a></li>

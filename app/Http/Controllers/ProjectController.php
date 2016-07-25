@@ -135,7 +135,7 @@ public function show_my_project($id){
 
     public function index()
     {
-        return view('projects.all-projects');
+        return Project::all();
     }
 
     /**
@@ -261,6 +261,10 @@ SELECT team_id FROM user_team_role where user_id =".$current_user_id."
             return $projects;
             
     }
+	
+	public function allProjects() {
+		return view('projects.all-projects');
+	}
 
 
 

@@ -1122,7 +1122,6 @@
 							},	
 
 							'loadProject': function () {
-								console.log("loading prj");
 								if (!self.isLoading) {
 									self.isLoading = true;
 
