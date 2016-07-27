@@ -276,9 +276,10 @@
 						<!-- END ORDER STATUS -->
 					<!-- </div> -->
 
-                    <div ng-controller="projectCtrl" ng-cloak ng-init="projects.hasProjects();" >
-                        <div class="modal fade" id="new-project-modal" tabindex="-1" role="dialog" aria-hidden="true">
-                            <!-- new project modal -->
+                    <div ng-controller="projectCtrl" ng-cloak ng-init="projects.hasProjects();">
+                        
+						<!-- new project modal -->
+						<div class="modal fade" id="new-project-modal" tabindex="-1" role="dialog" aria-hidden="true">   
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -286,7 +287,7 @@
                                         <h4 class="modal-title" id="myModalLabel">Create Project</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <form novalidate  ng-submit="createProject(projects.project); projects.hasProjects();" id="addProject" class="form-horizontal" role="form">
+                                        <form novalidate ng-submit="createProject(projects.project);" id="addProject" class="form-horizontal" role="form">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <div class="form-group">
                                                 <label for="title" class="control-label sr-only">Title</label>
@@ -312,8 +313,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end new project modal -->
                         </div>
+						<!-- end new project modal -->
 				
                         <!-- new-project widget -->
                         <div class="row" ng-show="projects.noProjects">
@@ -370,7 +371,7 @@
                         <div class="col-md-4" ng-controller="projectCtrl">
                             <div class="widget">
                                 <div class="widget-header clearfix">
-                                    <h3><i class="icon ion-android-list"></i> <span>PROJECTS PROGRESS</span></h3>
+                                    <h3><i class="icon ion-android-list"></i> <span>MY PROJECTS STATUS</span></h3>
                                     <div class="btn-group widget-header-toolbar">
                                         <a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
                                         <a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
@@ -434,7 +435,7 @@
                                     </ul>
                                 </div>
                                 <div class="widget-footer">
-                                    <a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}">View All Projects</a> <span ng-cloak class="badge"><% projects.myProjects.length %></span>
+                                    <a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}">View My Projects</a> <span ng-cloak class="badge"><% projects.myProjects.length %></span>
                                 </div>
                             </div>
                             <!-- END TASK PROGRESS -->
@@ -474,7 +475,7 @@
 								<div class="col-md-4"  >
 									<div class="widget">
 										<div class="widget-header clearfix">
-											<h3><i class="icon ion-pin"></i> <span>LAST PROJECT PROGRESS</span></h3>
+											<h3><i class="icon ion-pin"></i> <span>LAST PROJECT CREATED</span></h3>
 											<div class="btn-group widget-header-toolbar">
 												<a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
 												<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
@@ -491,11 +492,11 @@
                                                     <span class="label-default-bg">Title:</span> <a href="{{URL::to('project-detail/')}}/<% projects.lastProject.id %>"><span class="bold"><% projects.lastProject.title | limitTo:24 %><% projects.lastProject.title.length > 24 ? '...' : '' %></span></a>
                                                 </h5>
                                                 <br>
-                                                <h5><span class="label-default-bg">Duration:</span> <span class="bold"><% projects.lastProject.duration_day %></span></h5>
+                                                <h5><span class="label-default-bg">Duration:</span> <span class="bold"><% projects.lastProject.duration_day %> days</span></h5>
                                             </div>
 										</div>
 										<div class="widget-footer">
-											<a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}">All Projects</a>
+											<a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}">My Projects</a>
 										</div>
 									</div>
 								</div>
@@ -507,7 +508,7 @@
 							<div class="widget">
 								<!-- profile-summary widget -->
 								<div class="widget-header clearfix">
-									<h3><i class="icon ion-person"></i> <span>YOUR PROFILE SUMMARY</span></h3>
+									<h3><i class="icon ion-person"></i> <span>MY PROFILE</span></h3>
 									<div class="btn-group widget-header-toolbar">
 										<a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
 										<a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
@@ -518,12 +519,12 @@
 										<div class="progress progress-xs">
 											<div class="progress-bar progress-bar-info completeness-progress" data-transitiongoal="0"></div>
 										</div>
-										<div ng-controller="userProfileSummaryCtrl" ng-init="loadCurrentUser(); loadExperiences(); loadEducations(); loadIndustries()" ng-show="user.name" ng-cloak>
+										<div ng-controller="userProfileSummaryCtrl" ng-init="loadCurrentUser();" ng-show="user.name" ng-cloak>
 											<p class="complete-info">Your profile is <strong id = "pbar-percentage" class="completeness-percentage">0%</strong> complete, please provide information below:</p>
 											<p>First Name: <span ng-class="{'bold': user.name, 'italic-underline-bold': !user.name}"><% user.name || "empty"  %></span></p>
 											<p>Last Name: <span ng-class="{'bold': user.last_name, 'italic-underline-bold': !user.last_name}"><% user.last_name  || "empty"%></span></p>
 											<p>Birthdate: <span ng-class="{'bold': user.birthday_date, 'italic-underline-bold': !user.birthday_date}"><% user.birthday_date || "empty" | date:"dd/MM/yyyy" %></span></p>
-											<p>Sex: <span ng-class="{'bold': user.sex, 'italic-underline-bold': !user.sex}"><% user.sex  || "empty" %></span></p>
+											<!-- <p>Sex: <span ng-class="{'bold': user.sex, 'italic-underline-bold': !user.sex}"><% user.sex  || "empty" %></span></p> -->
 											<p>Phone: <span ng-class="{'bold': user.phone_number, 'italic-underline-bold': !user.phone_number}"><% user.phone_number  || "empty" %></span></p>
 											<p>Education: <span ng-class="{'bold': educationLength, 'italic-underline-bold': !educationLength}">( <% educationLength || "empty" %> )</span></p>
 											<p>Experience: <span ng-class="{'bold': experienceLength, 'italic-underline-bold': !experienceLength}">( <% experienceLength || "empty" %> )</span></p>
