@@ -10,35 +10,35 @@
         width:22px;
     }
 
-.progress.active .progress-bar {
-    -webkit-transition: none !important;
-    transition: none !important;
-}
+	.progress.active .progress-bar {
+		-webkit-transition: none !important;
+		transition: none !important;
+	}
 </style>
 
 <!-- COLUMN RIGHT -->
-		<div id="col-right" class="col-right" ng-controller="projectCtrl" ng-init="loadMyProject(); loadJoinedProject()">
+		<div id="col-right" class="col-right" ng-controller="projectCtrl" ng-init="projects.loadProject(); loadJoinedProject()">
 			<div class="container-fluid primary-content">
 				<!-- PRIMARY CONTENT HEADING -->
 				<div  class="primary-content-heading clearfix">
-					<h2>MY PROJECTS</h2>
+					<h2>ALL PROJECTS</h2>
 					<ul class="breadcrumb pull-left">
 						<li><i class="icon ion-home"></i><a href="#">Home</a></li>
 						<li><a href="#">Pages</a></li>
-						<li class="active">My Projects</li>
+						<li class="active">All Projects</li>
 					</ul>
 
 				</div>
-                                            <!-- quick task modal -->
+					<!-- quick task modal -->
                     <div class="modal fade" id="new-project-modal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title" id="myModalLabel">Create Project</h4>
+                                    <h4 class="modal-title" id="myModalLabel">Post a Project</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form novalidate  ng-submit="createProject(projects.project)" id="addProject" class="form-horizontal" role="form">
+                                    <form novalidate  ng-submit="createProject(projects.project);" id="addProject" class="form-horizontal" role="form">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="form-group">
                                             <label for="title" class="control-label sr-only">Title</label>
@@ -67,6 +67,7 @@
                         </div>
                     </div>
                     <!-- end quick task modal -->
+					
 				<!-- END PRIMARY CONTENT HEADING -->
 				<div class="project-list-subheading">
 					<p class="lead">You're involved in <span class="label label-success"><% projects.active %> active</span> projects, <span class="label label-warning"><% projects.pending %> pending</span> and <span class="label label-default"><% projects.closed %> closed</span></p>
@@ -87,19 +88,19 @@
 								<th>Action</th>
 							</tr>
 						</thead>
-                        <tbody ng-controller="userCtrl" ng-init='currentUser()'>
-                        <tr ng-repeat='project in projects.myProjects'>
-                            <td><a href="{{URL::to('project-detail/')}}/<% project.id %>"><% project.title %></a></td>
-                            <td><% project.date_start | date:"dd/MM/yyyy" %></td>
-                            <td><% project.duration_day %> days</td>
-                            <td><div class="progress">
-                                <div class="progress-bar" percent="<% project.progress %>" style="width: 0%"><% project.progress %>%</div>
-                            </td>
-                            <td><span ng-class="{'label-warning': project.priority=='MEDIUM','label-success': project.priority=='LOW','label-danger': project.priority=='HIGH' }" class="label "><% project.priority %></span></td>
-                            <td><img src="{{ asset('/assets/upload/img/user')}}/<% users.user.profile_image || 'avatar.png' %>" alt="Avatar" class="avatar"> <a href="#"><%users.user.name %> </a></td>
-                            <td><span ng-class="{'label-warning': project.status=='PENDING','label-success': project.status=='ACTIVE','label-default': project.status=='CLOSED' }" class="label "><% project.status %></span></td>
-                            <td><a ng-click="deleteProject(project)" class="prj_delete btn btn-primary btn-block" >Delete </a></td>
-                        </tr>
+                        <tbody ng-cloak>
+							<tr ng-repeat='project in projects.projects'>
+								<td><a href="{{URL::to('project-detail/')}}/<% project.id %>"><% project.title %></a></td>
+								<td><% project.date_start | date:"dd/MM/yyyy" %></td>
+								<td><% project.duration_day %> days</td>
+								<td><div class="progress">
+									<div class="progress-bar" percent="<% project.progress %>" style="width: 0%"><% project.progress %>%</div>
+								</td>
+								<td><span ng-class="{'label-warning': project.priority=='MEDIUM','label-success': project.priority=='LOW','label-danger': project.priority=='HIGH' }" class="label "><% project.priority %></span></td>
+								<td><img src="{{ asset('/assets/upload/img/user')}}/<% project.user_profile_image || 'avatar.png' %>" alt="Avatar" class="avatar"> <a href="#"><%project.user_name %> </a></td>
+								<td><span ng-class="{'label-warning': project.status=='PENDING','label-success': project.status=='ACTIVE','label-default': project.status=='CLOSED' }" class="label "><% project.status %></span></td>
+								<td><a ng-click="deleteProject(project)" class="prj_delete btn btn-primary btn-block" >Delete </a></td>
+							</tr>
                         </tbody>
 					</table>
 				</div>
