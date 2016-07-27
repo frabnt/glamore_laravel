@@ -1138,7 +1138,6 @@
 																	//console.log(value.company_name);
 																	value.date_end=new   Date(value.date_end);
 																	value.date_start=new   Date(value.date_start);
-
 																});
 
 																
@@ -1224,7 +1223,6 @@
 							},
 							
 							'hasProjects': function () {
-
 									var myProjects = $resource(base_url + '/project/userinfo/:u_id/', { u_id: current_user_id});
 									var query = myProjects.query();
 									query.$promise.then(function (result) {
@@ -1233,7 +1231,7 @@
                                             self.noProjects = false;
                                             self.lastProject = result[result.length-1];
                                             $('.chart').data('easyPieChart').update(self.lastProject.progress);
-                                        } else {
+										} else {
                                             self.noProjects = true;
                                         }
 									}, function(error) {
@@ -1341,17 +1339,23 @@
 																	//self.projects = [];
 																	//self.loadMyProject();
 																	self.myProjects.push(result);
-
+																	self.projects.push(result);
 																	//self.loadMyProject();
 
 																	self.project= null;
 																	self.setActivePendingClosed();
 																	d.resolve();
 																	self.isSaving = false;
+																	
+																	self.noProjects = false;
+																	self.lastProject = result;
+																	self.loadProject()
+																	//$('.chart').data('easyPieChart').update(self.lastProject.progress);
 																},function(error) {
 																	toaster.pop('error', 'Plaese check your connection '+ error.status);
 																	console.log(error);
 																});
+																
 																return d.promise;
 															}
 
@@ -1504,7 +1508,6 @@
 			ProjectService.createProject(project);
 
 		},
-
 
 		$scope.deleteProject= function(project){
 
@@ -2577,57 +2580,57 @@ app.controller('userProfileSummaryCtrl', function($scope, $resource, Education, 
 		$scope.educationLength = 0,
 		
 		$scope.loadCurrentUser = function(){
-			var curUser = $resource(base_url + '/users/:id/', { id: current_user_id});
-			temp = curUser.get(function (data){			
-				//data.birthday_date = new Date(data.birthday_date);
-
-				$scope.user = data;
-				var dbElements = ['name', 'last_name', 'birthday_date', 'about_me', 'sex', 'marital_status', 'phone_number'];
-				var percentage = 0;
-				angular.forEach($scope.user, function (value, key) {
-					if(dbElements.indexOf(key) >= 0) {
-						if(value) {
-							percentage += 10;
-						}
-					}
-				});
-				$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+percentage).progressbar();
-			});
-		}
-		
-		$scope.loadExperiences = function () {
+			var dbElements = ['name', 'last_name', 'birthday_date', 'about_me', 'profile_image', 'marital_status', 'phone_number'];
+			var socialMedia = ['facebook_page', 'twitter_page', 'linkedin_page', 'dribble_page', 'gplus_page'];
+			var length = dbElements.length + 4;
+			var count = 0;
+			var social = false;
+			
 			var res = $resource(base_url +"/experience/user/:id", {id: current_user_id}, {});
-
 			experiences = res.query();
 			experiences.$promise.then(function (result) {
 				$scope.experienceLength = result.length;
 				if($scope.experienceLength > 0) {
-					$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+10).progressbar();
-                }
+					count += 1;
+					//$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+(1/length)*100).progressbar();
+				}
 			});
-		},
-		
-		$scope.loadIndustries = function () {
-			var res = $resource(base_url +"/industry/user/:id", {id: current_user_id}, {});
-
+			
+			res = $resource(base_url +"/industry/user/:id", {id: current_user_id}, {});
 			industries = res.query();
 			industries.$promise.then(function (result) {
 				$scope.industryLength = result.length;
 				if($scope.industryLength > 0) {
-					$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+10).progressbar();
-                }
+					count += 1;
+					//$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+(1/length)*100).progressbar();
+				}
 			});
-		},
-		
-		$scope.loadEducations = function () {
-			var res = $resource(base_url +"/education/user/:id", {id: current_user_id}, {});
-
+			
+			res = $resource(base_url +"/education/user/:id", {id: current_user_id}, {});
 			educations = res.query();
 			educations.$promise.then(function (result) {
 				$scope.educationLength = result.length;
 				if($scope.educationLength > 0) {
-					$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+10).progressbar();
-                }
+					count += 1;
+					//$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+(count/length)*100).progressbar();
+				}
+			});
+			
+			var curUser = $resource(base_url + '/users/:id/', { id: current_user_id});
+			temp = curUser.get(function (data){		
+				$scope.user = data;
+				angular.forEach($scope.user, function (value, key) {
+					if(dbElements.indexOf(key) >= 0) {
+						if(value) {
+							count += 1;
+						}
+					} else if(!social && socialMedia.indexOf(key)>=0 && value)  {
+						social = true;
+						count += 1;
+					}
+				});
+				$('.completeness-progress').attr('data-transitiongoal', parseInt($('.completeness-progress').attr('data-transitiongoal'))+(count/length)*100).progressbar();
+				
 			});
 		}
 

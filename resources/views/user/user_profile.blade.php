@@ -15,7 +15,7 @@
 	<style>
 	.profile-header-background{
 	height: 310px;
-	background: url("{{ asset('/assets/upload/img/user')}}/<% users.user.background_image || 'city.jpg' %>");
+	background: url("{{ asset('/assets/upload/img/user')}}/<% users.user.background_image || 'city2.jpg' %>");
 	background-repeat:no-repeat;
 	background-size: cover;
 	}
@@ -143,7 +143,7 @@
 								</ul>
 							</div>
 							<div class="section">
-								<h3>Social</h3>
+								<h3>Social Media</h3>
 								<ul class="list-unstyled list-social">
 									 <li><a ><i class="icon ion-social-twitter"></i><td><a href="#" editable-text="users.user.twitter_page"  onaftersave="users.updateUser(users.user)" ><% users.user.twitter_page|| "empty" %></a></td></a></li>
 									<li><a ><i class="icon ion-social-facebook"></i><td><a href="#" editable-text="users.user.facebook_page"  onaftersave="users.updateUser(users.user)" ><% users.user.facebook_page|| "empty" %></a></td></a></li>
@@ -381,7 +381,7 @@
 													<div class="form-group">
 														<div class="col-sm-offset-3 col-sm-9">
 															
-															<input id="submitExperienceButton" ng-click="hideForm()" type="submit" class="btn btn-primary btn-block" value="Save Education">
+															<input id="submitExperienceButton" ng-click="hideForm()" type="submit" class="btn btn-primary btn-block" value="Save Experience">
 									
 														</div>
 														
