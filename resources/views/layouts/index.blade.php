@@ -279,7 +279,7 @@
                     <div ng-controller="projectCtrl" ng-cloak ng-init="projects.hasProjects();">
                         
 						<!-- new project modal -->
-						<div class="modal fade" id="new-project-modal" tabindex="-1" role="dialog" aria-hidden="true">   
+						<!-- <div class="modal fade" id="new-project-modal" tabindex="-1" role="dialog" aria-hidden="true">   
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -313,7 +313,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 						<!-- end new project modal -->
 				
                         <!-- new-project widget -->

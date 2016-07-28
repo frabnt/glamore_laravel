@@ -29,8 +29,8 @@
 					</ul>
 
 				</div>
-                                            <!-- quick task modal -->
-                    <div class="modal fade" id="new-project-modal" tabindex="-1" role="dialog" aria-hidden="true">
+					<!-- quick task modal -->
+                    <!-- <div class="modal fade" id="new-project-modal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- end quick task modal -->
 				<!-- END PRIMARY CONTENT HEADING -->
 				<div class="project-list-subheading">

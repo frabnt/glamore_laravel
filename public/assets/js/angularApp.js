@@ -1347,9 +1347,9 @@
 																	d.resolve();
 																	self.isSaving = false;
 																	
-																	self.noProjects = false;
+																	/*self.noProjects = false;
 																	self.lastProject = result;
-																	self.loadProject()
+																	self.loadProject();*/
 																	//$('.chart').data('easyPieChart').update(self.lastProject.progress);
 																},function(error) {
 																	toaster.pop('error', 'Plaese check your connection '+ error.status);

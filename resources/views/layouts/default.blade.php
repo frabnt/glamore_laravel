@@ -65,7 +65,11 @@
 							<h4 class="modal-title" id="myModalLabel">Post a Project</h4>
 						</div>
 						<div class="modal-body">
-							<form novalidate  ng-submit="createProject(projects.project); projects.hasProject()" id="addProject" class="form-horizontal" role="form">
+							@if (!Request::is('home'))
+								<form novalidate  ng-submit="createProject(projects.project); projects.loadProject()" id="addProject" class="form-horizontal" role="form">
+							@else
+								<form novalidate  ng-submit="createProject(projects.project); projects.hasProjects()" id="addProject" class="form-horizontal" role="form">
+							@endif
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 								<div class="form-group">
 									<label for="title" class="control-label sr-only">Title</label>
