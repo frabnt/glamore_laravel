@@ -105,7 +105,7 @@
 						<a class="btn btn-link btn-off-canvas pull-left"><i class="icon ion-navicon"></i></a>
 						<div class="logo pull-left">
 							<a href="{{URL::to('home')}}">
-								<img src={{ asset('assets/img/logos_glamore_big.png') }} alt="Glamore Logo" />
+								<img style="height: 30px; width: auto;" src={{ asset('assets/img/logo_intranet.jpg') }} alt="Glamore Logo" />
 							</a>
 						</div>
 					</div>
@@ -117,6 +117,14 @@
 							</div>
 						</div>
 					</form>
+					<div class="logo-area">
+						<a class="btn btn-link btn-off-canvas pull-left"><i class="icon ion-navicon"></i></a>
+						<div class="logo" style="padding-left: 100px;">
+							<a href="http://www.glamore.co/">
+								<img src={{ asset('assets/img/logo_frontend.png') }} alt="Glamore Logo" />
+							</a>
+						</div>
+					</div>
 					<div ng-controller="notificationCtrl"  ng-show="!notifications.isLoading" ng-init='loadMyNotifications()' class="top-bar-right pull-right">
 						<div  class="action-group hidden-xs hidden-sm">
 							<ul>
