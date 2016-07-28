@@ -442,6 +442,15 @@
 							<button type="button" class="btn btn-default center-block"><i class="icon ion-ios-refresh"></i> Load more</button>
 						</div> -->
 					</div>
+					
+					<div class="col-md-4">
+						<div style="padding: 0px 29% 10% 0px;" class="row">
+							<div class="sticky-content pull-right col-md-4">
+								<a href="{{ url('/my-project') }}/{!! auth()->user()->id !!}" type="button" class="btn btn-info "><i class="icon ion-ios-paper-outline"></i> Back to my projects</a>
+							</div>
+						</div>
+					</div>
+					
 					<div class="col-md-4">
 						<!-- MY TODO LIST -->
 						<div ng-controller="todoCtrl" ng-init='loadMyTodosOfCurrentProject()' >
